@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "购物"
+  "usingComponents": {
+    "i-icon": "../../dist/icon/index" 
+  },
+  "navigationBarTitleText": "春联选购"
 }

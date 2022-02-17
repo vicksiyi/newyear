@@ -11,7 +11,7 @@
 <view class="swiper">
   <image class="img" src="../../images/static/swiper.jpg"></image>
 </view>
-<view class="select">
+<view class="select" bindtap="goShopping">
   开始选购吧!
   <i-icon type="enter" />
 </view>

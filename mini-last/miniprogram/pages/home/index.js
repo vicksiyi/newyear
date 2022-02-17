@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    
+
   },
 
   /**
@@ -25,5 +25,10 @@ Page({
     } catch (e) {
       console.log(e);
     }
+  },
+  goShopping: function () {
+    wx.navigateTo({
+      url: '../shopping/index',
+    })
   }
 })

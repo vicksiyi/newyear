@@ -1,1 +1,229 @@
 /* pages/shopping/index.wxss */
+.selected {
+  width: 100%;
+  height: 100rpx;
+  position: fixed;
+  bottom: 0;
+  background: #1c2438;
+  display: flex;
+  flex-direction: row;
+  z-index: 1000;
+}
+
+.selected .card {
+  width: 490rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.selected .card .icon {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.selected .card .icon-margin {
+  margin: 10rpx;
+}
+
+.selected .card .money {
+  line-height: 100rpx;
+  color: #D8322E;
+  font-size: 40rpx;
+}
+
+.selected .done {
+  width: 260rpx;
+  background: #D8322E;
+  text-align: center;
+  line-height: 100rpx;
+  color: #fff;
+}
+
+.content {
+  display: flex;
+  flex-direction: row;
+}
+
+.content .left {
+  width: 130rpx;
+  font-size: 23rpx;
+  color: #495060;
+  text-align: center;
+}
+
+.content .left .item {
+  height: 80rpx;
+  margin-top: 8rpx;
+  line-height: 80rpx;
+  background: #f8f8f9;
+}
+
+.content .left .item:nth-child(1) {
+  background: #fff;
+}
+
+.selected-item {
+  background: #fff;
+}
+
+.content .right {
+  width: 620rpx;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.content .right::-webkit-scrollbar {
+  display: none;
+}
+
+.content .right .top {
+  height: 60rpx;
+  width: 100%;
+  padding-left: 30rpx;
+  line-height: 60rpx;
+  background: #f8f8f9;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: row;
+  width: 500rpx;
+  margin: 50rpx auto;
+  height: 160rpx;
+}
+
+.card-done-item {
+  width: 100%;
+  padding-left: 40rpx;
+}
+
+.card-done-item .img {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.card-done-item .detail {
+  margin-left: 100rpx;
+}
+
+.card-item .img {
+  width: 120rpx;
+  height: 120rpx;
+  margin: 20rpx 5rpx 20rpx 5rpx;
+}
+
+.card-item .detail {
+  width: 490rpx;
+  padding: 10rpx;
+}
+
+.card-item .detail .up {
+  width: 400rpx;
+  height: 100rpx;
+  font-size: 25rpx;
+  line-height: 40rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /*重点，不能用block等其他*/
+  -webkit-line-clamp: 2;
+  /*重点IE和火狐不支持*/
+  -webkit-box-orient: vertical;
+  /*重点*/
+}
+
+.card-item .detail .down {
+  height: 60rpx;
+  display: flex;
+  flex-direction: row;
+  line-height: 60rpx;
+  position: relative;
+  width: 490rpx;
+}
+
+.card-item .detail .down .money {
+  font-size: 30rpx;
+  color: #ff9900;
+}
+
+.card-item .detail .down .action {
+  display: flex;
+  flex-direction: row;
+  right: 100rpx;
+  position: absolute;
+  line-height: 60rpx;
+  float: right;
+}
+
+.card-item .detail .down .img {
+  width: 50rpx;
+  height: 50rpx;
+  margin: 5rpx;
+}
+
+.card-done {
+  width: 100%;
+  background: #fff;
+  height: 400rpx;
+  position: fixed;
+  bottom: 100rpx;
+  z-index: 999;
+}
+
+.card-done .top {
+  height: 60rpx;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-top: 10rpx;
+  color: #80848f;
+}
+
+.card-done .top .tag {
+  width: 10rpx;
+  height: 50rpx;
+  background: #D8322E;
+  margin-left: 20rpx;
+  margin-top: 5rpx;
+}
+
+.card-done .top .msg {
+  font-size: 30rpx;
+  margin-left: 10rpx;
+  line-height: 60rpx;
+}
+
+.card-done .top .clear {
+  position: absolute;
+  right: 20rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+}
+
+.card-done .line {
+  height: 1rpx;
+  width: 700rpx;
+  margin: 10rpx auto;
+  background: #e9eaec;
+}
+
+.bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 998;
+}
+
+.card-done .list {
+  height: 300rpx;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.card-done .list::-webkit-scrollbar {
+  display: none;
+}

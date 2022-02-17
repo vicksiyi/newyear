@@ -1,2 +1,568 @@
 <!--pages/shopping/index.wxml-->
-<text>pages/shopping/index.wxml</text>
+<!-- 底部选择 -->
+<view class="selected">
+  <view class="card">
+    <view class="icon icon-margin">
+      <image class="icon" src="../../images/icon/card.png"></image>
+    </view>
+    <view class="money">
+      <i-icon size="30" color="#D8322E" type="transaction_fill" />
+      22.2元
+    </view>
+  </view>
+  <view class="done">选好了</view>
+</view>
+<!-- 购物车 -->
+<view class="bg">
+  <view class="card-done">
+    <view class="top">
+      <view class="tag"></view>
+      <view class="msg">已选商品</view>
+      <view class="clear">
+        <i-icon type="trash" />
+        清空购物车
+      </view>
+    </view>
+    <view class="line"></view>
+    <view class="list">
+      <view class="card-item card-done-item">
+        <view class="img">
+          <image class="img" src="../../images/static/5.png"></image>
+        </view>
+        <view class="detail">
+          <view class="up">
+            上联:春夏秋冬行好运
+            下联:东西南北遇贵人
+            横批:出入平安
+          </view>
+          <view class="down">
+            <view class="money">￥11.0</view>
+            <view class="action">
+              <!-- <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view> -->
+              <view>
+                <image class="img" src="../../images/icon/add.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="card-item card-done-item">
+        <view class="img">
+          <image class="img" src="../../images/static/5.png"></image>
+        </view>
+        <view class="detail">
+          <view class="up">
+            上联:春夏秋冬行好运
+            下联:东西南北遇贵人
+            横批:出入平安
+          </view>
+          <view class="down">
+            <view class="money">￥11.0</view>
+            <view class="action">
+              <!-- <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view> -->
+              <view>
+                <image class="img" src="../../images/icon/add.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="card-item card-done-item">
+        <view class="img">
+          <image class="img" src="../../images/static/5.png"></image>
+        </view>
+        <view class="detail">
+          <view class="up">
+            上联:春夏秋冬行好运
+            下联:东西南北遇贵人
+            横批:出入平安
+          </view>
+          <view class="down">
+            <view class="money">￥11.0</view>
+            <view class="action">
+              <!-- <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view> -->
+              <view>
+                <image class="img" src="../../images/icon/add.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="card-item card-done-item">
+        <view class="img">
+          <image class="img" src="../../images/static/5.png"></image>
+        </view>
+        <view class="detail">
+          <view class="up">
+            上联:春夏秋冬行好运
+            下联:东西南北遇贵人
+            横批:出入平安
+          </view>
+          <view class="down">
+            <view class="money">￥11.0</view>
+            <view class="action">
+              <view>
+                <image class="img" src="../../images/icon/reduce.png"></image>
+              </view>
+              <view>1</view>
+              <view>
+                <image class="img" src="../../images/icon/add.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="card-item card-done-item">
+        <view class="img">
+          <image class="img" src="../../images/static/5.png"></image>
+        </view>
+        <view class="detail">
+          <view class="up">
+            上联:春夏秋冬行好运
+            下联:东西南北遇贵人
+            横批:出入平安
+          </view>
+          <view class="down">
+            <view class="money">￥11.0</view>
+            <view class="action">
+              <!-- <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view> -->
+              <view>
+                <image class="img" src="../../images/icon/add.png"></image>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 正文 -->
+<view class="content" style="max-height: {{height}}px;">
+  <view class="left">
+    <view wx:for="{{lists}}" hover-class="selected-item" wx:key="*this" class="item">
+      {{item}}
+    </view>
+  </view>
+  <view class="right card-right" style="height: {{height}}px;">
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <!-- <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view> -->
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="card-item">
+      <view class="img">
+        <image class="img" src="../../images/static/5.png"></image>
+      </view>
+      <view class="detail">
+        <view class="up">
+          上联:春夏秋冬行好运
+          下联:东西南北遇贵人
+          横批:出入平安
+        </view>
+        <view class="down">
+          <view class="money">￥11.0</view>
+          <view class="action">
+            <view>
+              <image class="img" src="../../images/icon/reduce.png"></image>
+            </view>
+            <view>1</view>
+            <view>
+              <image class="img" src="../../images/icon/add.png"></image>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
