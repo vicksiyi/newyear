@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/mine/index",
+    "pages/orderList/index",
+    "pages/home/index",
+    "pages/index/index",
+    "pages/login/index",
+    "pages/order/index",
+    "pages/comsumption/index",
+    "pages/shopping/index",
+    "pages/orderConfirm/index",
+    "pages/address/index",
+    "pages/orderDetail/index",
+    "pages/logistic/index",
+    "pages/showLogistic/index",
+    "pages/blessing/blessing",
+    "pages/lucky-turntable/lucky-turntable"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#D8322E",
+    "navigationBarTitleText": "虎虎生威春联购",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#80848f",
+    "selectedColor": "#1c2438",
+    "borderStyle": "black",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "iconPath": "images/tabBer/icon.png",
+        "selectedIconPath": "images/tabBer/icon-select.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/orderList/index",
+        "iconPath": "images/tabBer/icon.png",
+        "selectedIconPath": "images/tabBer/icon-select.png",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "iconPath": "images/tabBer/icon.png",
+        "selectedIconPath": "images/tabBer/icon-select.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

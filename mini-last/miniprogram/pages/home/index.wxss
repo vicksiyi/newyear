@@ -1,0 +1,57 @@
+/* pages/home/index.wxss */
+.top-img {
+  width: 100%;
+  height: 80rpx;
+}
+
+.top-img .img {
+  width: 100%;
+  height: 80rpx;
+}
+
+.notice {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.swiper {
+  width: 740rpx;
+  margin: auto;
+  height: 300rpx;
+}
+
+.swiper .img {
+  width: 740rpx;
+  height: 300rpx;
+  border-radius: 20rpx;
+}
+
+.select {
+  width: 250rpx;
+  margin: 20rpx auto;
+  height: 50rpx;
+  padding: 5rpx;
+  text-align: center;
+  background: #D8322E;
+  color: #fff;
+  border-radius: 20rpx;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+}
+
+.show-img .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 20rpx;
+}
+
+/* 
+.show-img .item {
+  width: 300rpx;
+  height: 300rpx;
+} */
+
+.show-img .item .img {
+  width: 300rpx;
+  height: 300rpx;
+}

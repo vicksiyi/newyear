@@ -1,0 +1,64 @@
+<!--pages/orderList/index.wxml-->
+<i-panel i-class="panel" title="到店自取">
+  <view class="order">
+    <view class="order-item">
+      <view class="left">
+        <view class="up">
+          下单时间：2022-01-03 16：22:51
+        </view>
+        <view class="down">
+          <span>盒联1.1m</span> 等4件商品 ¥ 62.00元
+        </view>
+      </view>
+      <view class="right">
+        <view>查看详细</view>
+        <view>待取货</view>
+      </view>
+    </view>
+    <view class="order-item">
+      <view class="left">
+        <view class="up">
+          下单时间：2022-01-03 16：22:51
+        </view>
+        <view class="down">
+          <span>盒联1.1m</span> 等4件商品 ¥ 62.00元
+        </view>
+      </view>
+      <view class="right">
+        <view>查看详细</view>
+        <view class="done">已取货</view>
+      </view>
+    </view>
+    <view class="order-item">
+      <view class="left">
+        <view class="up">
+          下单时间：2022-01-03 16：22:51
+        </view>
+        <view class="down">
+          <span>盒联1.1m</span> 等4件商品 ¥ 62.00元
+        </view>
+      </view>
+      <view class="right">
+        <view>查看详细</view>
+        <view>待取货</view>
+      </view>
+    </view>
+  </view>
+</i-panel>
+<i-panel i-class="panel" title="快递派送">
+  <view class="order">
+    <view class="order-item">
+      <view class="left">
+        <view class="up">
+          下单时间：2022-01-03 16：22:51
+        </view>
+        <view class="down">
+          <span>盒联1.1m</span> 等4件商品 ¥ 62.00元
+        </view>
+      </view>
+      <view class="right">
+        <view>查看详细</view>
+      </view>
+    </view>
+  </view>
+</i-panel>

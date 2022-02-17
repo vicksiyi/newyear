@@ -1,0 +1,76 @@
+/* pages/orderList/index.wxss */
+.panel {
+  background: #e9eaec;
+  color: #fff !important;
+}
+
+.order {
+  margin: auto;
+}
+
+.order .order-item {
+  margin: 20rpx auto;
+}
+
+.order .order-item {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04)
+}
+
+.order .order-item .left {
+  width: 450rpx;
+  padding: 20rpx;
+}
+
+.order .order-item .left .up {
+  color: #80848f;
+  font-size: 28rpx;
+  text-align: center;
+  height: 40rpx;
+  line-height: 40rpx;
+}
+
+.order .order-item .left .down {
+  text-align: center;
+  font-size: 30rpx;
+  color: #495060;
+  margin-top: 20rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.order .order-item .left .down span {
+  font-size: 32rpx;
+  color: #1c2438;
+  padding-right: 5rpx;
+}
+
+.order .order-item .right {
+  width: 250rpx;
+  display: flex;
+  flex-direction: row;
+  margin-top: 50rpx;
+}
+
+.order .order-item .right view {
+  width: 110rpx;
+  margin-left: 5rpx;
+  height: 50rpx;
+  font-size: 20rpx;
+  text-align: center;
+  line-height: 50rpx;
+}
+
+.order .order-item .right view:nth-child(1) {
+  border: 1rpx solid #D8322E;
+  color: #D8322E;
+}
+
+.order .order-item .right view:nth-child(2) {
+  background: #D8322E;
+}
+
+.order .order-item .right .done {
+  background: #bbbec4 !important;
+}

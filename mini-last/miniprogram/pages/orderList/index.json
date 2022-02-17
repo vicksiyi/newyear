@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "i-panel": "../../dist/panel/index"
+  },
+  "navigationBarTitleText": "订单列表"
+}

@@ -1,0 +1,6 @@
+/* pages/login/index.wxss */
+@import "/static/css/index.wxss";
+
+.start-btn-border {
+  color: #fff;
+}

@@ -1,0 +1,80 @@
+/* pages/blessing/blessing.wxss */
+.main {
+  height: 100vh;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding-bottom: 44rpx;
+}
+
+.bg-image {
+  width: 47.28vmax;
+  height: 95.26vmax;
+  position: fixed;
+  top: 5rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -1;
+}
+
+.avatar {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 12.6vmax;
+  margin-top: 3.7vmax;
+}
+
+.avatar__img-border {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12.6vmax;
+  height: 12.6vmax;
+}
+
+.avatar__img {
+  width: 11.49vmax;
+  height: 11.49vmax;
+  border-radius: 50%;
+}
+
+.beatific {
+  margin-top: 5.5vmax;
+  text-align: center;
+  font-family: 'Siyuan Bold';
+  font-size: 2.44vmax;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.blessing-words {
+  display: flex;
+  justify-content: center;
+  margin-top: 7.8vmax;
+}
+
+.blessing-words__text {
+  width: 8vmax;
+  height: 36.9vmax;
+  line-height: 9vmax;
+  font-size: 8vmax;
+  color: #F4E4BA;
+  word-break: break-all;
+  text-shadow: 2px 3px 5px rgba(0, 0, 0, .8);
+}
+
+.qr-code {
+  position: absolute;
+  top: 77.55vmax;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.qr-code__img {
+  width: 11.77vmax;
+  height: 11.77vmax;
+  border-radius: 3px;
+}

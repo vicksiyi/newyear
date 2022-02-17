@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "i-button": "../../dist/button/index",
+    "i-message": "../../dist/message/index"
+  },
+  "navigationBarTitleText": "授权",
+  "disableScroll": true
+}

@@ -1,0 +1,24 @@
+<!--index.wxml-->
+<view class="main">
+  <!-- 背景色 -->
+  <view class="bg-color"></view>
+  <!-- 背景图 -->
+  <image src="/images/bg_image_1.png" class="bg-image" />
+  <view class="avatar">
+    <!-- 头像框 -->
+    <image src="/images/avatar_border.png" class="avatar__img-border" />
+    <!-- 头像 -->
+    <image src="/images/avatar.png" class="avatar__img" />
+  </view>
+  <view class="tip">
+    <view class="tip__name">虎虎生威春联购</view>
+    <view class="tip__content">祝您新年快乐</view>
+  </view>
+  <!-- 进入按钮 -->
+  <view class="start-btn">
+    <view class="start-btn__box">
+      <image src="/images/start_btn.png" class="start-btn__img" bindtap="handleStart" />
+      <image src="/images/btn_ears.png" class="btn-ears__img" />
+    </view>
+  </view>
+</view>

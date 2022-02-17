@@ -1,0 +1,29 @@
+<!--pages/home/index.wxml-->
+<view class="top-img">
+  <image class="img" src="../../images/static/top.jpg"></image>
+</view>
+<!-- 通告栏 -->
+<view>
+  <i-notice-bar background-color="#fff" icon="systemprompt" loop>
+    在这里你可以选择到自己满意的春联饰品，欢迎光临
+  </i-notice-bar>
+</view>
+<view class="swiper">
+  <image class="img" src="../../images/static/swiper.jpg"></image>
+</view>
+<view class="select">
+  开始选购吧!
+  <i-icon type="enter" />
+</view>
+<view class="show-img">
+  <view class="row">
+    <view wx:for="{{[1,2]}}" class="item">
+      <image class="img" src="../../images/static/{{item}}.jpg"></image>
+    </view>
+  </view>
+  <view class="row">
+    <view wx:for="{{[3,4]}}" class="item">
+      <image class="img" src="../../images/static/{{item}}.jpg"></image>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,19 @@
+<!--pages/login/index.wxml-->
+<!-- 背景颜色 -->
+<view class="bg-color"></view>
+<!-- 背景图 -->
+<image src="/images/bg_image_1.png" class="bg-image" />
+<view class="avatar">
+  <!-- 头像框 -->
+  <image src="/images/avatar_border.png" class="avatar__img-border" />
+  <!-- 头像 -->
+  <image src="/images/avatar.png" class="avatar__img" />
+</view>
+<view class="tip">
+  <view class="tip__name">温情提示</view>
+  <view class="tip__content">请先登录</view>
+</view>
+<view class="start-btn">
+  <button style="margin-top: 20rpx;" class="key-login-btn" bindtap="getUser" open-type="getUserInfo">授权</button>
+</view>
+<i-message id="message" />
