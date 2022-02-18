@@ -1,1 +1,142 @@
 /* pages/order/index.wxss */
+.top {
+  width: 720rpx;
+  height: 120rpx;
+  background: #e9eaec;
+  margin: 20rpx auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.top .icon {
+  width: 60rpx;
+  height: 60rpx;
+  margin: 30rpx;
+}
+
+.top .icon image {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.top .detail {
+  width: 450rpx;
+}
+
+.top .action {
+  width: 100rpx;
+  font-size: 20rpx;
+}
+
+.top .action view {
+  width: 80rpx;
+  border: 1rpx solid #D8322E;
+  text-align: center;
+  padding: 5rpx;
+  color: #D8322E;
+  margin: 50rpx auto;
+}
+
+.top .detail view {
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.top .detail .status {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.top .detail .msg {
+  font-size: 25rpx;
+}
+
+.order-list {
+  width: 720rpx;
+  margin: auto;
+  height: 400rpx;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.order-list::-webkit-scrollbar {
+  display: none;
+}
+
+.order-list .item {
+  display: flex;
+  flex-direction: row;
+}
+
+.order-list .item .left {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.order-list .item .left image {
+  width: 160rpx;
+  height: 160rpx;
+  margin: 20rpx;
+  border-radius: 5rpx;
+}
+
+.order-list .item .msg {
+  width: 360rpx;
+  height: 200rpx;
+  padding-top: 30rpx;
+}
+
+.order-list .item .msg .class {
+  height: 80rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 80rpx;
+}
+
+.order-list .item .msg .detail {
+  height: 120rpx;
+  font-size: 25rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /*重点，不能用block等其他*/
+  -webkit-line-clamp: 2;
+  /*重点IE和火狐不支持*/
+  -webkit-box-orient: vertical;
+  /*重点*/
+}
+
+.order-list .item .right {
+  width: 190rpx;
+  text-align: center;
+}
+
+.order-list .item .right .num {
+  height: 100rpx;
+  line-height: 160rpx;
+  color: #80848f;
+}
+
+.order-list .item .right .money {
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #ff9900;
+}
+
+.order-detail .all-num {
+  font-size: 30rpx;
+  padding-left: 30rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+
+.order-detail .all-num span {
+  float: right;
+  padding-right: 40rpx;
+}
+
+.icon-place {
+  width: 50rpx;
+  height: 50rpx;
+}

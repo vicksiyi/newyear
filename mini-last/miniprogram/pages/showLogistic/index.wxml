@@ -1,2 +1,2 @@
 <!--pages/showLogistic/index.wxml-->
-<text>pages/showLogistic/index.wxml</text>
+<navigator url="plugin://kdPlugin/index?num=SF1141900154711&appName=虎虎春联购">跳转</navigator>

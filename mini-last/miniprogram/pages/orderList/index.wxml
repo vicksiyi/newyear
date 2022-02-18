@@ -57,7 +57,7 @@
         </view>
       </view>
       <view class="right">
-        <view>查看详细</view>
+        <view bindtap="navLogistic">查看详细</view>
       </view>
     </view>
   </view>

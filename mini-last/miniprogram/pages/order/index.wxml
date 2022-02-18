@@ -1,2 +1,50 @@
 <!--pages/order/index.wxml-->
-<text>pages/order/index.wxml</text>
+<view class="top">
+  <view class="icon">
+    <image src="../../images/icon/car.png"></image>
+  </view>
+  <view class="detail">
+    <view class="status">未发货</view>
+    <view class="msg">你的订单正在处理中...</view>
+  </view>
+  <view class="action">
+    <view bindtap="showDetail">查看详情</view>
+  </view>
+</view>
+<i-cell-group>
+  <i-cell title="约翰" label="官渡二路129号广东石油化工学院">
+    <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
+    <view slot="footer" class="mobile">13338888888</view>
+  </i-cell>
+</i-cell-group>
+<view class="order-detail">
+  <i-panel title="订单详情">
+    <view class="order-list">
+      <view wx:for="{{[1,2,3,4]}}" class="item">
+        <view class="left">
+          <image src="https://i.loli.net/2017/08/21/599a521472424.jpg"></image>
+        </view>
+        <view class="msg">
+          <view class="class">盒联1.1m</view>
+          <view class="detail">
+            上联:春夏秋冬行好运
+            下联:东西南北遇贵人
+            横批:出入平安
+          </view>
+        </view>
+        <view class="right">
+          <view class="num">X 2</view>
+          <view class="money">
+            ￥ 11.5
+          </view>
+        </view>
+      </view>
+    </view>
+  </i-panel>
+  <view class="all-num">
+    总计: <span>￥114.5</span>
+  </view>
+</view>
+<i-input value="{{ orderDetail }}" title="订单信息" disabled />
+<i-input value="{{ orderNum }}" title="订单号码" disabled />
+<i-input value="{{ orderTime }}" title="订单时间" disabled />

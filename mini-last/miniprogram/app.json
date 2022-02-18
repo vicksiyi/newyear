@@ -1,18 +1,17 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/order/index",
+    "pages/orderList/index",
     "pages/orderDetail/index",
     "pages/orderConfirm/index",
     "pages/address/index",
     "pages/mine/index",
     "pages/shopping/index",
-    "pages/orderList/index",
     "pages/home/index",
     "pages/login/index",
-    "pages/order/index",
     "pages/comsumption/index",
-    "pages/logistic/index",
-    "pages/showLogistic/index"
+    "pages/logistic/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -50,6 +49,10 @@
     "routePlan": {
       "version": "1.0.18",
       "provider": "wx50b5593e81dd937a"
+    },
+    "kdPlugin": {
+      "version": "1.1.2",
+      "provider": "wx6885acbedba59c14"
     }
   },
   "permission": {
