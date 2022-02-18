@@ -1,1 +1,64 @@
 /* pages/address/index.wxss */
+.img {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.num {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background: #D8322E;
+  color: #fff;
+  line-height: 50rpx;
+  text-align: center;
+}
+
+.footer span {
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 22rpx;
+  padding-right: 20rpx;
+}
+
+.add {
+  width: 100%;
+  /* border-radius: 5rpx; */
+  text-align: center;
+  height: 80rpx;
+  background: #D8322E;
+  line-height: 80rpx;
+  color: #fff;
+  font-size: 30rpx;
+  position: fixed;
+  bottom: 0;
+  /* margin-left: 5rpx; */
+  /* margin-bottom: 5rpx; */
+}
+
+.click {
+  opacity: 0.5;
+}
+
+.pop-up {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, .5);
+  z-index: 2;
+}
+
+.pop-up .form {
+  width: 600rpx;
+  padding: 30rpx;
+  background: #fff;
+  margin: 50% auto;
+}
+
+.pop-up-add {
+  width: 300rpx;
+  position: static;
+  margin: 30rpx auto;
+}

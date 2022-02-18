@@ -1,4 +1,10 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "i-cell-group": "../../dist/cell-group/index",
+    "i-cell": "../../dist/cell/index",
+    "i-button": "../../dist/button/index",
+    "i-icon": "../../dist/icon/index",
+    "i-input": "../../dist/input/index"
+  },
   "navigationBarTitleText": "地址管理"
 }

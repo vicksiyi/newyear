@@ -1,2 +1,27 @@
 <!--pages/address/index.wxml-->
-<text>pages/address/index.wxml</text>
+<i-cell-group>
+  <i-cell wx:for="{{[1,2,3,4]}}" title="约翰" label="官渡二路129号广东石油化工学院" only-tap-footer>
+    <view style="background:{{index == 2 ? '#ff9900':''}};" slot="icon" class="num">
+      {{index == 2 ? '默':index + 1}}
+    </view>
+    <view class="footer" slot="footer">
+      <span>13338888888</span>
+      <image class="img" src="../../images/icon/edit.png"></image>
+    </view>
+  </i-cell>
+</i-cell-group>
+<view wx:if="{{visible}}" bindtap="handleClick" class="pop-up">
+  <view class="form">
+    <i-panel title="基础用法">
+      <i-input value="{{ address.name }}" title="收货人" placeholder="名字" />
+      <i-input value="{{ address.mobile }}" type="number" title="联系电话" placeholder="请输入手机号" />
+      <i-input value="{{ address.address }}" type="textarea" title="详细地址" placeholder="请输入详细地址(最多50字)" maxlength="50" />
+    </i-panel>
+    <view class="add pop-up-add" hover-class="click">
+      添加地址
+    </view>
+  </view>
+</view>
+<view class="add" bindtap="handleClick" hover-class="click">
+  <i-icon type="add" />添加收货地址
+</view>

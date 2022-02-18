@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/orderConfirm/index",
     "pages/index/index",
+    "pages/orderDetail/index",
+    "pages/orderConfirm/index",
+    "pages/address/index",
     "pages/mine/index",
     "pages/shopping/index",
     "pages/orderList/index",
@@ -9,8 +11,6 @@
     "pages/login/index",
     "pages/order/index",
     "pages/comsumption/index",
-    "pages/address/index",
-    "pages/orderDetail/index",
     "pages/logistic/index",
     "pages/showLogistic/index"
   ],

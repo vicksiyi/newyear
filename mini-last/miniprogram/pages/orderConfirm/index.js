@@ -81,5 +81,10 @@ Page({
     this.setData({
       currentWordNumber: len //当前字数 
     })
+  },
+  selectDone: function () {
+    wx.navigateTo({
+      url: '../orderDetail/index',
+    })
   }
 })

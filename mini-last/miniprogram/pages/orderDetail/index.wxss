@@ -1,1 +1,136 @@
 /* pages/orderDetail/index.wxss */
+.card {
+  width: 720rpx;
+  border-radius: 10rpx;
+  background: #f8f8f9;
+  height: 240rpx;
+  margin: 20rpx auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.card .left {
+  width: 100rpx;
+  height: 200rpx;
+  background: #D8322E;
+  color: #fff;
+  font-size: 18px;
+  margin: 20rpx;
+  border-radius: 5rpx;
+  text-align: center;
+}
+
+.card .left view {
+  height: 66rpx;
+  line-height: 66rpx;
+}
+
+.card .right {
+  padding: 20rpx;
+}
+
+.card .right .num {
+  color: #D8322E;
+  font-size: 70rpx;
+  font-weight: 400;
+}
+
+.card .right .msg {
+  font-size: 22rpx;
+  color: #80848f;
+  margin-top: 10rpx;
+}
+.card .right .bottom{
+  font-size: 26rpx;
+  margin-top: 20rpx;
+  color: #495060;
+}
+
+.order-list {
+  width: 720rpx;
+  margin: auto;
+  height: 400rpx;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.order-list::-webkit-scrollbar {
+  display: none;
+}
+
+.order-list .item {
+  display: flex;
+  flex-direction: row;
+}
+
+.order-list .item .left {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.order-list .item .left image {
+  width: 160rpx;
+  height: 160rpx;
+  margin: 20rpx;
+  border-radius: 5rpx;
+}
+
+.order-list .item .msg {
+  width: 360rpx;
+  height: 200rpx;
+  padding-top: 30rpx;
+}
+
+.order-list .item .msg .class {
+  height: 80rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 80rpx;
+}
+
+.order-list .item .msg .detail {
+  height: 120rpx;
+  font-size: 25rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /*重点，不能用block等其他*/
+  -webkit-line-clamp: 2;
+  /*重点IE和火狐不支持*/
+  -webkit-box-orient: vertical;
+  /*重点*/
+}
+
+.order-list .item .right {
+  width: 190rpx;
+  text-align: center;
+}
+
+.order-list .item .right .num {
+  height: 100rpx;
+  line-height: 160rpx;
+  color: #80848f;
+}
+
+.order-list .item .right .money {
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #ff9900;
+}
+
+.order-detail .all-num {
+  font-size: 30rpx;
+  padding-left: 30rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+
+.order-detail .all-num span {
+  float: right;
+  padding-right: 40rpx;
+}
+.icon-place {
+  width: 50rpx;
+  height: 50rpx;
+}

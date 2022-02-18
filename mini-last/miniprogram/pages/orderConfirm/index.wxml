@@ -23,7 +23,7 @@
         <!-- 到店自取 -->
         <view wx:if="{{current == 'tab1'}}" class="map" bindtap="navigation">
           <i-cell-group>
-            <i-cell title="开始导航" is-link url="/pages/dashboard/index" only-tap-footer>
+            <i-cell title="开始导航" is-link only-tap-footer>
               <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
             </i-cell>
           </i-cell-group>
