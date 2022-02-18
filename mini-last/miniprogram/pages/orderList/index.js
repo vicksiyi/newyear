@@ -18,5 +18,10 @@ Page({
     wx.navigateTo({
       url: 'plugin://kdPlugin/index?num=SF1141900154711&appName=虎虎春联购',
     })
+  },
+  show:function(){
+    wx.navigateTo({
+      url: '../orderDetail/index',
+    })
   }
 })

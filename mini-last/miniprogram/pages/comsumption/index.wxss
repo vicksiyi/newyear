@@ -1,1 +1,34 @@
 /* pages/comsumption/index.wxss */
+.lists {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+
+.lists::-webkit-scrollbar {
+  display: none;
+}
+
+.lists .item {
+  display: flex;
+  flex-direction: row;
+  height: 100rpx;
+  line-height: 100rpx;
+  /* padding: 20rpx; */
+  width: 720rpx;
+  margin: 20rpx auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
+}
+
+.lists .item .msg {
+  width: 520rpx;
+  padding-left: 20rpx;
+}
+
+.lists .item .money {
+  color: #D8322E;
+  float: right;
+  width: 200rpx;
+  text-align: right;
+  padding-right: 50rpx;
+}

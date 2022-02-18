@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "i-tabs": "../../dist/tabs/index",
+    "i-tab": "../../dist/tab/index"
+  },
   "navigationBarTitleText": "消费记录"
 }

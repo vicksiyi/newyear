@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/comsumption/index",
     "pages/order/index",
     "pages/orderList/index",
     "pages/orderDetail/index",
@@ -10,7 +11,6 @@
     "pages/shopping/index",
     "pages/home/index",
     "pages/login/index",
-    "pages/comsumption/index",
     "pages/logistic/index"
   ],
   "window": {

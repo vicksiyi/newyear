@@ -1,2 +1,19 @@
 <!--pages/comsumption/index.wxml-->
-<text>pages/comsumption/index.wxml</text>
+<i-tabs current="{{ current }}" color="#D8322E" bindchange="handleChange">
+  <i-tab key="tab1" title="到店自取"></i-tab>
+  <i-tab key="tab2" title="快递派送"></i-tab>
+</i-tabs>
+<view class="lists" style="height: {{height}}px;">
+  <view wx:if="{{current == 'tab1'}}">
+    <view wx:for="{{[1,2,3,4,5]}}" bindtap="navOrderDetail" class="item">
+      <view class="msg">消费 2022-01-03 16：51：25</view>
+      <view class="money">￥129</view>
+    </view>
+  </view>
+  <view wx:else>
+    <view wx:for="{{[1,2]}}" bindtap="navOrder" class="item">
+      <view class="msg">消费 2022-01-03 16：51：25</view>
+      <view class="money">￥129</view>
+    </view>
+  </view>
+</view>
