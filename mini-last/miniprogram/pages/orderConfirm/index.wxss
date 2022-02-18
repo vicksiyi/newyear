@@ -1,1 +1,188 @@
 /* pages/orderConfirm/index.wxss */
+.select-tag {
+  width: 100%;
+  /* border: 1rpx solid #e9eaec;
+  border-bottom: none; */
+}
+
+.selected {
+  width: 100%;
+  height: 100rpx;
+  position: fixed;
+  bottom: 0;
+  background: #1c2438;
+  display: flex;
+  flex-direction: row;
+  z-index: 1000;
+}
+
+.selected .card {
+  width: 490rpx;
+  display: flex;
+  flex-direction: row;
+}
+
+.selected .card .icon {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.selected .card .icon-margin {
+  margin: 10rpx;
+}
+
+.selected .card .money {
+  line-height: 100rpx;
+  color: #D8322E;
+  font-size: 40rpx;
+  padding-left: 30rpx;
+}
+
+.selected .done {
+  width: 260rpx;
+  background: #D8322E;
+  text-align: center;
+  line-height: 100rpx;
+  color: #fff;
+}
+
+.content {
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.content .icon-place {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.order-list {
+  width: 720rpx;
+  margin: auto;
+  height: 400rpx;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.order-list::-webkit-scrollbar {
+  display: none;
+}
+
+.order-list .item {
+  display: flex;
+  flex-direction: row;
+}
+
+.order-list .item .left {
+  width: 200rpx;
+  height: 200rpx;
+}
+
+.order-list .item .left image {
+  width: 160rpx;
+  height: 160rpx;
+  margin: 20rpx;
+  border-radius: 5rpx;
+}
+
+.order-list .item .msg {
+  width: 360rpx;
+  height: 200rpx;
+  padding-top: 30rpx;
+}
+
+.order-list .item .msg .class {
+  height: 80rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 80rpx;
+}
+
+.order-list .item .msg .detail {
+  height: 120rpx;
+  font-size: 25rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  /*重点，不能用block等其他*/
+  -webkit-line-clamp: 2;
+  /*重点IE和火狐不支持*/
+  -webkit-box-orient: vertical;
+  /*重点*/
+}
+
+.order-list .item .right {
+  width: 190rpx;
+  text-align: center;
+}
+
+.order-list .item .right .num {
+  height: 100rpx;
+  line-height: 160rpx;
+  color: #80848f;
+}
+
+.order-list .item .right .money {
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #ff9900;
+}
+
+.order-detail .all-num {
+  font-size: 30rpx;
+  padding-left: 30rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+}
+
+.order-detail .all-num span {
+  float: right;
+  padding-right: 40rpx;
+}
+
+.contant-text {
+  border-top: 1px solid rgb(247, 247, 247);
+  width: 100%;
+  margin: 0 auto;
+  background-color: #ffff;
+}
+
+textarea {
+  min-height: 500rpx;
+  max-height: 500rpx;
+  padding: 10rpx 10rpx;
+  font-size: 16px;
+  width: 94%;
+  margin-left: 3%;
+  margin-top: 15px;
+}
+
+.tips {
+  width: 96%;
+  margin-left: 2%;
+  height: 45px;
+  color: rgba(136, 136, 136, 1);
+  font-size: 14px;
+  margin-top: 15px;
+  text-align: left;
+  font-family: PingFangSC-regular;
+}
+
+.minWord {
+  color: red;
+  font-size: 14px;
+  position: absolute;
+  top: 30px;
+}
+
+.currentWordNumber {
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 14px;
+  float: right;
+  margin-right: 15rpx;
+  color: rgba(136, 136, 136, 1);
+  margin-bottom: 10rpx;
+}

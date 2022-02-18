@@ -1,1 +1,0 @@
-<canvas type="2d" id="posterCanvas" bindlongtap="exportPoster" style="width:{{canvasWidth +'px'}}; height:{{canvasHeight +'px'}}"></canvas>

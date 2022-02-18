@@ -1,2 +1,84 @@
 <!--pages/orderConfirm/index.wxml-->
-<text>pages/orderConfirm/index.wxml</text>
+<view class="selected">
+  <view class="card">
+    <view class="money">
+      合计：
+      <i-icon size="30" color="#D8322E" type="transaction_fill" />
+      22.2元
+    </view>
+  </view>
+  <view class="done" bindtap="selectDone">支付</view>
+</view>
+<i-panel title="请确认你的订单">
+  <view class="order">
+    <!-- 选择 -->
+    <view class="select-tag">
+      <i-tabs current="{{ current }}" color="#D8322E" bindchange="handleChange">
+        <i-tab key="tab1" title="到店自取"></i-tab>
+        <i-tab key="tab2" title="快递派送"></i-tab>
+      </i-tabs>
+    </view>
+    <view class="content" style="height: {{height}}px;">
+      <view class="invite">
+        <!-- 到店自取 -->
+        <view wx:if="{{current == 'tab1'}}" class="map" bindtap="navigation">
+          <i-cell-group>
+            <i-cell title="开始导航" is-link url="/pages/dashboard/index" only-tap-footer>
+              <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
+            </i-cell>
+          </i-cell-group>
+          <map slot="footer" id="myMap" style="width: 700rpx;margin: auto; height: 300rpx;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" covers="{{covers}}" show-location></map>
+        </view>
+        <!-- 快递派送 -->
+        <view wx:else>
+          <i-cell-group>
+            <i-cell wx:if="{{address}}" title="约翰" label="官渡二路129号广东石油化工学院" is-link url="/pages/address/index">
+              <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
+              <view slot="footer" class="mobile">13338888888</view>
+            </i-cell>
+            <i-cell wx:else title="请先选择地址" is-link url="/pages/address/index">
+              <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
+              <view slot="footer" class="mobile">选择地址</view>
+            </i-cell>
+          </i-cell-group>
+        </view>
+        <view class="order-detail">
+          <i-panel title="订单详情">
+            <view class="order-list">
+              <view wx:for="{{[1,2,3,4]}}" class="item">
+                <view class="left">
+                  <image src="https://i.loli.net/2017/08/21/599a521472424.jpg"></image>
+                </view>
+                <view class="msg">
+                  <view class="class">盒联1.1m</view>
+                  <view class="detail">
+                    上联:春夏秋冬行好运
+                    下联:东西南北遇贵人
+                    横批:出入平安
+                  </view>
+                </view>
+                <view class="right">
+                  <view class="num">X 2</view>
+                  <view class="money">
+                    ￥ 11.5
+                  </view>
+                </view>
+              </view>
+            </view>
+          </i-panel>
+          <view class="all-num">
+            总计: <span>￥114.5</span>
+          </view>
+        </view>
+        <i-panel title="备注">
+          <view class="contant-text">
+            <view class="currentWordNumber">{{currentWordNumber|0}}/{{max}}</view>
+            <textarea name="bindTextAreaBlur" placeholder="暂无备注" bindblur="getText" bindinput="getValueLength" show-confirm-bar='true' value="{{editText}}" bindconfirm="getText" maxlength="{{max}}" minlength="{{min}}">
+      <text class="minWord">{{minWord}}</text>
+     </textarea>
+          </view>
+        </i-panel>
+      </view>
+    </view>
+  </view>
+</i-panel>

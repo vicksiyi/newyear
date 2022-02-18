@@ -2,7 +2,7 @@
 <!-- 底部选择 -->
 <view class="selected">
   <view class="card">
-    <view class="icon icon-margin">
+    <view class="icon icon-margin" bindtap="close">
       <image class="icon" src="../../images/icon/card.png"></image>
     </view>
     <view class="money">
@@ -10,10 +10,10 @@
       22.2元
     </view>
   </view>
-  <view class="done">选好了</view>
+  <view class="done" bindtap="selectDone">选好了</view>
 </view>
 <!-- 购物车 -->
-<view class="bg">
+<view bindtap="close" wx:if="{{show}}" class="bg">
   <view class="card-done">
     <view class="top">
       <view class="tag"></view>

@@ -28,7 +28,8 @@
       "disablePlugins": [],
       "outputPath": ""
     },
-    "useIsolateContext": true,
+    "useIsolateContext": false,
+    "userConfirmedUseIsolateContext": true,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
@@ -37,8 +38,7 @@
     "minifyWXML": true,
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
-    "ignoreUploadUnusedFiles": true,
-    "userConfirmedUseIsolateContext": true
+    "ignoreUploadUnusedFiles": true
   },
   "appid": "wx6ea4050fdf8acfb1",
   "projectname": "mini-last",

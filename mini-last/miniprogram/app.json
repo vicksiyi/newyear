@@ -1,20 +1,18 @@
 {
   "pages": [
-    "pages/shopping/index",
+    "pages/orderConfirm/index",
+    "pages/index/index",
     "pages/mine/index",
+    "pages/shopping/index",
     "pages/orderList/index",
     "pages/home/index",
-    "pages/index/index",
     "pages/login/index",
     "pages/order/index",
     "pages/comsumption/index",
-    "pages/orderConfirm/index",
     "pages/address/index",
     "pages/orderDetail/index",
     "pages/logistic/index",
-    "pages/showLogistic/index",
-    "pages/blessing/blessing",
-    "pages/lucky-turntable/lucky-turntable"
+    "pages/showLogistic/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -47,6 +45,17 @@
         "text": "我的"
       }
     ]
+  },
+  "plugins": {
+    "routePlan": {
+      "version": "1.0.18",
+      "provider": "wx50b5593e81dd937a"
+    }
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序定位"
+    }
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
