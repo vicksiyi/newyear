@@ -58,13 +58,19 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-card style="height: 220px; margin-top: 20px"></el-card>
+      <el-card style="height: 220px; margin-top: 20px">
+        <div style="height: 220px" ref="echarts"></div>
+      </el-card>
       <el-row style="margin-top: 20px">
         <el-col :span="12">
-          <el-card style="height: 200px"></el-card>
+          <el-card style="height: 240px">
+            <div style="height: 220px" ref="userEcharts"></div>
+          </el-card>
         </el-col>
         <el-col :span="12">
-          <el-card style="height: 200px"></el-card>
+          <el-card style="height: 240px">
+            <div style="height: 220px" ref="videoEcharts"></div>
+          </el-card>
         </el-col>
       </el-row>
     </el-col>
@@ -72,86 +78,15 @@
 </template>
 
 <script>
+import { getData } from "../../api/data";
+import * as echarts from "echarts";
 export default {
   name: "home",
   data: function () {
     return {
       avatarUrl:
         "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-      tableData: [
-        {
-          type: "盒联1.1m",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "盒联1.3m",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "盒联1.6m",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "盒联2.2m",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "盒联3.0m",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "二开直联",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "二开半直联",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "三开直联",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "四开直联",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "五开直联",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "红包",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-        {
-          type: "中国结",
-          day: "100",
-          month: "1000",
-          all: "10000",
-        },
-      ],
+      tableData: [],
       countData: [
         {
           name: "今日支付订单",
@@ -194,14 +129,112 @@ export default {
   },
   methods: {},
   mounted: function () {
-    this.$http
-      .get("/user?ID=1234")
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    getData().then((res) => {
+      let { code, data } = res.data;
+      if (code == 20000) {
+        this.tableData = data.tableData;
+        let order = data.orderData;
+        let xData = order.date;
+        let keyArray = Object.keys(order.data[0]);
+        let series = [];
+        keyArray.forEach((key) => {
+          series.push({
+            name: key,
+            data: order.data.map((item) => item[key]),
+            type: "line",
+          });
+        });
+        let option = {
+          xAxis: {
+            data: xData,
+          },
+          yAxis: {},
+          legend: {
+            data: keyArray,
+          },
+          series,
+        };
+        const E = echarts.init(this.$refs.echarts);
+        E.setOption(option);
+
+        const userOption = {
+          legend: {
+            // 图例颜色
+            textStyle: {
+              color: "#333",
+            },
+          },
+          grid: {
+            left: "20%",
+          },
+          // 提示框
+          tooltip: {
+            trigger: "axis",
+          },
+          xAxis: {
+            type: "category", // 类目轴
+            data: data.userData.map((item) => item.date),
+            axisLine: {
+              lineStyle: {
+                color: "#17b3a3",
+              },
+            },
+            axisLabel: {
+              interval: 0,
+              color: "#333",
+            },
+          },
+          yAxis: [
+            {
+              type: "value",
+              axisLine: {
+                lineStyle: {
+                  color: "#17b3a3",
+                },
+              },
+            },
+          ],
+          color: ["#2ec7c9", "#b6a2de"],
+          series: [
+            {
+              name: "新增用户",
+              data: data.userData.map((item) => item.new),
+              type: "bar",
+            },
+            {
+              name: "活跃用户",
+              data: data.userData.map((item) => item.active),
+              type: "bar",
+            },
+          ],
+        };
+        const userE = echarts.init(this.$refs.userEcharts);
+        userE.setOption(userOption);
+
+        const videoOption = {
+          tooltip: {
+            trigger: "item",
+          },
+          color: [
+            "#0f78f4",
+            "#dd536b",
+            "#9462e5",
+            "#a6a6a6",
+            "#e1bb22",
+            "#39c362",
+            "#3eb1cf",
+          ],
+          series: [
+            {
+              data: data.videoData,
+              type: "pie",
+            },
+          ],
+        };
+        const V = echarts.init(this.$refs.videoEcharts);
+        V.setOption(videoOption);
+      }
+    });
   },
 };
 </script>

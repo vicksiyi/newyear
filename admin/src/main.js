@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store/index';
 import http from 'axios';
+import '@/api/mock.js';
 
 Vue.config.productionTip = false
 
