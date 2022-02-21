@@ -58,3 +58,7 @@ table {
 p {
     word-wrap: break-word
 }
+
+html{
+    overflow-x: hidden;
+}

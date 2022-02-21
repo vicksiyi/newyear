@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/index';
+import http from 'axios';
 
 Vue.config.productionTip = false
 
@@ -12,7 +13,8 @@ import {
   Button, Row, Container, Main, Footer, Header,
   Dropdown, DropdownMenu, DropdownItem, Avatar, Form,
   FormItem, Input, Col, Menu, Submenu, MenuItem,
-  MenuItemGroup, Aside,
+  MenuItemGroup, Aside, Card, Table,
+  TableColumn,
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Row);
@@ -33,6 +35,11 @@ Vue.use(Submenu);
 Vue.use(MenuItem);
 Vue.use(MenuItemGroup);
 Vue.use(Aside);
+Vue.use(Card);
+Vue.use(Table);
+Vue.use(TableColumn);
+
+Vue.prototype.$http = http;
 
 /* eslint-disable no-new */
 new Vue({

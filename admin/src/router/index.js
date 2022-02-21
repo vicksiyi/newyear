@@ -20,22 +20,22 @@ export default new Router({
         },
         {
           path: '/invite',
-          name:'invite',
+          name: 'invite',
           component: () => import('@/views/order/invite')
         },
         {
           path: '/express',
-          name:'express',
+          name: 'express',
           component: () => import('@/views/order/express')
         },
         {
           path: '/item',
-          name:'item',
+          name: 'item',
           component: () => import('@/views/item/item')
         },
         {
           path: '/system',
-          name:'system',
+          name: 'system',
           component: () => import('@/views/system/system')
         }
       ]
@@ -44,11 +44,10 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '*',    // 此处需特别注意至于最底部
+      redirect: '/login'
     }
-    // ,
-    // {
-    //   path: '*',    // 此处需特别注意至于最底部
-    //   redirect: '/login'
-    // }
   ]
 })
