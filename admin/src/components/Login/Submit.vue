@@ -5,12 +5,11 @@
         <img src="../../assets/logo.png" alt="" srcset="" />
         <div class="logo-righ">
           <div class="logo-first">
-            <span>虎虎生威春联购管理系统</span>
+            <span>虎虎生威春联购Web后台</span>
           </div>
           <div class="logo-second">
             <span
-              >Huhu Shengwei Spring Festival couplet purchase management
-              system</span
+              >Huhu Shengwei Spring Festival couplet shopping Web background</span
             >
           </div>
         </div>

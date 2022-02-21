@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/index';
 
 Vue.config.productionTip = false
 
@@ -10,7 +11,8 @@ Vue.config.productionTip = false
 import {
   Button, Row, Container, Main, Footer, Header,
   Dropdown, DropdownMenu, DropdownItem, Avatar, Form,
-  FormItem, Input
+  FormItem, Input, Col, Menu, Submenu, MenuItem,
+  MenuItemGroup, Aside,
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Row);
@@ -25,11 +27,18 @@ Vue.use(Avatar);
 Vue.use(Form);
 Vue.use(FormItem);
 Vue.use(Input);
+Vue.use(Col);
+Vue.use(Menu);
+Vue.use(Submenu);
+Vue.use(MenuItem);
+Vue.use(MenuItemGroup);
+Vue.use(Aside);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

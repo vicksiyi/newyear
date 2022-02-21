@@ -1,15 +1,14 @@
 <template>
   <div class="header">
     <div class="logo">
-      <img src="../assets/logo.png" alt="" srcset="" />
+      <img @click="handleMenu" src="../assets/logo.png" alt="" srcset="" />
       <div class="logo-righ">
         <div class="logo-first">
-          <span>虎虎生威春联购管理系统</span>
+          <span>虎虎生威春联购Web后台</span>
         </div>
         <div class="logo-second">
           <span
-            >Huhu Shengwei Spring Festival couplet purchase management
-            system</span
+            >Huhu Shengwei Spring Festival couplet shopping Web background</span
           >
         </div>
       </div>
@@ -50,6 +49,11 @@ export default {
         this.$router.push("/data/manage");
       } else this.$router.push("/login");
     },
+    handleMenu: function () {
+      if (!this.isLogin) {
+        this.$store.commit("collapseMenu");
+      }
+    },
   },
   mounted: function () {},
 };
@@ -61,8 +65,8 @@ export default {
   width: 100%;
   height: 60px;
   background: #d8322e;
-  border-bottom: 1px solid rgb(93, 178, 218);
-  box-shadow: 0 2px 12px 0 rgba(221, 71, 71, 0.1);
+  /* border-bottom: 1px solid rgb(93, 178, 218); */
+  box-shadow: 0 2px 12px 0 rgba(255, 255, 255, 0.1);
 }
 .logo {
   float: left;
