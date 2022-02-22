@@ -59,17 +59,29 @@
         </el-col>
       </el-row>
       <el-card style="height: 220px; margin-top: 20px">
-        <div style="height: 220px" ref="echarts"></div>
+        <Echart
+          :isItemType="true"
+          v-if="isChart"
+          :chartData="echartData.orders"
+        ></Echart>
       </el-card>
       <el-row style="margin-top: 20px">
         <el-col :span="12">
           <el-card style="height: 240px">
-            <div style="height: 220px" ref="userEcharts"></div>
+            <Echart
+              :isUser="true"
+              v-if="isChart"
+              :chartData="echartData.users"
+            ></Echart>
           </el-card>
         </el-col>
         <el-col :span="12">
           <el-card style="height: 240px">
-            <div style="height: 220px" ref="videoEcharts"></div>
+            <Echart
+              :isVideo="true"
+              v-if="isChart"
+              :chartData="echartData.videos"
+            ></Echart>
           </el-card>
         </el-col>
       </el-row>
@@ -79,9 +91,12 @@
 
 <script>
 import { getData } from "../../api/data";
-import * as echarts from "echarts";
+import Echart from "@/components/Echart";
 export default {
   name: "home",
+  components: {
+    Echart,
+  },
   data: function () {
     return {
       avatarUrl:
@@ -125,116 +140,67 @@ export default {
           color: "#E6A23C",
         },
       ],
+      echartData: {
+        orders: {},
+        users: {},
+        videos: {},
+      },
+      isChart: false,
     };
   },
-  methods: {},
-  mounted: function () {
-    getData().then((res) => {
-      let { code, data } = res.data;
-      if (code == 20000) {
-        this.tableData = data.tableData;
-        let order = data.orderData;
-        let xData = order.date;
-        let keyArray = Object.keys(order.data[0]);
-        let series = [];
-        keyArray.forEach((key) => {
-          series.push({
-            name: key,
-            data: order.data.map((item) => item[key]),
-            type: "line",
-          });
+  methods: {
+    getChartData: function () {
+      return new Promise((resolve, reject) => {
+        getData().then((res) => {
+          resolve(res);
         });
-        let option = {
-          xAxis: {
-            data: xData,
-          },
-          yAxis: {},
-          legend: {
-            data: keyArray,
-          },
-          series,
-        };
-        const E = echarts.init(this.$refs.echarts);
-        E.setOption(option);
+      });
+    },
+  },
+  created: async function () {
+    let res = await this.getChartData();
+    let { code, data } = res.data;
+    if (code == 20000) {
+      this.tableData = data.tableData;
+      let order = data.orderData;
+      let xData = order.date;
+      let keyArray = Object.keys(order.data[0]);
+      let series = [];
+      keyArray.forEach((key) => {
+        series.push({
+          name: key,
+          data: order.data.map((item) => item[key]),
+          type: "line",
+        });
+      });
+      // 生成折线图
+      this.echartData.orders.xData = xData;
+      this.echartData.orders.lData = keyArray;
+      this.echartData.orders.series = series;
+      // 生成柱形图
+      this.echartData.users.xData = data.userData.map((item) => item.date);
+      this.echartData.users.series = [
+        {
+          name: "新增用户",
+          data: data.userData.map((item) => item.new),
+          type: "bar",
+        },
+        {
+          name: "活跃用户",
+          data: data.userData.map((item) => item.active),
+          type: "bar",
+        },
+      ];
 
-        const userOption = {
-          legend: {
-            // 图例颜色
-            textStyle: {
-              color: "#333",
-            },
-          },
-          grid: {
-            left: "20%",
-          },
-          // 提示框
-          tooltip: {
-            trigger: "axis",
-          },
-          xAxis: {
-            type: "category", // 类目轴
-            data: data.userData.map((item) => item.date),
-            axisLine: {
-              lineStyle: {
-                color: "#17b3a3",
-              },
-            },
-            axisLabel: {
-              interval: 0,
-              color: "#333",
-            },
-          },
-          yAxis: [
-            {
-              type: "value",
-              axisLine: {
-                lineStyle: {
-                  color: "#17b3a3",
-                },
-              },
-            },
-          ],
-          color: ["#2ec7c9", "#b6a2de"],
-          series: [
-            {
-              name: "新增用户",
-              data: data.userData.map((item) => item.new),
-              type: "bar",
-            },
-            {
-              name: "活跃用户",
-              data: data.userData.map((item) => item.active),
-              type: "bar",
-            },
-          ],
-        };
-        const userE = echarts.init(this.$refs.userEcharts);
-        userE.setOption(userOption);
-
-        const videoOption = {
-          tooltip: {
-            trigger: "item",
-          },
-          color: [
-            "#0f78f4",
-            "#dd536b",
-            "#9462e5",
-            "#a6a6a6",
-            "#e1bb22",
-            "#39c362",
-            "#3eb1cf",
-          ],
-          series: [
-            {
-              data: data.videoData,
-              type: "pie",
-            },
-          ],
-        };
-        const V = echarts.init(this.$refs.videoEcharts);
-        V.setOption(videoOption);
-      }
-    });
+      // 生成饼图
+      this.echartData.videos.series = [
+        {
+          data: data.videoData,
+          type: "pie",
+        },
+      ];
+    }
+    this.isChart = true;
   },
 };
 </script>
