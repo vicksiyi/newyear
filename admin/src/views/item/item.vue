@@ -75,7 +75,7 @@
               >添加商品</el-button
             >
           </el-col>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-select v-model="value" clearable placeholder="类别筛选">
               <el-option
                 v-for="item in itemType"
@@ -85,6 +85,16 @@
               >
               </el-option>
             </el-select>
+          </el-col>
+          <el-col :span="12">
+            <el-row :gutter="20">
+              <el-col :span="20">
+                <el-input v-model="input" placeholder="请输入搜索名称"></el-input>
+              </el-col>
+              <el-col :span="4">
+                <el-button icon="el-icon-search" circle></el-button>
+              </el-col>
+            </el-row>
           </el-col>
         </el-row>
         <el-card style="margin-top: 20px" shadow="hover">
