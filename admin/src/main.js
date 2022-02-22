@@ -15,7 +15,9 @@ import {
   Dropdown, DropdownMenu, DropdownItem, Avatar, Form,
   FormItem, Input, Col, Menu, Submenu, MenuItem,
   MenuItemGroup, Aside, Card, Table,
-  TableColumn, Breadcrumb, BreadcrumbItem,
+  TableColumn, Breadcrumb, BreadcrumbItem, Tag, Popconfirm,
+  MessageBox, Select, Message, Option, Drawer, Radio, RadioGroup,
+  Upload
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Row);
@@ -41,9 +43,22 @@ Vue.use(Table);
 Vue.use(TableColumn);
 Vue.use(Breadcrumb);
 Vue.use(BreadcrumbItem);
+Vue.use(Tag);
+Vue.use(Popconfirm);
+Vue.use(Select);
+Vue.use(Option);
+Vue.use(Drawer);
+Vue.use(Radio);
+Vue.use(RadioGroup);
+Vue.use(Upload);
 
 Vue.prototype.$http = http;
-
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$prompt = MessageBox.prompt;
+Vue.prototype.$notify = Notification;
+Vue.prototype.$message = Message;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
