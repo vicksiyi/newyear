@@ -75,11 +75,22 @@ export default {
           url: "/item/item",
         },
         {
-          path: "/system",
-          name: "system",
           label: "系统管理",
           icon: "s-tools",
-          url: "/system/system",
+          children: [
+            {
+              path: "/notice",
+              name: "notice",
+              label: "公告管理",
+              url: "/system/notice",
+            },
+            {
+              path: "/page",
+              name: "page",
+              label: "页面管理",
+              url: "/system/page",
+            },
+          ],
         },
       ],
     };

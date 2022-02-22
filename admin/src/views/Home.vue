@@ -10,8 +10,8 @@
               <el-breadcrumb-item
                 v-for="item in tag"
                 :key="item.path"
-                :to="{ path: item.path  }"
-                >{{item.label}}</el-breadcrumb-item
+                :to="{ path: item.path }"
+                >{{ item.label }}</el-breadcrumb-item
               >
             </el-breadcrumb>
           </div>

@@ -34,9 +34,14 @@ export default new Router({
           component: () => import('@/views/item/item')
         },
         {
-          path: '/system',
-          name: 'system',
-          component: () => import('@/views/system/system')
+          path: '/notice',
+          name: 'notice',
+          component: () => import('@/views/system/notice')
+        },
+        {
+          path: '/page',
+          name: 'page',
+          component: () => import('@/views/system/page')
         }
       ]
     },
