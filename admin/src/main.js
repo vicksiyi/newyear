@@ -17,7 +17,8 @@ import {
   MenuItemGroup, Aside, Card, Table,
   TableColumn, Breadcrumb, BreadcrumbItem, Tag, Popconfirm,
   MessageBox, Select, Message, Option, Drawer, Radio, RadioGroup,
-  Upload, Alert, Pagination, DatePicker, TimePicker
+  Upload, Alert, Pagination, DatePicker, TimePicker, Carousel,
+  CarouselItem, Dialog, Descriptions, DescriptionsItem
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Row);
@@ -55,6 +56,11 @@ Vue.use(Alert);
 Vue.use(Pagination);
 Vue.use(DatePicker);
 Vue.use(TimePicker);
+Vue.use(Carousel);
+Vue.use(CarouselItem);
+Vue.use(Dialog);
+Vue.use(Descriptions);
+Vue.use(DescriptionsItem);
 
 Vue.prototype.$http = http;
 Vue.prototype.$msgbox = MessageBox;
