@@ -15,7 +15,7 @@ import {
   Dropdown, DropdownMenu, DropdownItem, Avatar, Form,
   FormItem, Input, Col, Menu, Submenu, MenuItem,
   MenuItemGroup, Aside, Card, Table,
-  TableColumn,
+  TableColumn, Breadcrumb, BreadcrumbItem,
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Row);
@@ -39,6 +39,8 @@ Vue.use(Aside);
 Vue.use(Card);
 Vue.use(Table);
 Vue.use(TableColumn);
+Vue.use(Breadcrumb);
+Vue.use(BreadcrumbItem);
 
 Vue.prototype.$http = http;
 
