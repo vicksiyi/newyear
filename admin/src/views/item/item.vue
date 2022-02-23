@@ -90,7 +90,7 @@
             <el-row :gutter="20">
               <el-col :span="20">
                 <el-input
-                  v-model="input"
+                  v-model="search"
                   placeholder="请输入搜索名称"
                 ></el-input>
               </el-col>
@@ -308,6 +308,7 @@ export default {
         },
       ],
       value: "",
+      search:""
     };
   },
   methods: {
