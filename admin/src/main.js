@@ -18,7 +18,8 @@ import {
   TableColumn, Breadcrumb, BreadcrumbItem, Tag, Popconfirm,
   MessageBox, Select, Message, Option, Drawer, Radio, RadioGroup,
   Upload, Alert, Pagination, DatePicker, TimePicker, Carousel,
-  CarouselItem, Dialog, Descriptions, DescriptionsItem, Image
+  CarouselItem, Dialog, Descriptions, DescriptionsItem, Image,
+  Steps,Step,
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Row);
@@ -62,6 +63,8 @@ Vue.use(Dialog);
 Vue.use(Descriptions);
 Vue.use(DescriptionsItem);
 Vue.use(Image);
+Vue.use(Steps);
+Vue.use(Step);
 
 Vue.prototype.$http = http;
 Vue.prototype.$msgbox = MessageBox;

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
-import Home from '@/views/Home';
 
 Vue.use(Router)
 
@@ -17,6 +16,11 @@ export default new Router({
           path: '/',
           name: 'home',
           component: () => import('@/views/home/home')
+        },
+        {
+          path: '/notpay',
+          name: 'notpay',
+          component: () => import('@/views/order/notpay')
         },
         {
           path: '/invite',
@@ -42,6 +46,11 @@ export default new Router({
           path: '/page',
           name: 'page',
           component: () => import('@/views/system/page')
+        },
+        {
+          path: '/logistic',
+          name: 'logistic',
+          component: () => import('@/views/system/logistic')
         }
       ]
     },

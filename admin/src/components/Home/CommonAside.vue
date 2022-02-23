@@ -52,6 +52,13 @@ export default {
           icon: "s-order",
           children: [
             {
+              path: "/notpay",
+              name: "notpay",
+              label: "未付订单",
+              icon: "user",
+              url: "/order/notpay",
+            },
+            {
               path: "/invite",
               name: "invite",
               label: "到店自取",
@@ -89,6 +96,12 @@ export default {
               name: "page",
               label: "页面管理",
               url: "/system/page",
+            },
+            {
+              path: "/logistic",
+              name: "logistic",
+              label: "物流管理",
+              url: "/system/logistic",
             },
           ],
         },

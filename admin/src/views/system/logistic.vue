@@ -1,12 +1,12 @@
 <template>
   <div>
-    System
+    Logistic
   </div>
 </template>
 
 <script>
 export default {
-  name: "system",
+  name: "Logistic",
 };
 </script>
 

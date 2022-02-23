@@ -9,7 +9,12 @@
       content="上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安"
       imageUrl="https://img0.baidu.com/it/u=1241289850,504782566&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=707"
     ></Item>
-    <el-descriptions style="margin-top:20px;" title="合计">
+    <el-descriptions border style="margin-top: 20px" :column="1" title="备注">
+      <el-descriptions-item label="描述" span="2">
+        <p class="msg">
+          xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+        </p>
+      </el-descriptions-item>
       <el-descriptions-item label="总金额">
         <span class="all-money">￥120</span>
       </el-descriptions-item>
@@ -33,6 +38,9 @@ export default {
   float: right;
   margin-right: 20px;
   font-size: 30px;
-  color: #E6A23C;
+  color: #e6a23c;
+}
+.msg {
+  width: 220px;
 }
 </style>
