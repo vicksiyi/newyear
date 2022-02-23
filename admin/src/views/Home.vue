@@ -51,4 +51,7 @@ export default {
 .tab {
   margin-bottom: 20px;
 }
+.el-table--scrollable-y .el-table__body-wrapper{
+
+}
 </style>

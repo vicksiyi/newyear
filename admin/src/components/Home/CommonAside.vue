@@ -1,6 +1,6 @@
 <template>
   <el-menu
-    default-active="1-4-1"
+    :default-active="1"
     class="el-menu-vertical-demo"
     @open="handleOpen"
     @close="handleClose"
@@ -52,21 +52,21 @@ export default {
           icon: "s-order",
           children: [
             {
-              path: "/notpay",
+              path: "/order/notpay",
               name: "notpay",
               label: "未付订单",
               icon: "user",
               url: "/order/notpay",
             },
             {
-              path: "/invite",
+              path: "/order/invite",
               name: "invite",
               label: "到店自取",
               icon: "user",
               url: "/order/invite",
             },
             {
-              path: "/express",
+              path: "/order/express",
               name: "express",
               label: "快递派送",
               icon: "goods",
@@ -86,22 +86,40 @@ export default {
           icon: "s-tools",
           children: [
             {
-              path: "/notice",
+              path: "/system/notice",
               name: "notice",
               label: "公告管理",
               url: "/system/notice",
             },
             {
-              path: "/page",
+              path: "/system/page",
               name: "page",
               label: "页面管理",
               url: "/system/page",
             },
             {
-              path: "/logistic",
+              path: "/system/logistic",
               name: "logistic",
               label: "物流管理",
               url: "/system/logistic",
+            },
+          ],
+        },
+        {
+          label: "日志管理",
+          icon: "discount",
+          children: [
+            {
+              path: "/logs/login",
+              name: "loginLog",
+              label: "登录日志",
+              url: "/logs/login",
+            },
+            {
+              path: "/logs/manage",
+              name: "manageLog",
+              label: "操作日志",
+              url: "/logs/manage",
             },
           ],
         },
@@ -116,9 +134,7 @@ export default {
       console.log(key, keyPath);
     },
     clickMenu: function (item) {
-      this.$router.push({
-        name: item.name,
-      });
+      this.$router.push(item.path);
       this.$store.commit("selectMenu", item);
     },
   },

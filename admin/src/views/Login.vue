@@ -23,6 +23,19 @@ import Submit from "@/components/Login/Submit";
 export default {
   name: "Login",
   components: { Header, Footer, Submit },
+  methods: {
+    getLocation: function () {
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          resolve(position);
+        });
+      });
+    },
+  },
+  mounted: async function () {
+    let location = await this.getLocation();
+    console.log(location);
+  },
 };
 </script>
 

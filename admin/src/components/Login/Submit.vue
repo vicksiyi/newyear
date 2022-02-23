@@ -9,7 +9,8 @@
           </div>
           <div class="logo-second">
             <span
-              >Huhu Shengwei Spring Festival couplet shopping Web background</span
+              >Huhu Shengwei Spring Festival couplet shopping Web
+              background</span
             >
           </div>
         </div>
@@ -65,7 +66,7 @@ export default {
       console.log(123, formName);
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert("submit!");
+          this.$router.replace("/");
         } else {
           console.log("error submit!!");
           return false;
