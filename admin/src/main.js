@@ -18,7 +18,7 @@ import {
   TableColumn, Breadcrumb, BreadcrumbItem, Tag, Popconfirm,
   MessageBox, Select, Message, Option, Drawer, Radio, RadioGroup,
   Upload, Alert, Pagination, DatePicker, TimePicker, Carousel,
-  CarouselItem, Dialog, Descriptions, DescriptionsItem
+  CarouselItem, Dialog, Descriptions, DescriptionsItem, Image
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Row);
@@ -61,6 +61,7 @@ Vue.use(CarouselItem);
 Vue.use(Dialog);
 Vue.use(Descriptions);
 Vue.use(DescriptionsItem);
+Vue.use(Image);
 
 Vue.prototype.$http = http;
 Vue.prototype.$msgbox = MessageBox;

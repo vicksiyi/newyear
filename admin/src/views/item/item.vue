@@ -89,7 +89,10 @@
           <el-col :span="12">
             <el-row :gutter="20">
               <el-col :span="20">
-                <el-input v-model="input" placeholder="请输入搜索名称"></el-input>
+                <el-input
+                  v-model="input"
+                  placeholder="请输入搜索名称"
+                ></el-input>
               </el-col>
               <el-col :span="4">
                 <el-button icon="el-icon-search" circle></el-button>
@@ -140,7 +143,7 @@
             <el-table-column fixed="right" label="操作" width="200">
               <template>
                 <el-button type="warning" size="mini">编辑</el-button>
-                <el-button type="danger" size="mini">删除</el-button>
+                <el-button type="danger" size="mini">下架</el-button>
               </template>
             </el-table-column>
           </el-table>

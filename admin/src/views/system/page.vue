@@ -21,6 +21,7 @@
                 </el-carousel-item>
               </el-carousel>
             </div>
+            <div class="shopping">开始选购吧!</div>
             <div class="center">
               <div class="item">
                 <img class="item-img" src="../../assets/1.jpg" alt="" />
@@ -93,7 +94,7 @@ export default {
         {
           name: "",
           url: "http://localhost:8080/static/img/swiper.e00c62c.jpg",
-        }
+        },
       ],
       fileList2: [
         {
@@ -168,14 +169,14 @@ export default {
 }
 .phone .content .center .item {
   float: left;
-  width: 70px;
-  height: 70px;
+  width: 68px;
+  height: 68px;
   margin-left: 23px;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 .phone .content .center .item-img {
-  width: 70px;
-  height: 70px;
+  width: 68px;
+  height: 68px;
 }
 .phone .content .bottom {
   width: 100%;
@@ -186,5 +187,15 @@ export default {
   background-repeat: no-repeat;
   background-size: 100%;
   box-sizing: border-box;
+}
+.phone .content .shopping {
+  padding: 5px;
+  width: 80px;
+  height: 10px;
+  margin: 4px auto;
+  background: #D8322E;
+  color: #fff;
+  border-radius: 10px;
+  text-align: center;
 }
 </style>
