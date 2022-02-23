@@ -1,11 +1,12 @@
 <template>
   <el-menu
-    :default-active="1"
+    default-active="1"
     class="el-menu-vertical-demo"
     @open="handleOpen"
     @close="handleClose"
     :collapse="isCollapse"
     text-color="#606266"
+    :unique-opened="true"
     active-text-color="#d8322e"
   >
     <el-menu-item
