@@ -4,6 +4,7 @@ const app = express();
 const passport = require('passport');
 const Test = require('./routes/test');
 const Oauth = require('./routes/oauth');
+const Company = require('./routes/company');
 
 
 // // 使用body-parser
@@ -14,6 +15,7 @@ app.use(passport.initialize());
 require('./config/userPassport')(passport);
 app.use('/api/test', Test);
 app.use('/api/oauth', Oauth);
+app.use('/api/company', Company);
 
 app.listen(5001, () => {
     console.log('the server port running');

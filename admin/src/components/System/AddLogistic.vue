@@ -7,15 +7,15 @@
       label-width="100px"
       class="demo-ruleForm"
     >
-      <el-form-item label="公司名称" prop="name" required>
+      <el-form-item label="公司名称" prop="name">
         <el-input
           v-model="ruleForm.name"
           placeholder="请输入公司名称"
         ></el-input>
       </el-form-item>
-      <el-form-item label="公司编码" prop="code" required>
+      <el-form-item label="公司编码" prop="symbol">
         <el-input
-          v-model="ruleForm.code"
+          v-model="ruleForm.symbol"
           placeholder="请输入公司编码"
         ></el-input>
       </el-form-item>
@@ -32,35 +32,57 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { addCompany } from "@/api/company";
 export default {
   name: "AddLogistic",
   data() {
     return {
       ruleForm: {
         name: "",
-        code: "",
-        startTime1: "",
-        startTime2: "",
-        endTime1: "",
-        endTime2: "",
+        symbol: "",
       },
       rules: {
         name: [{ required: true, message: "请输入公司名称", trigger: "blur" }],
-        code: [{ required: true, message: "请输入公司编码", trigger: "blur" }],
+        symbol: [
+          { required: true, message: "请输入公司编码", trigger: "blur" },
+        ],
       },
     };
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      let _this = this;
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          const params = {
+            headers: this.headers,
+            data: _this.ruleForm,
+          };
+          const _result = await addCompany(params);
+          if (_result.data.code === 200) {
+            this.$message({
+              message: "成功添加",
+              type: "success",
+            });
+            this.$emit("closeDrawer");
+            this.ruleForm = {
+              name: "",
+              symbol: "",
+            };
+          } else this.$message.error("未知错误");
         } else {
           console.log("error submit!!");
           return false;
         }
       });
-    }
+    },
+  },
+  computed: {
+    ...mapGetters("header", ["getHeader"]),
+    headers() {
+      return this.$store.getters["header/getHeader"];
+    },
   },
   mounted: function () {},
 };

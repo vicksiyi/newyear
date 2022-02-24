@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-import { oauthLogin } from "../../api/oauth";
+import { oauthLogin } from "@/api/oauth";
 import md5 from "js-md5";
 import { mapActions } from "vuex";
 export default {
@@ -66,16 +66,22 @@ export default {
     };
   },
   methods: {
-    ...mapActions("token", ["setTokenAsync"]),
+    ...mapActions("header", ["setTokenAsync"]),
     submitForm(formName) {
       let _this = this;
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           let parms = Object.assign({}, _this.ruleForm);
           parms.password = md5(parms.password);
           let _result = await oauthLogin(parms);
           if (_result.data.code == 200) {
-            this.$store.commit("setToken", _result.data.token);
+            this.$store.commit("header/setToken", _result.data.token);
             this.setTokenAsync(_result.data.token);
             this.$router.replace("/");
           }
@@ -84,6 +90,7 @@ export default {
           return false;
         }
       });
+      loading.close();
     },
   },
 };

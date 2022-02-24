@@ -1,4 +1,5 @@
 export default {
+    namespaced: true,
     state: {
         token: ''
     },
@@ -10,6 +11,11 @@ export default {
     actions: {
         setTokenAsync({ commit }, val) {
             commit('setToken', val)
+        }
+    },
+    getters: {
+        getHeader: function (state) {
+            return { Authorization: state.token }
         }
     }
 }

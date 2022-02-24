@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import tab from './tab';
-import token from './token';
+import header from './header';
 import createPersistedState from "vuex-persistedstate"
 
 // 引入持久化
@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules: {
         tab,
-        token
+        header
     },
     // 持久化操作
     plugins: [createPersistedState({
