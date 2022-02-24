@@ -1,0 +1,23 @@
+module.exports = {
+    mysqlConfig: {
+        host     : 'xxx.xxx.xxx',
+        user     : 'root',
+        password : 'xxxxxxxxx',
+        database : 'xxxxxxxx'
+    },
+    secretUser: 'xxxxxxxxxxxxxxxxxxx',
+    secretAdmin: 'xxxxxxxxxxxxxxxxxxxxxxx',
+    email_server: {
+        user: "xxxxxxxxxxx@qq.com",
+        password: "xxxxxxxxxxxxxx",
+        host: "smtp.qq.com",
+        ssl: true
+    },
+    APPID: 'xxxxxxxxxxxxxxxxxxxx',
+    SECRET: 'xxxxxxxxxxxxxxxxxxxxx',
+    redis:{
+        port:6379,
+        host:'xxx.xxx.xxx.xxx',
+        pass:'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+    }
+}
