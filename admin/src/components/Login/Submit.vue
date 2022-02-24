@@ -31,6 +31,7 @@
         </el-form-item>
         <el-form-item label="登录密码" prop="password">
           <el-input
+            type="password"
             v-model="ruleForm.password"
             placeholder="请输入密码"
           ></el-input>
@@ -47,6 +48,9 @@
   </div>
 </template>
 <script>
+import { oauthLogin } from "../../api/oauth";
+import md5 from "js-md5";
+import { mapActions } from "vuex";
 export default {
   name: "Submit",
   data() {
@@ -62,11 +66,19 @@ export default {
     };
   },
   methods: {
+    ...mapActions("token", ["setTokenAsync"]),
     submitForm(formName) {
-      console.log(123, formName);
-      this.$refs[formName].validate((valid) => {
+      let _this = this;
+      this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          this.$router.replace("/");
+          let parms = Object.assign({}, _this.ruleForm);
+          parms.password = md5(parms.password);
+          let _result = await oauthLogin(parms);
+          if (_result.data.code == 200) {
+            this.$store.commit("setToken", _result.data.token);
+            this.setTokenAsync(_result.data.token);
+            this.$router.replace("/");
+          }
         } else {
           console.log("error submit!!");
           return false;

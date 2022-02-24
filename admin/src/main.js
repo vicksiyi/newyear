@@ -74,6 +74,7 @@ Vue.prototype.$confirm = MessageBox.confirm;
 Vue.prototype.$prompt = MessageBox.prompt;
 Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

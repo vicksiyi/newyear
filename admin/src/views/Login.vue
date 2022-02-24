@@ -30,11 +30,12 @@ export default {
           resolve(position);
         });
       });
-    },
+    }
   },
   mounted: async function () {
-    let location = await this.getLocation();
-    console.log(location);
+    // 获取地理位置
+    // let location = await this.getLocation();
+    // console.log(location);
   },
 };
 </script>

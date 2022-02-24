@@ -16,3 +16,7 @@ exports.formatTimestamp = function (timestamp) {
     var second = dateObj.getSeconds();
     return year + "-" + month + "-" + theDate + " " + hour + ":" + minute + ":" + second;
 }
+
+exports.toJson = function (result) {
+    return JSON.parse(JSON.stringify(result));
+}
