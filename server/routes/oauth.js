@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const md5 = require('js-md5');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
-const axios = require('../utils/request');
 const keys = require('../config/keys');
 const utils = require('../utils/utils');
 const admin = require('../model/admin');
@@ -16,6 +14,7 @@ const jwtToken = function (rule) {
         })
     })
 }
+
 // $routes /oauth/login
 // @desc 登录
 // @access private

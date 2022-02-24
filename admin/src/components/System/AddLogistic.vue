@@ -59,7 +59,9 @@ export default {
             headers: this.headers,
             data: _this.ruleForm,
           };
-          const _result = await addCompany(params);
+          const _result = await addCompany(params).catch(err=>{
+            this.$message.error("重复添加")
+          });
           if (_result.data.code === 200) {
             this.$message({
               message: "成功添加",
