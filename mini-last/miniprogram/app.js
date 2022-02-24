@@ -15,5 +15,6 @@ App({
     }
 
     this.globalData = {};
+    this.baseUrl = 'http://localhost:5000/api';
   }
 });

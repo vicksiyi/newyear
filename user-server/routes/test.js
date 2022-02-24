@@ -4,7 +4,7 @@ const router = express.Router();
 // $routes /test/test
 // @desc 测试
 // @access private
-router.post('/test', (req, res) => {
+router.get('/test', (req, res) => {
     res.send({
         msg: '成功'
     })
