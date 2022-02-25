@@ -18,14 +18,14 @@
             <el-table-column label="优先级" width="70">
               <template slot-scope="scope">
                 <div style="width: 35px; text-align: center">
-                  {{ scope.$index + 1 }}
+                  {{ scope.row.priority }}
                 </div>
               </template>
             </el-table-column>
             <el-table-column label="类别名称" width="100">
               <template slot-scope="scope">
                 <div>
-                  {{ scope.row }}
+                  {{ scope.row.title }}
                 </div>
               </template>
             </el-table-column>
@@ -34,6 +34,7 @@
                 <div class="type-action">
                   <div>
                     <el-button
+                      @click="swap(scope.$index, 0)"
                       type="primary"
                       size="mini"
                       icon="el-icon-top"
@@ -42,6 +43,7 @@
                   </div>
                   <div>
                     <el-button
+                      @click="swap(scope.$index, 1)"
                       type="primary"
                       size="mini"
                       icon="el-icon-bottom"
@@ -52,10 +54,18 @@
                   </div>
                   <div>
                     <el-button
-                      @click="delType(scope.$index)"
+                      v-if="scope.row.status === 1"
+                      @click="switchType(scope.$index, 0)"
                       type="danger"
                       size="mini"
-                      >删除</el-button
+                      >隐藏</el-button
+                    >
+                    <el-button
+                      v-else
+                      @click="switchType(scope.$index, 1)"
+                      type="success"
+                      size="mini"
+                      >显示</el-button
                     >
                   </div>
                 </div>
@@ -79,9 +89,9 @@
             <el-select v-model="value" clearable placeholder="类别筛选">
               <el-option
                 v-for="item in itemType"
-                :key="item"
-                :label="item"
-                :value="item"
+                :key="item.id"
+                :label="item.title"
+                :value="item.id"
               >
               </el-option>
             </el-select>
@@ -157,12 +167,19 @@
       :size="600"
     >
       <ItemSubmit v-if="isItem"></ItemSubmit>
-      <TypeSubmit v-else></TypeSubmit>
+      <TypeSubmit @closeDrawer="closeDrawer" v-else></TypeSubmit>
     </el-drawer>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import {
+  getItemType,
+  downItemType,
+  upItemType,
+  swapItemType,
+} from "@/api/item/type";
 import ItemSubmit from "@/components/Item/ItemSubmit";
 import TypeSubmit from "@/components/Item/TypeSubmit";
 export default {
@@ -173,20 +190,7 @@ export default {
       drawer: false,
       direction: "rtl",
       isItem: true,
-      itemType: [
-        "盒联1.1m",
-        "盒联1.3m",
-        "盒联1.6m",
-        "盒联2.2m",
-        "盒联3.0m",
-        "二开直联",
-        "二开半直联",
-        "三开直联",
-        "四开直联",
-        "五开直联",
-        "红包",
-        "中国结",
-      ],
+      itemType: [],
       items: [
         {
           name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
@@ -308,26 +312,82 @@ export default {
         },
       ],
       value: "",
-      search:""
+      search: "",
     };
   },
+  computed: {
+    ...mapGetters("header", ["getHeader"]),
+    headers() {
+      return this.$store.getters["header/getHeader"];
+    },
+  },
   methods: {
-    delType() {
-      this.$confirm("是否删除{}类别?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-        .then(() => {
-          this.$message({
-            type: "success",
-            message: "删除成功!",
-          });
+    async swap(index, type) {
+      let id2;
+      const id1 = this.itemType[index].id;
+      if (type === 0) id2 = this.itemType[index - 1].id;
+      else id2 = this.itemType[index + 1].id;
+      const _result = await swapItemType({
+        data: { id1: id1, id2: id2 },
+        headers: this.headers,
+      }).catch((err) => {
+        this.$message.error("未知错误");
+      });
+      if (_result.data.code === 200) {
+        this.$message({
+          type: "success",
+          message: `成功${type === 0 ? "隐藏" : "显示"}`,
+        });
+        this.getData();
+      } else this.$message.error(_result.data.msg);
+    },
+    // 隐藏&显示
+    switchType(index, type) {
+      const _this = this;
+      const id = this.itemType[index].id;
+      this.$confirm(
+        `是否${type === 0 ? "隐藏" : "显示"}${
+          this.itemType[index].title
+        }类别?以及相关数据？`,
+        "提示",
+        {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        }
+      )
+        .then(async () => {
+          let _result;
+          // 判断隐藏还是显示
+          if (type === 0) {
+            _result = await downItemType({
+              id: id,
+              headers: this.headers,
+            }).catch((err) => {
+              this.$message.error("未知错误");
+            });
+          } else {
+            _result = await upItemType({
+              id: id,
+              headers: this.headers,
+            }).catch((err) => {
+              this.$message.error("未知错误");
+            });
+          }
+          if (_result.data.code === 200) {
+            this.$message({
+              type: "success",
+              message: `成功${type === 0 ? "隐藏" : "显示"}`,
+            });
+            this.getData();
+          } else {
+            this.$message.error(_result.data.msg);
+          }
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: `已取消${type === 0 ? "隐藏" : "显示"}`,
           });
         });
     },
@@ -339,6 +399,28 @@ export default {
       this.isItem = false;
       this.drawer = true;
     },
+    closeDrawer: function () {
+      // this.getData();
+      this.drawer = false;
+    },
+    async getData() {
+      const loading = this.$loading({
+        lock: true,
+        text: "Loading",
+        spinner: "el-icon-loading",
+        background: "rgba(0, 0, 0, 0.7)",
+      });
+      const _result = await getItemType({ headers: this.headers }).catch(
+        (err) => {
+          this.$message.error("未知错误");
+        }
+      );
+      loading.close();
+      this.itemType = _result.data.data;
+    },
+  },
+  mounted: function () {
+    this.getData();
   },
 };
 </script>

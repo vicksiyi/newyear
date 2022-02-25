@@ -1,9 +1,9 @@
 <template>
   <div class="form">
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px">
-      <el-form-item label="类别" prop="name" required>
+      <el-form-item label="类别" prop="title">
         <el-input
-          v-model="ruleForm.name"
+          v-model="ruleForm.title"
           placeholder="请输入类别名称"
         ></el-input>
       </el-form-item>
@@ -20,24 +20,48 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { addItemType } from "@/api/item/type";
 export default {
   name: "TypeSubmit",
   data() {
     return {
       ruleForm: {
-        name: "",
+        title: "",
       },
       rules: {
-        name: [{ required: true, message: "请输入类别名称", trigger: "blur" }],
+        title: [{ required: true, message: "请输入类别名称", trigger: "blur" }],
       },
     };
   },
+  computed: {
+    ...mapGetters("header", ["getHeader"]),
+    headers() {
+      return this.$store.getters["header/getHeader"];
+    },
+  },
   methods: {
     submitForm(formName) {
-      console.log(formName);
-      this.$refs[formName].validate((valid) => {
+      let _this = this;
+      _this.$refs[formName].validate(async (valid) => {
         if (valid) {
-          alert("submit!");
+          const params = {
+            headers: _this.headers,
+            data: _this.ruleForm,
+          };
+          const _result = await addItemType(params).catch((err) => {
+            this.$message.error("重复添加");
+          });
+          if (_result.data.code === 200) {
+            this.$message({
+              message: "成功添加",
+              type: "success",
+            });
+            this.$emit("closeDrawer");
+            this.ruleForm = {
+              title: "",
+            };
+          } else this.$message.error(_result.data.msg);
         } else {
           console.log("error submit!!");
           return false;
