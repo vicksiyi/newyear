@@ -7,17 +7,19 @@
       label-width="100px"
       class="demo-ruleForm"
     >
-      <el-form-item label="商品图片" prop="imageUrl">
+      <el-form-item label="商品图片" prop="url">
         <el-upload
+          name="image"
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          :headers="headers"
+          action="http://localhost:8080/api/upload/images"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
           <img
-            v-if="ruleForm.imageUrl"
-            :src="ruleForm.imageUrl"
+            v-if="ruleForm.url"
+            :src="ruleForm.url"
             class="avatar"
           />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -73,6 +75,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "ItemSubmit",
   data() {
@@ -91,8 +94,10 @@ export default {
         "红包",
         "中国结",
       ],
+      filename:'',
       ruleForm: {
-        imageUrl: "",
+        url: "",
+        filename:"",
         name: "",
         type: "",
         money: "",
@@ -101,7 +106,7 @@ export default {
       },
       rules: {
         name: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
-        imageUrl: [
+        url: [
           { required: true, message: "请上传商品图片", trigger: "change" },
         ],
         type: [
@@ -121,6 +126,12 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters("header", ["getHeader"]),
+    headers() {
+      return this.$store.getters["header/getHeader"];
+    },
+  },
   methods: {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -133,15 +144,15 @@ export default {
       });
     },
     handleAvatarSuccess(res, file) {
-      this.ruleForm.imageUrl = URL.createObjectURL(file.raw);
-      console.log(this.ruleForm.imageUrl);
+      this.ruleForm.url = URL.createObjectURL(file.raw);
+      this.filename = res.file;
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
+      const isJPG = file.type === "image/jpeg" || file.type === "image/png";
       const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+        this.$message.error("上传头像图片只能是 JPG/PNG 格式!");
       }
       if (!isLt2M) {
         this.$message.error("上传头像图片大小不能超过 2MB!");

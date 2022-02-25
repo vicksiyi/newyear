@@ -3,9 +3,9 @@ class Item extends Handle {
     constructor() {
         super();
     }
-    edit(uuid, title, url, num, money) {
-        const sql = `update items set title = '${title}', url='${url}',
-        num = ${num}, money = ${money} where uuid='${uuid}'`;
+    edit(uuid, title, typeId, url, num, money, status) {
+        const sql = `update items set title = '${title}',typeId=${typeId}, url='${url}',
+        num = ${num}, money=${money},status=${status} where uuid='${uuid}'`;
         return super.commit(sql);
     }
     // 上架商品
@@ -26,9 +26,9 @@ class Item extends Handle {
         return super.commit(sql);
     }
     // 插入商品
-    insert(title, url, num, money) {
-        const sql = `insert into items(title,url,num,status,money) 
-        values('${title}','${url}',${num},0,${money})`;
+    insert(title, typeId, url, num, money, status) {
+        const sql = `insert into items(title,typeId,url,num,status,money,status) 
+        values('${title}',${typeId},'${url}',${num},0,${money},${status})`;
         return super.commit(sql);
     }
 }

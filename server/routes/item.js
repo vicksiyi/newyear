@@ -23,9 +23,9 @@ function uploadImage(filename) {
 // @desc 上传商品
 // @access private , 
 router.post('/addItem', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const { title, filename, num, money } = req.body;
+    const { title, typeId, filename, num, money, status } = req.body;
     const url = uploadImage(filename); // 上传到OSS获取url;
-    const _result = await item.insert(title, url, num, money).catch(err => {
+    const _result = await item.insert(title, typeId, url, num, money, status).catch(err => {
         res.send({
             code: 400,
             msg: "插入失败"
@@ -101,8 +101,9 @@ router.put('/downItem/:uuid', passport.authenticate('jwt', { session: false }), 
 // @access private
 router.put('/editItem/:uuid', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const uuid = req.params.uuid;
-    const { title, url, num, money } = req.body;
-    const _result = await item.edit(title, url, num, money).catch(err => {
+    const { title, typeId, filename, num, money, status } = req.body;
+    const url = uploadImage(filename); // 上传到OSS获取url;
+    const _result = await item.edit(uuid, title, typeId, url, num, money, status).catch(err => {
         res.send({
             code: 400,
             msg: '更新失败'
