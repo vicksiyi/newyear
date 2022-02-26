@@ -57,44 +57,6 @@ router.get('/getItem/:page', passport.authenticate('jwt', { session: false }), a
     })
 })
 
-// 上架商品[设置状态]
-// $routes /item/upItem
-// @desc 上架商品
-// @access private
-router.put('/upItem/:uuid', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const uuid = req.params.uuid;
-    const _result = await item.putUp(uuid).catch(err => {
-        res.send({
-            code: 400,
-            msg: '上架失败'
-        })
-        throw Error(err);
-    });
-    res.send({
-        code: 200,
-        msg: '上架成功'
-    })
-})
-
-// 下架商品[设置状态]
-// $routes /item/downItem/:uuid
-// @desc 下架商品
-// @access private
-router.put('/downItem/:uuid', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const uuid = req.params.uuid;
-    const _result = await item.putDown(uuid).catch(err => {
-        res.send({
-            code: 400,
-            msg: '下架失败'
-        })
-        throw Error(err);
-    });
-    res.send({
-        code: 200,
-        msg: '下架成功'
-    })
-})
-
 // 更新商品
 // $routes /item/editItem/:uuid
 // @desc 更新商品
@@ -112,6 +74,43 @@ router.post('/editItem', passport.authenticate('jwt', { session: false }), async
     res.send({
         code: 200,
         msg: '更新成功'
+    })
+})
+
+// 获取商品总数量
+// $routes /item/getNum
+// @desc 获取商品总数量
+// @access private
+router.get('/getNum', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const _result = await item.getNum().catch(err => {
+        res.send({
+            code: 400,
+            msg: '更新失败'
+        })
+        throw Error(err);
+    });
+    res.send({
+        code: 200,
+        total: _result[0].num
+    })
+})
+
+// 类别筛选
+// $routes /item/getFilterItem
+// @desc 类别筛选
+// @access private
+router.get('/getFilterItem/:typeId/:page', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const page = req.params.page, typeId = req.params.typeId;
+    const _result = await item.query(page, true, typeId).catch(err => {
+        res.send({
+            code: 400,
+            msg: '获取失败'
+        })
+        throw Error(err);
+    });
+    res.send({
+        code: 200,
+        data: _result
     })
 })
 module.exports = router;

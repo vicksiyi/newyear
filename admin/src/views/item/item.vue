@@ -86,7 +86,12 @@
             >
           </el-col>
           <el-col :span="6">
-            <el-select v-model="value" clearable placeholder="类别筛选">
+            <el-select
+              v-model="filterType"
+              @change="getFilter"
+              clearable
+              placeholder="类别筛选"
+            >
               <el-option
                 v-for="item in itemType"
                 :key="item.id"
@@ -162,6 +167,16 @@
               </template>
             </el-table-column>
           </el-table>
+          <el-row style="margin-top: 20px" :gutter="20">
+            <el-col :span="8" :offset="8">
+              <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="total"
+              >
+              </el-pagination
+            ></el-col>
+          </el-row>
         </el-card>
       </el-col>
     </el-row>
@@ -193,7 +208,7 @@ import {
   upItemType,
   swapItemType,
 } from "@/api/item/type";
-import { getItem } from "@/api/item/item";
+import { getItem, getNum, getFilterItem } from "@/api/item/item";
 import ItemSubmit from "@/components/Item/ItemSubmit";
 import TypeSubmit from "@/components/Item/TypeSubmit";
 export default {
@@ -202,6 +217,7 @@ export default {
   data() {
     return {
       item: {},
+      total: 0,
       isEdit: false,
       isShow: false,
       statusList: ["待上架", "已上架", "已下架"],
@@ -210,29 +226,7 @@ export default {
       isItem: true,
       itemType: [],
       items: [],
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕",
-        },
-        {
-          value: "选项2",
-          label: "双皮奶",
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎",
-        },
-        {
-          value: "选项4",
-          label: "龙须面",
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭",
-        },
-      ],
-      value: "",
+      filterType: "",
       search: "",
     };
   },
@@ -330,29 +324,60 @@ export default {
       this.isShow = false;
       this.drawer = false;
     },
-    async getData() {
-      let _this = this;
+    async getFilter() {
+      if (this.filterType) {
+        let _this = this;
+        const loading = this.startLoading();
+        const params = {
+          headers: this.headers,
+          typeId: this.filterType,
+          page: 0,
+        };
+        const _result = await getFilterItem(params).catch((err) => {
+          this.$message.error("未知错误");
+        });
+        this.items = _result.data.data;
+        this.endLoading(loading);
+      } else {
+        this.getData();
+      }
+    },
+    startLoading() {
       const loading = this.$loading({
         lock: true,
         text: "Loading",
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)",
       });
+      return loading;
+    },
+    endLoading(loading) {
+      loading.close();
+    },
+    async getData() {
+      let _this = this;
+      const loading = this.startLoading();
       const params = {
         headers: this.headers,
       };
-      Promise.all([getItemType(params), getItem({ ...params, page: 0 })])
+      Promise.all([
+        getItemType(params),
+        this.filterType
+          ? getFilterItem({ ...params, page: 0, typeId: this.filterType })
+          : getItem({ ...params, page: 0 }),
+        getNum(params),
+      ])
         .then((_result) => {
-          console.log(_result[1].data.data);
           _this.itemType = _result[0].data.data;
           _this.items = _result[1].data.data;
+          _this.total = _result[2].data.total;
+          this.endLoading(loading);
         })
         .catch((err) => {
           console.log(err);
+          this.endLoading(loading);
           this.$message.error("未知错误");
         });
-      loading.close();
-      // this.itemType = _result.data.data;
     },
     tag(type) {
       switch (type) {

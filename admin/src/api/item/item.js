@@ -44,3 +44,21 @@ export const editItem = function (parms) {
         data: parms.data
     })
 }
+
+// 获取商品总数量
+export const getNum = function (parms) {
+    return axios.request({
+        url: `/api/item/getNum`,
+        method: 'get',
+        headers: parms.headers,
+    })
+}
+
+// 类别筛选
+export const getFilterItem = function (parms) {
+    return axios.request({
+        url: `/api/item/getFilterItem/${parms.typeId}/${parms.page}`,
+        method: 'get',
+        headers: parms.headers,
+    })
+}
