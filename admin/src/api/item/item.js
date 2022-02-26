@@ -62,3 +62,12 @@ export const getFilterItem = function (parms) {
         headers: parms.headers,
     })
 }
+
+// 类别筛选
+export const getFilterNum = function (parms) {
+    return axios.request({
+        url: `/api/item/getFilterNum/${parms.typeId}`,
+        method: 'get',
+        headers: parms.headers,
+    })
+}

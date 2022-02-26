@@ -171,7 +171,10 @@
             <el-col :span="8" :offset="8">
               <el-pagination
                 background
+                @current-change="pageChange"
+                :current-page="page"
                 layout="prev, pager, next"
+                :page-size="20"
                 :total="total"
               >
               </el-pagination
@@ -208,7 +211,7 @@ import {
   upItemType,
   swapItemType,
 } from "@/api/item/type";
-import { getItem, getNum, getFilterItem } from "@/api/item/item";
+import { getItem, getNum, getFilterItem, getFilterNum } from "@/api/item/item";
 import ItemSubmit from "@/components/Item/ItemSubmit";
 import TypeSubmit from "@/components/Item/TypeSubmit";
 export default {
@@ -228,6 +231,7 @@ export default {
       items: [],
       filterType: "",
       search: "",
+      page: 1,
     };
   },
   computed: {
@@ -324,23 +328,10 @@ export default {
       this.isShow = false;
       this.drawer = false;
     },
+    // 类别筛选获取数据
     async getFilter() {
-      if (this.filterType) {
-        let _this = this;
-        const loading = this.startLoading();
-        const params = {
-          headers: this.headers,
-          typeId: this.filterType,
-          page: 0,
-        };
-        const _result = await getFilterItem(params).catch((err) => {
-          this.$message.error("未知错误");
-        });
-        this.items = _result.data.data;
-        this.endLoading(loading);
-      } else {
-        this.getData();
-      }
+      this.page = 1;
+      this.getData();
     },
     startLoading() {
       const loading = this.$loading({
@@ -354,6 +345,7 @@ export default {
     endLoading(loading) {
       loading.close();
     },
+    // 数据加载
     async getData() {
       let _this = this;
       const loading = this.startLoading();
@@ -363,9 +355,18 @@ export default {
       Promise.all([
         getItemType(params),
         this.filterType
-          ? getFilterItem({ ...params, page: 0, typeId: this.filterType })
-          : getItem({ ...params, page: 0 }),
-        getNum(params),
+          ? getFilterItem({
+              ...params,
+              page: this.page,
+              typeId: this.filterType,
+            })
+          : getItem({ ...params, page: this.page }),
+        this.filterType
+          ? getFilterNum({
+              ...params,
+              typeId: this.filterType,
+            })
+          : getNum({ ...params, page: this.page }),
       ])
         .then((_result) => {
           _this.itemType = _result[0].data.data;
@@ -399,6 +400,10 @@ export default {
     },
     toStatus(index) {
       return this.statusList[index];
+    },
+    pageChange(page) {
+      this.page = page;
+      this.getData();
     },
   },
   mounted: function () {

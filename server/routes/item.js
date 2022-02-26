@@ -43,7 +43,7 @@ router.post('/addItem', passport.authenticate('jwt', { session: false }), async 
 // @desc 获取商品列表
 // @access private , 
 router.get('/getItem/:page', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const page = req.params.page;
+    const page = req.params.page - 1;
     const _result = await item.query(page).catch(err => {
         res.send({
             code: 400,
@@ -85,7 +85,7 @@ router.get('/getNum', passport.authenticate('jwt', { session: false }), async (r
     const _result = await item.getNum().catch(err => {
         res.send({
             code: 400,
-            msg: '更新失败'
+            msg: '获取失败'
         })
         throw Error(err);
     });
@@ -100,7 +100,7 @@ router.get('/getNum', passport.authenticate('jwt', { session: false }), async (r
 // @desc 类别筛选
 // @access private
 router.get('/getFilterItem/:typeId/:page', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const page = req.params.page, typeId = req.params.typeId;
+    const page = req.params.page - 1, typeId = req.params.typeId;
     const _result = await item.query(page, true, typeId).catch(err => {
         res.send({
             code: 400,
@@ -111,6 +111,25 @@ router.get('/getFilterItem/:typeId/:page', passport.authenticate('jwt', { sessio
     res.send({
         code: 200,
         data: _result
+    })
+})
+
+// 类别筛选 商品数量
+// $routes /item/getFilterNum
+// @desc 类别筛选 商品数量
+// @access private
+router.get('/getFilterNum/:typeId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const typeId = req.params.typeId;
+    const _result = await item.getNum(true, typeId).catch(err => {
+        res.send({
+            code: 400,
+            msg: '获取失败'
+        })
+        throw Error(err);
+    });
+    res.send({
+        code: 200,
+        total: _result[0].num
     })
 })
 module.exports = router;

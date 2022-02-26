@@ -3,8 +3,9 @@ class Item extends Handle {
     constructor() {
         super();
     }
-    getNum() {
-        const sql = `select count(1) as num from items;`;
+    getNum(isFilter = false, typeId) {
+        const sql = `select count(1) as num from items where ${isFilter ? 'typeId=' + typeId : '1=1'};`;
+        console.log(sql);
         return super.commit(sql);
     }
     edit(uuid, title, typeId, url, num, money, status) {
@@ -26,8 +27,8 @@ class Item extends Handle {
     query(page, isFilter = false, typeId) {
         const sql = `select i.uuid,i.title,t.title as type,
         i.url,i.num,i.status,i.money from items i 
-        inner join itemTypes t where i.typeId = t.id ${isFilter ? 'and i.typeId =' + typeId : ''} limit ${20 * page},20;`;
-        console.log(sql);
+        inner join itemTypes t where i.typeId = t.id 
+        ${isFilter ? 'and i.typeId =' + typeId : ''} limit ${20 * page},20;`;
         return super.commit(sql);
     }
     // 插入商品

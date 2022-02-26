@@ -85,12 +85,13 @@ export default {
             this.setTokenAsync(_result.data.token);
             this.$router.replace("/");
           }
+          loading.close();
         } else {
+          loading.close();
           console.log("error submit!!");
           return false;
         }
       });
-      loading.close();
     },
   },
 };
