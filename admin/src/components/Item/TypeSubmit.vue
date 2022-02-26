@@ -58,9 +58,6 @@ export default {
               type: "success",
             });
             this.$emit("closeDrawer");
-            this.ruleForm = {
-              title: "",
-            };
           } else this.$message.error(_result.data.msg);
         } else {
           console.log("error submit!!");

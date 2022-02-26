@@ -23,9 +23,9 @@ function uploadImage(filename) {
 // @desc 上传商品
 // @access private , 
 router.post('/addItem', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const { title, typeId, filename, num, money, status } = req.body;
-    const url = uploadImage(filename); // 上传到OSS获取url;
-    const _result = await item.insert(title, typeId, url, num, money, status).catch(err => {
+    const { title, type, filename, num, money, status } = req.body;
+    const url = await uploadImage(filename); // 上传到OSS获取url;
+    const _result = await item.insert(title, type, url, num, money, status).catch(err => {
         res.send({
             code: 400,
             msg: "插入失败"
@@ -43,7 +43,7 @@ router.post('/addItem', passport.authenticate('jwt', { session: false }), async 
 // @desc 获取商品列表
 // @access private , 
 router.get('/getItem/:page', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const page = req.body.page;
+    const page = req.params.page;
     const _result = await item.query(page).catch(err => {
         res.send({
             code: 400,
@@ -99,11 +99,10 @@ router.put('/downItem/:uuid', passport.authenticate('jwt', { session: false }), 
 // $routes /item/editItem/:uuid
 // @desc 更新商品
 // @access private
-router.put('/editItem/:uuid', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const uuid = req.params.uuid;
-    const { title, typeId, filename, num, money, status } = req.body;
-    const url = uploadImage(filename); // 上传到OSS获取url;
-    const _result = await item.edit(uuid, title, typeId, url, num, money, status).catch(err => {
+router.post('/editItem', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    let { uuid, title, type, filename, num, money, status, url } = req.body;
+    url = url || await uploadImage(filename); // 上传到OSS获取url;
+    const _result = await item.edit(uuid, title, type, url, num, money, status).catch(err => {
         res.send({
             code: 400,
             msg: '更新失败'

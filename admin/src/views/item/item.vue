@@ -116,9 +116,9 @@
             height="600"
             style="width: 100%; overflow-x: hidden"
           >
-            <el-table-column prop="name" label="名称">
+            <el-table-column prop="title" label="名称">
               <template slot-scope="scope">
-                <p>{{ scope.row.name }}</p>
+                <p>{{ scope.row.title }}</p>
               </template>
             </el-table-column>
             <el-table-column label="图片">
@@ -145,15 +145,20 @@
             </el-table-column>
             <el-table-column prop="status" label="状态">
               <template slot-scope="scope">
-                <el-tag>
-                  {{ scope.row.status }}
+                <el-tag :type="tag(scope.row.status)">
+                  {{ scope.row.status | filterStatus }}
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column fixed="right" label="操作" width="200">
-              <template>
-                <el-button type="warning" size="mini">编辑</el-button>
-                <el-button type="danger" size="mini">下架</el-button>
+            <el-table-column fixed="right" label="操作" width="100">
+              <template slot-scope="scope">
+                <el-button
+                  type="warning"
+                  @click="edit(scope.$index)"
+                  size="mini"
+                  >编辑</el-button
+                >
+                <!-- <el-button type="danger" size="mini">下架</el-button> -->
               </template>
             </el-table-column>
           </el-table>
@@ -161,12 +166,20 @@
       </el-col>
     </el-row>
     <el-drawer
-      :title="isItem ? '添加商品' : '添加类别'"
+      :title="isItem ? (isEdit ? '编辑商品' : '添加商品') : '添加类别'"
       :visible.sync="drawer"
       :direction="direction"
       :size="600"
+      v-if="isShow"
     >
-      <ItemSubmit v-if="isItem"></ItemSubmit>
+      <ItemSubmit
+        v-if="isItem"
+        @closeDrawer="closeDrawer"
+        :itemType="itemType"
+        :status="statusList"
+        :isEdit="isEdit"
+        :item="item"
+      ></ItemSubmit>
       <TypeSubmit @closeDrawer="closeDrawer" v-else></TypeSubmit>
     </el-drawer>
   </div>
@@ -180,6 +193,7 @@ import {
   upItemType,
   swapItemType,
 } from "@/api/item/type";
+import { getItem } from "@/api/item/item";
 import ItemSubmit from "@/components/Item/ItemSubmit";
 import TypeSubmit from "@/components/Item/TypeSubmit";
 export default {
@@ -187,108 +201,15 @@ export default {
   components: { ItemSubmit, TypeSubmit },
   data() {
     return {
+      item: {},
+      isEdit: false,
+      isShow: false,
+      statusList: ["待上架", "已上架", "已下架"],
       drawer: false,
       direction: "rtl",
       isItem: true,
       itemType: [],
-      items: [
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-        {
-          name: "上联:春夏秋冬行好运 下联:东西南北遇贵人 横批:出入平安",
-          money: "11.9",
-          status: "已上架",
-          num: "20",
-          type: "盒联1.1m",
-          url: "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png",
-        },
-      ],
+      items: [],
       options: [
         {
           value: "选项1",
@@ -391,36 +312,78 @@ export default {
           });
         });
     },
+    // 添加商品
     addItem() {
+      this.isShow = true;
       this.isItem = true;
+      this.isEdit = false;
+      this.item = {};
       this.drawer = true;
     },
     addType() {
+      this.isShow = true;
       this.isItem = false;
       this.drawer = true;
     },
     closeDrawer: function () {
-      // this.getData();
+      this.getData();
+      this.isShow = false;
       this.drawer = false;
     },
     async getData() {
+      let _this = this;
       const loading = this.$loading({
         lock: true,
         text: "Loading",
         spinner: "el-icon-loading",
         background: "rgba(0, 0, 0, 0.7)",
       });
-      const _result = await getItemType({ headers: this.headers }).catch(
-        (err) => {
+      const params = {
+        headers: this.headers,
+      };
+      Promise.all([getItemType(params), getItem({ ...params, page: 0 })])
+        .then((_result) => {
+          console.log(_result[1].data.data);
+          _this.itemType = _result[0].data.data;
+          _this.items = _result[1].data.data;
+        })
+        .catch((err) => {
+          console.log(err);
           this.$message.error("未知错误");
-        }
-      );
+        });
       loading.close();
-      this.itemType = _result.data.data;
+      // this.itemType = _result.data.data;
+    },
+    tag(type) {
+      switch (type) {
+        case 0:
+          return "";
+        case 1:
+          return "success";
+        default:
+          return "info";
+      }
+    },
+    // 编辑商品
+    edit(index) {
+      this.isShow = true;
+      this.isEdit = true;
+      this.item = Object.assign({}, this.items[index]);
+      this.item.status = this.toStatus(this.item.status);
+      this.drawer = true;
+    },
+    toStatus(index) {
+      return this.statusList[index];
     },
   },
   mounted: function () {
     this.getData();
+  },
+  filters: {
+    filterStatus(index) {
+      const statusList = ["待上架", "已上架", "已下架"];
+      return statusList[index];
+    },
   },
 };
 </script>

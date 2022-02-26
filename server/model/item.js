@@ -27,8 +27,8 @@ class Item extends Handle {
     }
     // 插入商品
     insert(title, typeId, url, num, money, status) {
-        const sql = `insert into items(title,typeId,url,num,status,money,status) 
-        values('${title}',${typeId},'${url}',${num},0,${money},${status})`;
+        const sql = `insert into items(title,typeId,url,num,money,status) 
+        values('${title}',${typeId},'${url}',${num},${money},${status})`;
         return super.commit(sql);
     }
 }

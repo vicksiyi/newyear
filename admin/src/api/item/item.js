@@ -38,8 +38,9 @@ export const downItem = function (parms) {
 // 修改商品
 export const editItem = function (parms) {
     return axios.request({
-        url: `/api/item/editItem/${parms.uuid}`,
-        method: 'put',
+        url: `/api/item/editItem`,
+        method: 'post',
         headers: parms.headers,
+        data: parms.data
     })
 }
