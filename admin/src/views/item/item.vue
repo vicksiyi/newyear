@@ -59,57 +59,7 @@
           </el-col>
         </el-row>
         <el-card style="margin-top: 20px" shadow="hover">
-          <el-table
-            :data="items"
-            height="600"
-            style="width: 100%; overflow-x: hidden"
-          >
-            <el-table-column prop="title" label="名称">
-              <template slot-scope="scope">
-                <p>{{ scope.row.title }}</p>
-              </template>
-            </el-table-column>
-            <el-table-column label="图片">
-              <template slot-scope="scope">
-                <img :src="scope.row.url" alt="" />
-              </template>
-            </el-table-column>
-            <el-table-column prop="type" label="类别">
-              <template slot-scope="scope">
-                <div>
-                  {{ scope.row.type }}
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="money" label="金额">
-              <template slot-scope="scope">
-                <div>{{ scope.row.money }}元</div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="num" label="剩余数量">
-              <template slot-scope="scope">
-                <div>{{ scope.row.num }}个</div>
-              </template>
-            </el-table-column>
-            <el-table-column prop="status" label="状态">
-              <template slot-scope="scope">
-                <el-tag :type="tag(scope.row.status)">
-                  {{ scope.row.status | filterStatus }}
-                </el-tag>
-              </template>
-            </el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
-              <template slot-scope="scope">
-                <el-button
-                  type="warning"
-                  @click="edit(scope.$index)"
-                  size="mini"
-                  >编辑</el-button
-                >
-                <!-- <el-button type="danger" size="mini">下架</el-button> -->
-              </template>
-            </el-table-column>
-          </el-table>
+          <ShowItems></ShowItems>
           <el-row style="margin-top: 20px" :gutter="20">
             <el-col :span="8" :offset="8">
               <el-pagination
@@ -147,16 +97,15 @@
 </template>
 
 <script>
-import { getItemType } from "@/api/item/type";
-import { mapState, mapGetters } from "vuex";
-import { getItem, getNum, getFilterItem, getFilterNum } from "@/api/item/item";
+import { mapState } from "vuex";
 import ItemSubmit from "@/components/Item/ItemSubmit";
 import TypeSubmit from "@/components/Item/TypeSubmit";
 import ShowItemType from "@/components/Item/ShowItemType";
+import ShowItems from "@/components/Item/ShowItems";
 import Loading from "@/common/loading";
 export default {
   name: "item",
-  components: { ItemSubmit, TypeSubmit, ShowItemType },
+  components: { ItemSubmit, TypeSubmit, ShowItemType, ShowItems },
   data() {
     return {
       item: {},
@@ -174,10 +123,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("header", ["getHeader"]),
-    headers() {
-      return this.$store.getters["header/getHeader"];
-    },
     ...mapState({
       itemType: (state) => state.item.itemType,
     }),
@@ -214,7 +159,6 @@ export default {
         headers: this.headers,
       };
       Promise.all([
-        getItemType(params),
         // 判断是否存在类别筛选
         this.filterType
           ? getFilterItem({
@@ -232,8 +176,6 @@ export default {
           : getNum({ ...params, page: this.page }),
       ])
         .then((_result) => {
-          // _this.itemType = _result[0].data.data;
-          _this.updateItemType(_result[0].data.data);
           _this.items = _result[1].data.data;
           _this.total = _result[2].data.total;
           Loading.end(loading);
@@ -243,16 +185,6 @@ export default {
           Loading.end(loading);
           this.$message.error("未知错误");
         });
-    },
-    tag(type) {
-      switch (type) {
-        case 0:
-          return "";
-        case 1:
-          return "success";
-        default:
-          return "info";
-      }
     },
     // 编辑商品
     edit(index) {
@@ -276,12 +208,9 @@ export default {
         message: "暂无此功能",
       });
     },
-    updateItemType(itemType) {
-      this.$store.commit("updateItemType", itemType);
-    },
   },
   mounted: function () {
-    this.getData();
+    // this.getData();
   },
   filters: {
     filterStatus(index) {
@@ -293,8 +222,4 @@ export default {
 </script>
 
 <style scoped>
-img {
-  width: 60px;
-  height: 60px;
-}
 </style>

@@ -1,6 +1,8 @@
 export default {
     state: {
         itemType: [],
+        items: [],
+        status: ["待上架", "已上架", "已下架"]
     },
     mutations: {
         // title转id
@@ -20,6 +22,10 @@ export default {
             for (let i = 0; i < state.itemType.length; i++) {
                 if (state.itemType.id == id) return state.itemType[i].title;
             }
+        },
+        // 更新items
+        updateItems(state, items) {
+            state.items = items;
         }
     }
 }
