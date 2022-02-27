@@ -132,4 +132,23 @@ router.get('/getFilterNum/:typeId', passport.authenticate('jwt', { session: fals
         total: _result[0].num
     })
 })
+
+// 模糊查询
+// $routes /item/search/:key
+// @desc 模糊查询
+// @access private
+router.get('/search/:key', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const key = req.params.key;
+    const _result = await item.search(key).catch(err => {
+        res.send({
+            code: 400,
+            msg: '获取失败'
+        })
+        throw Error(err);
+    });
+    res.send({
+        code: 200,
+        data: _result
+    })
+})
 module.exports = router;

@@ -3,9 +3,13 @@ class Item extends Handle {
     constructor() {
         super();
     }
+    // 模糊查询
+    search(key) {
+        const sql = `select * from items where title like '%${key}%'`;
+        return super.commit(sql);
+    }
     getNum(isFilter = false, typeId) {
         const sql = `select count(1) as num from items where ${isFilter ? 'typeId=' + typeId : '1=1'};`;
-        console.log(sql);
         return super.commit(sql);
     }
     edit(uuid, title, typeId, url, num, money, status) {

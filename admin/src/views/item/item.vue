@@ -110,7 +110,11 @@
                 ></el-input>
               </el-col>
               <el-col :span="4">
-                <el-button icon="el-icon-search" circle></el-button>
+                <el-button
+                  @click="searchKey"
+                  icon="el-icon-search"
+                  circle
+                ></el-button>
               </el-col>
             </el-row>
           </el-col>
@@ -333,6 +337,7 @@ export default {
       this.page = 1;
       this.getData();
     },
+    // 开始加载
     startLoading() {
       const loading = this.$loading({
         lock: true,
@@ -342,6 +347,7 @@ export default {
       });
       return loading;
     },
+    // 结束加载
     endLoading(loading) {
       loading.close();
     },
@@ -354,6 +360,7 @@ export default {
       };
       Promise.all([
         getItemType(params),
+        // 判断是否存在类别筛选
         this.filterType
           ? getFilterItem({
               ...params,
@@ -361,6 +368,7 @@ export default {
               typeId: this.filterType,
             })
           : getItem({ ...params, page: this.page }),
+        // 判断是不是类别筛选下的数据获取 [总数]
         this.filterType
           ? getFilterNum({
               ...params,
@@ -404,6 +412,9 @@ export default {
     pageChange(page) {
       this.page = page;
       this.getData();
+    },
+    searchKey() {
+      console.log(this.search);
     },
   },
   mounted: function () {
