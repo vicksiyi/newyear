@@ -16,8 +16,8 @@
                 indicator-position="none"
                 height="100px"
               >
-                <el-carousel-item v-for="item in 4" :key="item">
-                  <img class="carousel-img" src="@/assets/swiper.jpg" alt="" />
+                <el-carousel-item v-for="item in swipers" :key="item.id">
+                  <img class="carousel-img" :src="item.url" alt="" />
                 </el-carousel-item>
               </el-carousel>
             </div>
@@ -49,10 +49,14 @@
         <el-descriptions title="轮播图">
           <el-descriptions-item>
             <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
+              name="image"
+              action="http://localhost:8080/api/upload/images"
               list-type="picture-card"
-              :file-list="fileList"
+              :file-list="swipers"
               :on-preview="handlePictureCardPreview"
+              :headers="headers"
+              :before-upload="beforeAvatarUpload"
+              :on-success="handleSwiperSuccess"
               :on-remove="handleRemove"
             >
               <i class="el-icon-plus"></i>
@@ -67,7 +71,7 @@
             <el-upload
               action="https://jsonplaceholder.typicode.com/posts/"
               list-type="picture-card"
-              :file-list="fileList2"
+              :file-list="homeImages"
               :on-preview="handlePictureCardPreview"
               :on-remove="handleRemove"
             >
@@ -84,19 +88,20 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "page",
   data() {
     return {
       dialogImageUrl: "",
       dialogVisible: false,
-      fileList: [
+      swipers: [
         {
           name: "",
           url: "http://localhost:8080/static/img/swiper.e00c62c.jpg",
         },
       ],
-      fileList2: [
+      homeImages: [
         {
           name: "",
           url: "http://localhost:8080/static/img/1.e12286e.jpg",
@@ -116,6 +121,12 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapGetters("header", ["getHeader"]),
+    headers() {
+      return this.$store.getters["header/getHeader"];
+    },
+  },
   methods: {
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -124,6 +135,27 @@ export default {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
+    uploadProgress(event, res, fileList) {
+      console.log(event, res, fileList);
+    },
+    handleSwiperSuccess(res, file) {
+      this.swipers.push({
+        name: res.file,
+        url: file.url,
+      });
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg" || file.type === "image/png";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG/PNG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    }
   },
 };
 </script>
@@ -193,7 +225,7 @@ export default {
   width: 80px;
   height: 10px;
   margin: 4px auto;
-  background: #D8322E;
+  background: #d8322e;
   color: #fff;
   border-radius: 10px;
   text-align: center;

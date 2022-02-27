@@ -46,6 +46,7 @@
 import AddLogistic from "@/components/System/AddLogistic";
 import { mapGetters } from "vuex";
 import { getCompany, getCompanyNum, delCompany } from "@/api/company";
+import Loading from "@/common/loading";
 export default {
   name: "Logistic",
   components: { AddLogistic },
@@ -70,22 +71,17 @@ export default {
         headers: this.headers,
         page: 0,
       };
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
+      const loading = Loading.start(this);
       Promise.all([getCompany(params), getCompanyNum(params)])
         .then((result) => {
-          loading.close();
+          Loading.end(loading);
           if (result[0].data.code === 200 && result[1].data.code === 200) {
             this.companys = result[0].data.companys;
             this.num = result[1].data.num;
           }
         })
         .catch((err) => {
-          loading.close();
+          Loading.end(loading);
         });
     },
     // 删除物流公司

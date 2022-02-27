@@ -8,18 +8,7 @@
       class="demo-ruleForm"
     >
       <el-form-item label="商品图片" prop="url">
-        <el-upload
-          name="image"
-          class="avatar-uploader"
-          :headers="headers"
-          action="http://localhost:8080/api/upload/images"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="ruleForm.url" :src="ruleForm.url" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+        <AvatarUpload @changeFileName="changeFileName"></AvatarUpload>
       </el-form-item>
       <el-form-item label="商品名称" prop="title">
         <el-input
@@ -76,6 +65,8 @@
 <script>
 import { mapGetters } from "vuex";
 import { addItem, editItem } from "@/api/item/item";
+import { itemRules, itemForm } from "@/common/rules";
+import AvatarUpload from "@/components/Common/AvatarUpload";
 export default {
   name: "ItemSubmit",
   props: {
@@ -102,36 +93,11 @@ export default {
       default: false,
     },
   },
+  components: { AvatarUpload },
   data() {
     return {
-      filename: "",
-      ruleForm: {
-        url: "",
-        filename: "",
-        title: "",
-        type: "",
-        money: "",
-        num: "",
-        status: "",
-      },
-      rules: {
-        title: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
-        url: [{ required: true, message: "请上传商品图片", trigger: "blur" }],
-        type: [
-          {
-            required: true,
-            message: "请选择上传类型",
-            trigger: "blur",
-          },
-        ],
-        money: [{ required: true, message: "请输入商品金额", trigger: "blur" }],
-        num: [
-          { required: true, message: "请输入商品剩余数量", trigger: "blur" },
-        ],
-        status: [
-          { required: true, message: "请选择商品状态", trigger: "blur" },
-        ],
-      },
+      ruleForm: itemForm,
+      rules: itemRules,
     };
   },
   watch: {
@@ -142,17 +108,7 @@ export default {
       handler() {
         this.$nextTick(() => {
           this.ruleForm =
-            JSON.stringify(this.item) === "{}"
-              ? {
-                  url: "",
-                  filename: "",
-                  title: "",
-                  type: "",
-                  money: "",
-                  num: "",
-                  status: "",
-                }
-              : this.item;
+            JSON.stringify(this.item) === "{}" ? itemForm : this.item;
         });
       },
       immediate: true,
@@ -200,27 +156,16 @@ export default {
         }
       });
     },
-    handleAvatarSuccess(res, file) {
-      this.ruleForm.url = URL.createObjectURL(file.raw);
-      this.ruleForm.filename = res.file;
-    },
-    beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg" || file.type === "image/png";
-      const isLt2M = file.size / 1024 / 1024 < 2;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG/PNG 格式!");
-      }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
-      }
-      return isJPG && isLt2M;
-    },
     toType(label) {
       if (typeof label === "number") return label;
       for (let i = 0; i < this.itemType.length; i++) {
         if (this.itemType[i].title == label) return this.itemType[i].id;
       }
+    },
+    // 上传图片返回的url和filename
+    changeFileName(filename, url) {
+      this.ruleForm.filename = filename;
+      this.ruleForm.url = url;
     },
   },
 };
