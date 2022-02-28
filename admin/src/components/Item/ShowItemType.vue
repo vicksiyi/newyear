@@ -72,6 +72,12 @@ import {
 } from "@/api/item/type";
 export default {
   name: "ShowItemType",
+  props: {
+    getItemType: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
     ...mapGetters("header", ["getHeader"]),
     headers() {
@@ -85,6 +91,11 @@ export default {
     return {
       loading: false,
     };
+  },
+  watch: {
+    getItemType(res) {
+      this.getData();
+    },
   },
   methods: {
     async swap(index, type) {

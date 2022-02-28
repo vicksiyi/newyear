@@ -19,7 +19,7 @@ import {
   MessageBox, Select, Message, Option, Drawer, Radio, RadioGroup,
   Upload, Alert, Pagination, DatePicker, TimePicker, Carousel,
   CarouselItem, Dialog, Descriptions, DescriptionsItem, Image,
-  Steps, Step, Tooltip, Loading,
+  Steps, Step, Tooltip, Loading,Progress
 } from 'element-ui';
 Vue.use(Button);
 Vue.use(Row);
@@ -67,6 +67,7 @@ Vue.use(Steps);
 Vue.use(Step);
 Vue.use(Tooltip);
 Vue.use(Loading.directive);
+Vue.use(Progress);
 Vue.prototype.$http = http;
 Vue.prototype.$msgbox = MessageBox;
 Vue.prototype.$alert = MessageBox.alert;

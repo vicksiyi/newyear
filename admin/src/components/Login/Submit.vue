@@ -51,6 +51,7 @@
 import { oauthLogin } from "@/api/oauth";
 import md5 from "js-md5";
 import { mapActions } from "vuex";
+import Loading from "@/common/loading";
 export default {
   name: "Submit",
   data() {
@@ -69,12 +70,7 @@ export default {
     ...mapActions("header", ["setTokenAsync"]),
     submitForm(formName) {
       let _this = this;
-      const loading = this.$loading({
-        lock: true,
-        text: "Loading",
-        spinner: "el-icon-loading",
-        background: "rgba(0, 0, 0, 0.7)",
-      });
+      const loading = Loading.start(this);
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           let parms = Object.assign({}, _this.ruleForm);
@@ -85,9 +81,9 @@ export default {
             this.setTokenAsync(_result.data.token);
             this.$router.replace("/");
           }
-          loading.close();
+          Loading.end(loading);
         } else {
-          loading.close();
+          Loading.end(loading);
           console.log("error submit!!");
           return false;
         }

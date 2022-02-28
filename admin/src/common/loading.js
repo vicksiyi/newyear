@@ -1,9 +1,9 @@
 //页面加载
 class Loading {
-    start(_this) {
+    start(_this, text = "Loading") {
         const loading = _this.$loading({
             lock: true,
-            text: "Loading",
+            text: text,
             spinner: "el-icon-loading",
             background: "rgba(0, 0, 0, 0.7)",
         });

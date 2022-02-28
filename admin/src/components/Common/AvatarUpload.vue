@@ -1,16 +1,20 @@
 <template>
-  <el-upload
-    name="image"
-    class="avatar-uploader"
-    :headers="headers"
-    :action="action"
-    :show-file-list="false"
-    :on-success="handleAvatarSuccess"
-    :before-upload="beforeUploadImage"
-  >
-    <img v-if="url" :src="url" class="avatar" />
-    <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-  </el-upload>
+  <div>
+    <el-upload
+      name="image"
+      class="avatar-uploader"
+      :headers="headers"
+      :action="action"
+      :show-file-list="false"
+      :on-change="handleChange"
+      :on-success="handleAvatarSuccess"
+      :before-upload="beforeUploadImage"
+    >
+      <img v-if="url" :src="url" class="avatar" />
+      <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      <el-progress v-if="showProcess" :percentage="percentage"></el-progress>
+    </el-upload>
+  </div>
 </template>
 
 <script>
@@ -18,11 +22,18 @@ import { mapGetters } from "vuex";
 import Upload from "@/common/upload";
 export default {
   name: "AvatarUpload",
+  props: {
+    url: {
+      type: String,
+      default: "",
+    },
+  },
   data() {
     return {
       action: "http://localhost:8080/api/upload/images",
-      url: "",
       filename: "",
+      showProcess: false,
+      percentage: 0,
     };
   },
   computed: {
@@ -35,11 +46,27 @@ export default {
     handleAvatarSuccess(res, file) {
       this.url = URL.createObjectURL(file.raw);
       this.filename = res.file;
-      console.log(this.url);
       this.$emit("changeFileName", res.file, this.url);
     },
     beforeUploadImage(file) {
       Upload.beforeUploadLimitImage(this, file);
+    },
+    handleChange(file) {
+      if (file.status === "ready") {
+        this.percentage = 0;
+        this.showProcess = true;
+        const interval = setInterval(() => {
+          if (this.percentage >= 99) {
+            clearInterval(interval);
+            return;
+          }
+          this.percentage += 1;
+        }, 20);
+      }
+      if (file.status === "success") {
+        this.percentage = 100;
+        this.showProcess = false;
+      }
     },
   },
 };

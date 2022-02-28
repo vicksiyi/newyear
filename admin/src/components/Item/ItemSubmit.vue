@@ -8,7 +8,10 @@
       class="demo-ruleForm"
     >
       <el-form-item label="商品图片" prop="url">
-        <AvatarUpload @changeFileName="changeFileName"></AvatarUpload>
+        <AvatarUpload
+          :url="ruleForm.url"
+          @changeFileName="changeFileName"
+        ></AvatarUpload>
       </el-form-item>
       <el-form-item label="商品名称" prop="title">
         <el-input
@@ -54,8 +57,8 @@
         <el-button
           type="primary"
           style="width: 100%"
-          @click="submitForm('ruleForm')"
-          >添加商品</el-button
+          @click="isEdit ? editForm('ruleForm') : addForm('ruleForm')"
+          >{{ isEdit ? "修改商品" : "添加商品" }}</el-button
         >
       </el-form-item>
     </el-form>
@@ -63,96 +66,110 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { addItem, editItem } from "@/api/item/item";
 import { itemRules, itemForm } from "@/common/rules";
 import AvatarUpload from "@/components/Common/AvatarUpload";
 export default {
   name: "ItemSubmit",
-  props: {
-    itemType: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-    status: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
-    item: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    isEdit: {
-      type: Boolean,
-      default: false,
-    },
-  },
   components: { AvatarUpload },
   data() {
     return {
       ruleForm: itemForm,
       rules: itemRules,
+      isEdit: false,
     };
-  },
-  watch: {
-    isEdit(val) {
-      this.isEdit = val;
-    },
-    item: {
-      handler() {
-        this.$nextTick(() => {
-          this.ruleForm =
-            JSON.stringify(this.item) === "{}" ? itemForm : this.item;
-        });
-      },
-      immediate: true,
-    },
   },
   computed: {
     ...mapGetters("header", ["getHeader"]),
     headers() {
       return this.$store.getters["header/getHeader"];
     },
+    ...mapState({
+      itemType: (state) => state.item.itemType,
+      item: (state) => state.item.item,
+      status: (state) => state.item.status,
+      page: (state) => state.item.page,
+    }),
+  },
+  watch: {
+    item: {
+      handler() {
+        if (JSON.stringify(this.item) !== "{}") {
+          this.ruleForm = Object.assign({}, this.item);
+          this.ruleForm.status = this.status[this.ruleForm.status];
+          this.isEdit = true;
+        } else {
+          this.ruleForm = Object.assign({}, itemForm);
+        }
+      },
+      immediate: true,
+      deep: true,
+    },
   },
   methods: {
-    submitForm(formName) {
-      let _this = this;
-      this.$refs[formName].validate(async (valid) => {
-        if (valid) {
-          const data = Object.assign({}, _this.ruleForm);
-          data.status = _this.status.indexOf(data.status);
-          data.filename && delete data.url;
-          const params = {
-            headers: _this.headers,
-            data: data,
-          };
-          let _result;
-          if (this.isEdit) {
-            params.data.type = _this.toType(params.data.type);
-            _result = await editItem(params).catch((err) => {
-              this.$message.error("未知错误");
-            });
+    // 获取请求参数
+    getParams() {
+      const data = Object.assign({}, this.ruleForm);
+      data.status = this.status.indexOf(data.status);
+      data.filename && delete data.url;
+      const params = {
+        headers: this.headers,
+        data: data,
+      };
+      if (this.isEdit) {
+        params.data.type = this.toType(params.data.type);
+      }
+      return params;
+    },
+    // 根据状态 提示
+    tips(code, msg = "") {
+      if (code === 200) {
+        this.$message({
+          message: `成功${this.isEdit ? "修改" : "添加"}`,
+          type: "success",
+        });
+      } else this.$message.error(msg);
+    },
+    // 验证表单
+    validate(formName) {
+      return new Promise((resolve, reject) => {
+        this.$refs[formName].validate(async (valid) => {
+          if (valid) {
+            resolve(true);
           } else {
-            _result = await addItem(params).catch((err) => {
+            resolve(false);
+            return false;
+          }
+        });
+      });
+    },
+    // 添加商品
+    addForm(formName) {
+      this.validate(formName)
+        .then(async (res) => {
+          if (res) {
+            const params = this.getParams();
+            const _result = await addItem(params).catch((err) => {
               this.$message.error("未知错误");
             });
+            this.tips(_result.data.code, _result.data.msg);
+            this.ruleForm = itemForm;
+            this.$emit("closeDrawer"); // 关闭抽屉，并刷新获取数据
           }
-          if (_result.data.code === 200) {
-            this.$message({
-              message: `成功${_this.isEdit ? "修改" : "添加"}`,
-              type: "success",
-            });
-            this.$emit("closeDrawer");
-          } else this.$message.error(_result.data.msg);
-        } else {
-          console.log("error submit!!");
-          return false;
+        })
+        .catch((err) => console.log(err));
+    },
+    // 编辑商品
+    editForm(formName) {
+      this.validate(formName).then(async (res) => {
+        if (res) {
+          const params = this.getParams();
+          const _result = await editItem(params).catch((err) => {
+            this.$message.error("未知错误");
+          });
+          this.tips(_result.data.code, _result.data.msg);
+          this.$emit("closeDrawer"); // 关闭抽屉，并刷新获取数据
         }
       });
     },
@@ -166,6 +183,9 @@ export default {
     changeFileName(filename, url) {
       this.ruleForm.filename = filename;
       this.ruleForm.url = url;
+    },
+    mounted() {
+      console.log(123123123, this.$store.getters["header/getHeader"]);
     },
   },
 };

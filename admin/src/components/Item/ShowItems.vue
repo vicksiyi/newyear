@@ -54,6 +54,12 @@ import { mapState, mapGetters } from "vuex";
 import { getItem } from "@/api/item/item";
 export default {
   name: "ShowItems",
+  props: {
+    drawer: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
     ...mapGetters("header", ["getHeader"]),
     headers() {
@@ -63,7 +69,16 @@ export default {
       items: (state) => state.item.items,
       itemType: (state) => state.item.itemType,
       status: (state) => state.item.status,
-    })
+      page: (state) => state.item.page,
+      item: (state) => state.item.item,
+    }),
+  },
+  watch: {
+    drawer(val) {
+      if (!val) {
+        this.getItems();
+      }
+    },
   },
   data() {
     return {
@@ -73,7 +88,7 @@ export default {
   methods: {
     getItems(page) {
       this.loading = true;
-      getItem({ headers: this.headers, page: page })
+      getItem({ headers: this.headers, page: this.page })
         .then((result) => {
           this.loading = false;
           this.$store.commit("updateItems", result.data.data);
@@ -84,14 +99,12 @@ export default {
         });
     },
     tag(type) {
-      switch (type) {
-        case 0:
-          return "";
-        case 1:
-          return "success";
-        default:
-          return "info";
-      }
+      const switchType = ["", "success", "info"];
+      return switchType[type];
+    },
+    edit(index) {
+      this.$store.commit("updateItem", this.items[index]);
+      this.$emit("showDrawer");
     },
   },
   mounted() {
