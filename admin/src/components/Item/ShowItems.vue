@@ -59,6 +59,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    update: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     ...mapGetters("header", ["getHeader"]),
@@ -71,6 +75,8 @@ export default {
       status: (state) => state.item.status,
       page: (state) => state.item.page,
       item: (state) => state.item.item,
+      filterType: (state) => state.item.filterType,
+      search: (state) => state.item.search,
     }),
   },
   watch: {
@@ -79,6 +85,9 @@ export default {
         this.getItems();
       }
     },
+    update() {
+      this.getItems();
+    },
   },
   data() {
     return {
@@ -86,12 +95,20 @@ export default {
     };
   },
   methods: {
-    getItems(page) {
+    getItems() {
       this.loading = true;
-      getItem({ headers: this.headers, page: this.page })
+      getItem({
+        headers: this.headers,
+        page: this.page,
+        params: {
+          filterType: this.filterType,
+          search: this.search,
+        },
+      })
         .then((result) => {
           this.loading = false;
           this.$store.commit("updateItems", result.data.data);
+          this.$store.commit("updateTotal", result.data.total);
         })
         .catch((err) => {
           this.loading = false;

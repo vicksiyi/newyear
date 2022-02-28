@@ -15,23 +15,7 @@ export const getItem = function (parms) {
         url: `/api/item/getItem/${parms.page}`,
         method: 'get',
         headers: parms.headers,
-    })
-}
-// 上架商品
-export const upItem = function (parms) {
-    return axios.request({
-        url: `/api/item/upItem/${parms.uuid}`,
-        method: 'put',
-        headers: parms.headers,
-    })
-}
-
-// 下架商品
-export const downItem = function (parms) {
-    return axios.request({
-        url: `/api/item/downItem/${parms.uuid}`,
-        method: 'put',
-        headers: parms.headers,
+        params: parms.params
     })
 }
 
@@ -42,32 +26,5 @@ export const editItem = function (parms) {
         method: 'post',
         headers: parms.headers,
         data: parms.data
-    })
-}
-
-// 获取商品总数量
-export const getNum = function (parms) {
-    return axios.request({
-        url: `/api/item/getNum`,
-        method: 'get',
-        headers: parms.headers,
-    })
-}
-
-// 类别筛选
-export const getFilterItem = function (parms) {
-    return axios.request({
-        url: `/api/item/getFilterItem/${parms.typeId}/${parms.page}`,
-        method: 'get',
-        headers: parms.headers,
-    })
-}
-
-// 类别筛选
-export const getFilterNum = function (parms) {
-    return axios.request({
-        url: `/api/item/getFilterNum/${parms.typeId}`,
-        method: 'get',
-        headers: parms.headers,
     })
 }

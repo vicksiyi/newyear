@@ -43,6 +43,14 @@ export default {
         // 更新search
         updateSearch(state, search) {
             state.search = search;
+        },
+        // 更新total
+        updateTotal(state, total) {
+            state.total = total;
+        },
+        // 更新page
+        updatePage(state, page) {
+            state.page = page;
         }
     }
 }

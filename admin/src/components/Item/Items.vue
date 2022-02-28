@@ -18,10 +18,10 @@
           placeholder="类别筛选"
         >
           <el-option
-            v-for="(item, index) in itemType"
-            :key="index"
+            v-for="item in itemType"
+            :key="item.id"
             :label="item.title"
-            :value="index"
+            :value="item.id"
           >
           </el-option>
         </el-select>
@@ -47,11 +47,16 @@
       </el-col>
     </el-row>
     <el-card style="margin-top: 20px" shadow="hover">
-      <ShowItems @showDrawer="showDrawer" :drawer="drawer"></ShowItems>
+      <ShowItems
+        :update="update"
+        @showDrawer="showDrawer"
+        :drawer="drawer"
+      ></ShowItems>
       <el-row style="margin-top: 20px" :gutter="20">
         <el-col :span="8" :offset="8">
           <el-pagination
             background
+            @current-change="pageChange"
             :current-page="page"
             layout="prev, pager, next"
             :page-size="20"
@@ -65,7 +70,6 @@
       :title="JSON.stringify(item) === '{}' ? '添加商品' : '编辑商品'"
       :visible.sync="drawer"
       :direction="direction"
-      :size="600"
     >
       <ItemSubmit @closeDrawer="closeDrawer"></ItemSubmit>
     </el-drawer>
@@ -84,6 +88,7 @@ export default {
       drawer: false,
       direction: "rtl",
       search: "",
+      update: false,
     };
   },
   computed: {
@@ -107,16 +112,30 @@ export default {
     closeDrawer() {
       this.drawer = false;
     },
-    filterChange(index) {
-      this.$store.commit("updateFilterType", index);
+    // 筛选类别
+    filterChange(id) {
+      this.$store.commit("updatePage", 1);
+      if (id) this.$store.commit("updateFilterType", id);
+      else this.$store.commit("updateFilterType", "");
+      this.update = !this.update;
     },
+    // 查询输入变化
     searchChange(val) {
       if (!val) {
         this.$store.commit("updateSearch", val);
+        this.update = !this.update; // 更新数据
       }
     },
+    // 搜索商品
     searchKey() {
       this.$store.commit("updateSearch", this.search);
+      this.$store.commit("updatePage", 1);
+      this.update = !this.update;
+    },
+    // 页码变化
+    pageChange(page) {
+      this.$store.commit("updatePage", page);
+      this.update = !this.update;
     },
   },
   mounted() {

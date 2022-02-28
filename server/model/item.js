@@ -8,10 +8,14 @@ class Item extends Handle {
         const sql = `select * from items where title like '%${key}%'`;
         return super.commit(sql);
     }
-    getNum(isFilter = false, typeId) {
-        const sql = `select count(1) as num from items where ${isFilter ? 'typeId=' + typeId : '1=1'};`;
+    // 获取类别的数据
+    getNum(key = '', filter = -1) {
+        const sql = `select count(1) as num from items i
+        inner join itemTypes t where i.typeId = t.id and i.title 
+        like '%${key}%' ${filter === -1 ? '' : 'and i.typeId = ' + filter}`;
         return super.commit(sql);
     }
+    // 编辑商品
     edit(uuid, title, typeId, url, num, money, status) {
         const sql = `update items set title = '${title}',typeId=${typeId}, url='${url}',
         num = ${num}, money=${money},status=${status} where uuid='${uuid}'`;
@@ -28,11 +32,12 @@ class Item extends Handle {
         return super.commit(sql);
     }
     // 分页获取商品
-    query(page, isFilter = false, typeId) {
+    query(page, key = '', filter = -1) {
         const sql = `select i.uuid,i.title,t.title as type,
-        i.url,i.num,i.status,i.money from items i 
-        inner join itemTypes t where i.typeId = t.id 
-        ${isFilter ? 'and i.typeId =' + typeId : ''} limit ${20 * page},20;`;
+        i.url,i.num,i.status,i.money from items i
+        inner join itemTypes t where i.typeId = t.id and i.title 
+        like '%${key}%' ${filter === -1 ? '' : 'and i.typeId = ' + filter} 
+        order by i.time desc limit ${20 * page},20;`;
         return super.commit(sql);
     }
     // 插入商品
