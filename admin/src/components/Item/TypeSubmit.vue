@@ -22,6 +22,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { addItemType } from "@/api/item/type";
+import Form from "@/common/form";
 export default {
   name: "TypeSubmit",
   data() {
@@ -41,29 +42,25 @@ export default {
     },
   },
   methods: {
+    getParams(){
+      return {
+              headers: this.headers,
+              data: this.ruleForm,
+            };
+    },
     submitForm(formName) {
-      let _this = this;
-      _this.$refs[formName].validate(async (valid) => {
-        if (valid) {
-          const params = {
-            headers: _this.headers,
-            data: _this.ruleForm,
-          };
-          const _result = await addItemType(params).catch((err) => {
-            this.$message.error("重复添加");
-          });
-          if (_result.data.code === 200) {
-            this.$message({
-              message: "成功添加",
-              type: "success",
+      Form.validate(this, formName)
+        .then(async (res) => {
+          if (res) {
+            const params = this.getParams();
+            const _result = await addItemType(params).catch((err) => {
+              this.$message.error("重复添加");
             });
+            Form.tips(this, _result.data.code, _result.data.msg);
             this.$emit("closeDrawer");
-          } else this.$message.error(_result.data.msg);
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+          }
+        })
+        .catch((err) => console.log(err));
     },
   },
 };

@@ -70,6 +70,7 @@ import { mapGetters, mapState } from "vuex";
 import { addItem, editItem } from "@/api/item/item";
 import { itemRules, itemForm } from "@/common/rules";
 import AvatarUpload from "@/components/Common/AvatarUpload";
+import Form from "@/common/form";
 export default {
   name: "ItemSubmit",
   components: { AvatarUpload },
@@ -122,38 +123,16 @@ export default {
       }
       return params;
     },
-    // 根据状态 提示
-    tips(code, msg = "") {
-      if (code === 200) {
-        this.$message({
-          message: `成功${this.isEdit ? "修改" : "添加"}`,
-          type: "success",
-        });
-      } else this.$message.error(msg);
-    },
-    // 验证表单
-    validate(formName) {
-      return new Promise((resolve, reject) => {
-        this.$refs[formName].validate(async (valid) => {
-          if (valid) {
-            resolve(true);
-          } else {
-            resolve(false);
-            return false;
-          }
-        });
-      });
-    },
     // 添加商品
     addForm(formName) {
-      this.validate(formName)
+      Form.validate(this, formName)
         .then(async (res) => {
           if (res) {
             const params = this.getParams();
             const _result = await addItem(params).catch((err) => {
               this.$message.error("未知错误");
             });
-            this.tips(_result.data.code, _result.data.msg);
+            Form.tips(this, _result.data.code, _result.data.msg);
             this.ruleForm = itemForm;
             this.$emit("closeDrawer"); // 关闭抽屉，并刷新获取数据
           }
@@ -162,13 +141,13 @@ export default {
     },
     // 编辑商品
     editForm(formName) {
-      this.validate(formName).then(async (res) => {
+      Form.validate(this, formName).then(async (res) => {
         if (res) {
           const params = this.getParams();
           const _result = await editItem(params).catch((err) => {
             this.$message.error("未知错误");
           });
-          this.tips(_result.data.code, _result.data.msg);
+          Form.tips(this, _result.data.code, _result.data.msg);
           this.$emit("closeDrawer"); // 关闭抽屉，并刷新获取数据
         }
       });
