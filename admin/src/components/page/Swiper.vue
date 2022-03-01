@@ -1,60 +1,32 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <el-col :span="1.5">
-        <h1>样式图:</h1>
-      </el-col>
-      <el-col style="height: 520px; margin-bottom: 20px" :span="6">
-        <Phone></Phone>
-      </el-col>
-      <el-col :span="1.5">
-        <h1>数据上传:</h1>
-      </el-col>
-      <el-col :span="14">
-        <el-descriptions title="轮播图">
-          <el-descriptions-item>
-            <Swiper></Swiper>
-          </el-descriptions-item>
-        </el-descriptions>
-        <el-descriptions title="首页图">
-          <el-descriptions-item>
-            <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
-              list-type="picture-card"
-              :file-list="homeImages"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove"
-            >
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="" />
-            </el-dialog>
-          </el-descriptions-item>
-        </el-descriptions>
-      </el-col>
-    </el-row>
+    <el-upload
+      name="image"
+      action="http://localhost:8080/api/upload/images"
+      list-type="picture-card"
+      :file-list="swipers"
+      :on-preview="handlePictureCardPreview"
+      :headers="headers"
+      :before-upload="beforeAvatarUpload"
+      :on-success="handleSwiperSuccess"
+      :on-remove="handleRemove"
+    >
+      <i class="el-icon-plus"></i>
+    </el-upload>
+    <el-dialog :visible.sync="dialogVisible">
+      <img width="100%" :src="dialogImageUrl" alt="" />
+    </el-dialog>
   </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex";
-import Phone from "@/components/page/Phone";
-import Swiper from "@/components/page/Swiper";
 export default {
-  name: "page",
-  components: { Phone, Swiper },
+  name: "Swiper",
   data() {
     return {
       dialogImageUrl: "",
       dialogVisible: false,
       swipers: [
-        {
-          name: "",
-          url: "http://localhost:8080/static/img/swiper.e00c62c.jpg",
-        },
-      ],
-      homeImages: [
         {
           name: "",
           url: "http://localhost:8080/static/img/1.e12286e.jpg",
@@ -112,3 +84,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>
