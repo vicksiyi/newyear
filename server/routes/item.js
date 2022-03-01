@@ -3,28 +3,14 @@ const router = express.Router();
 const passport = require('passport');
 const uploadOss = require('../utils/upload');
 const item = require('../model/item');
-const file = require('../utils/file');
 
-// 上传图片到OSS
-function uploadImage(filename) {
-    const date = new Date();
-    const filepath = `${__dirname}/temp/${filename}`;
-    const distpath = `/images/item/${date.getFullYear()}-${date.getMonth()}-${date.getDate()}/${filename}`;
-    // 上传到OSS
-    return new Promise((resolve, reject) => {
-        uploadOss.addFile(filepath, distpath).then((url) => {
-            file.delFile(filepath); //删除缓存文件
-            resolve(url);
-        }).catch(err => reject(err));
-    })
-}
 // 上传商品
 // $routes /item/addItem
 // @desc 上传商品
 // @access private , 
 router.post('/addItem', passport.authenticate('jwt', { session: false }), async (req, res) => {
     const { title, type, filename, num, money, status } = req.body;
-    const url = await uploadImage(filename); // 上传到OSS获取url;
+    const url = await uploadOss.uploadImage(filename); // 上传到OSS获取url;
     const _result = await item.insert(title, type, url, num, money, status).catch(err => {
         res.send({
             code: 400,

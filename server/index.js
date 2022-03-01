@@ -8,6 +8,7 @@ const Company = require('./routes/company');
 const Upload = require('./routes/upload');
 const Item = require('./routes/item');
 const ItemType = require('./routes/itemType');
+const Page = require('./routes/page');
 require('./utils/timer');  // 启动定时器
 
 
@@ -23,6 +24,7 @@ app.use('/api/company', Company);
 app.use('/api/upload', Upload);
 app.use('/api/item', Item);
 app.use('/api/itemType', ItemType);
+app.use('/api/page', Page);
 
 app.listen(5001, () => {
     console.log('the server port running');

@@ -11,6 +11,15 @@ class Upload {
         }
         return isJPG && isLt2M;
     }
+    // 限制上传列表的长度
+    beforeUploadLimitLength(_this, filelist, limitLen) {
+        const length = filelist.length;
+        const isLen = length >= limitLen;
+        if (isLen) {
+            _this.$message.error(`上传不可以超过${limitLen}张图片`);
+        }
+        return !isLen;
+    }
 }
 
 export default new Upload();

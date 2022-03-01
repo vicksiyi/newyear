@@ -13,23 +13,14 @@
       <el-col :span="14">
         <el-descriptions title="轮播图">
           <el-descriptions-item>
-            <Swiper></Swiper>
+            <el-row :gutter="20">
+              <Swiper></Swiper>
+            </el-row>
           </el-descriptions-item>
         </el-descriptions>
         <el-descriptions title="首页图">
           <el-descriptions-item>
-            <el-upload
-              action="https://jsonplaceholder.typicode.com/posts/"
-              list-type="picture-card"
-              :file-list="homeImages"
-              :on-preview="handlePictureCardPreview"
-              :on-remove="handleRemove"
-            >
-              <i class="el-icon-plus"></i>
-            </el-upload>
-            <el-dialog :visible.sync="dialogVisible">
-              <img width="100%" :src="dialogImageUrl" alt="" />
-            </el-dialog>
+            <Home></Home>
           </el-descriptions-item>
         </el-descriptions>
       </el-col>
@@ -41,38 +32,12 @@
 import { mapGetters } from "vuex";
 import Phone from "@/components/page/Phone";
 import Swiper from "@/components/page/Swiper";
+import Home from "@/components/page/Home";
 export default {
   name: "page",
-  components: { Phone, Swiper },
+  components: { Phone, Swiper, Home },
   data() {
-    return {
-      dialogImageUrl: "",
-      dialogVisible: false,
-      swipers: [
-        {
-          name: "",
-          url: "http://localhost:8080/static/img/swiper.e00c62c.jpg",
-        },
-      ],
-      homeImages: [
-        {
-          name: "",
-          url: "http://localhost:8080/static/img/1.e12286e.jpg",
-        },
-        {
-          name: "",
-          url: "http://localhost:8080/static/img/2.e476cfc.jpg",
-        },
-        {
-          name: "",
-          url: "http://localhost:8080/static/img/3.53ee0df.jpg",
-        },
-        {
-          name: "",
-          url: "http://localhost:8080/static/img/4.2eb1bd9.jpg",
-        },
-      ],
-    };
+    return {};
   },
   computed: {
     ...mapGetters("header", ["getHeader"]),

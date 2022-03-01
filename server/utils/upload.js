@@ -18,6 +18,19 @@ class Upload {
             }).catch(err => reject(err));
         })
     }
+    // 上传到OSS
+    uploadImage(filename) {
+        const date = new Date();
+        const filepath = `${__dirname}/../routes/temp/${filename}`;
+        const distpath = `/images/item/${date.getFullYear()}-${date.getMonth()}-${date.getDate()}/${filename}`;
+        // 上传到OSS
+        return new Promise((resolve, reject) => {
+            this.addFile(filepath, distpath).then((url) => {
+                file.delFile(filepath); //删除缓存文件
+                resolve(url);
+            }).catch(err => reject(err));
+        })
+    }
 }
 const upload = new Upload(client);
 module.exports = upload;
