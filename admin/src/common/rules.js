@@ -1,4 +1,5 @@
 module.exports = {
+    // 商品字段
     itemForm: {
         url: "",
         filename: "",
@@ -8,6 +9,7 @@ module.exports = {
         num: "",
         status: "",
     },
+    // 商品输入判断
     itemRules: {
         title: [{ required: true, message: "请输入商品名称", trigger: "blur" }],
         url: [{ required: true, message: "请上传商品图片", trigger: "blur" }],
@@ -25,5 +27,17 @@ module.exports = {
         status: [
             { required: true, message: "请选择商品状态", trigger: "blur" },
         ],
-    }
+    },
+    // 物流公司字段
+    logisticForm: {
+        name: "",
+        symbol: "",
+    },
+    // 物流公司输入判断
+    logisticRules: {
+        name: [{ required: true, message: "请输入公司名称", trigger: "blur" }],
+        symbol: [
+            { required: true, message: "请输入公司编码", trigger: "blur" },
+        ],
+    },
 }

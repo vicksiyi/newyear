@@ -70,6 +70,7 @@
       :title="JSON.stringify(item) === '{}' ? '添加商品' : '编辑商品'"
       :visible.sync="drawer"
       :direction="direction"
+      :size="600"
     >
       <ItemSubmit @closeDrawer="closeDrawer"></ItemSubmit>
     </el-drawer>

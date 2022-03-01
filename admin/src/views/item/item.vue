@@ -2,9 +2,11 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="8">
-        <ItemType></ItemType>
+        <!-- 商品类型 -->
+        <ItemType></ItemType>  
       </el-col>
       <el-col :span="16">
+        <!-- 商品 -->
         <Items></Items>
       </el-col>
     </el-row>

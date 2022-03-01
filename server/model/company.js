@@ -11,7 +11,7 @@ class Company extends Handle {
 
     // 分页查询
     query(page) {
-        const sql = `select * from companys limit ${page * 20},20`;
+        const sql = `select * from companys order by time desc limit ${page * 20},20`;
         return super.commit(sql);
     }
 

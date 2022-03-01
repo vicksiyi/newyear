@@ -34,50 +34,37 @@
 <script>
 import { mapGetters } from "vuex";
 import { addCompany } from "@/api/company";
+import Form from "@/common/form";
+import { logisticForm, logisticRules } from "@/common/rules";
 export default {
   name: "AddLogistic",
   data() {
     return {
-      ruleForm: {
-        name: "",
-        symbol: "",
-      },
-      rules: {
-        name: [{ required: true, message: "请输入公司名称", trigger: "blur" }],
-        symbol: [
-          { required: true, message: "请输入公司编码", trigger: "blur" },
-        ],
-      },
+      ruleForm: logisticForm,
+      rules: logisticRules,
     };
   },
   methods: {
+    getParams() {
+      return {
+        headers: this.headers,
+        data: this.ruleForm,
+      };
+    },
     submitForm(formName) {
-      let _this = this;
-      this.$refs[formName].validate(async (valid) => {
-        if (valid) {
-          const params = {
-            headers: this.headers,
-            data: _this.ruleForm,
-          };
-          const _result = await addCompany(params).catch(err=>{
-            this.$message.error("重复添加")
-          });
-          if (_result.data.code === 200) {
-            this.$message({
-              message: "成功添加",
-              type: "success",
+      Form.validate(this, formName)
+        .then(async (res) => {
+          if (res) {
+            const params = this.getParams();
+            const _result = await addCompany(params).catch((err) => {
+              this.$message.error("重复添加");
             });
-            this.$emit("closeDrawer");
-            this.ruleForm = {
-              name: "",
-              symbol: "",
-            };
-          } else this.$message.error("未知错误");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+            Form.tips(this, _result.data.code, _result.data.msg);
+            this.ruleForm = Object.assign({}, logisticForm);
+            this.$emit("closeDrawer"); // 关闭抽屉，并刷新获取数据
+          }
+        })
+        .catch((err) => console.log(err));
     },
   },
   computed: {
@@ -85,8 +72,7 @@ export default {
     headers() {
       return this.$store.getters["header/getHeader"];
     },
-  },
-  mounted: function () {},
+  }
 };
 </script>
 

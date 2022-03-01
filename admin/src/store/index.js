@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import tab from './tab';
 import header from './header';
 import item from './item';
+import logistic from './logistic';
 import createPersistedState from "vuex-persistedstate"
 
 // 引入持久化
@@ -11,7 +12,8 @@ export default new Vuex.Store({
     modules: {
         tab,
         header,
-        item
+        item,
+        logistic
     },
     // 持久化操作
     plugins: [createPersistedState({

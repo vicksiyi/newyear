@@ -8,26 +8,18 @@
       </el-col>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
-      <el-table :data="companys" height="400" border style="width: 100%">
-        <el-table-column label="序号" width="180">
-          <template slot-scope="scope">
-            <div>{{ scope.$index + 1 }}</div>
-          </template>
-        </el-table-column>
-        <el-table-column prop="name" label="快递公司"> </el-table-column>
-        <el-table-column prop="symbol" label="编码"> </el-table-column>
-        <el-table-column label="操作" width="200">
-          <template slot-scope="scope">
-            <el-button type="danger" @click="del(scope.$index)" size="mini"
-              >删除</el-button
-            >
-          </template>
-        </el-table-column>
-      </el-table>
+      <ShowLogistic :update="update"></ShowLogistic>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
       <el-col :span="8" :offset="8">
-        <el-pagination background layout="prev, pager, next" :total="num">
+        <el-pagination
+          :page-size="20"
+          :current-page="page"
+          background
+          layout="prev, pager, next"
+          :total="total"
+          @current-change="pageChange"
+        >
         </el-pagination
       ></el-col>
     </el-row>
@@ -43,75 +35,37 @@
 </template>
 
 <script>
-import AddLogistic from "@/components/System/AddLogistic";
-import { mapGetters } from "vuex";
-import { getCompany, getCompanyNum, delCompany } from "@/api/company";
-import Loading from "@/common/loading";
+import AddLogistic from "@/components/Logistic/AddLogistic";
+import ShowLogistic from "@/components/Logistic/ShowLogistic";
+import { mapState } from "vuex";
 export default {
   name: "Logistic",
-  components: { AddLogistic },
+  components: { AddLogistic, ShowLogistic },
   data() {
     return {
       drawer: false,
+      update: false,
       direction: "rtl",
-      companys: [],
-      num: 0,
     };
   },
   methods: {
     closeDrawer() {
-      this.getData();
       this.drawer = false;
+      this.update = !this.update;
     },
     addLogistic() {
       this.drawer = true;
     },
-    getData() {
-      const params = {
-        headers: this.headers,
-        page: 0,
-      };
-      const loading = Loading.start(this);
-      Promise.all([getCompany(params), getCompanyNum(params)])
-        .then((result) => {
-          Loading.end(loading);
-          if (result[0].data.code === 200 && result[1].data.code === 200) {
-            this.companys = result[0].data.companys;
-            this.num = result[1].data.num;
-          }
-        })
-        .catch((err) => {
-          Loading.end(loading);
-        });
-    },
-    // 删除物流公司
-    del(index) {
-      const id = this.companys[index].id;
-      const params = {
-        headers: this.headers,
-        id: id,
-      };
-      delCompany(params)
-        .then(() => {
-          this.$message({
-            message: "成功删除",
-            type: "success",
-          });
-          this.getData();
-        })
-        .catch((err) => {
-          this.$message.error("未知错误");
-        });
+    pageChange(page) {
+      this.$store.commit("updatePage", page);
+      this.update = !this.update;
     },
   },
   computed: {
-    ...mapGetters("header", ["getHeader"]),
-    headers() {
-      return this.$store.getters["header/getHeader"];
-    },
-  },
-  mounted: async function () {
-    this.getData();
+    ...mapState({
+      total: (state) => state.logistic.total,
+      page: (state) => state.logistic.page,
+    }),
   },
 };
 </script>

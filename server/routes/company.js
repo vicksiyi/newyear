@@ -8,24 +8,25 @@ const company = require('../model/company');
 // @desc 分页获取物流公司
 // @access private
 router.get('/getCompany/:page', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    let page = req.params.page;
-    let _reuslt = await company.query(page);
-    _reuslt = utils.toJson(_reuslt);
-    res.send({
-        code: 200,
-        companys: _reuslt
+    let page = req.params.page - 1;
+    let _reuslt = await company.query(page).catch(err => {
+        res.send({
+            code: 400,
+            msg: '重复添加'
+        })
     })
-})
-
-// $routes /company/getCompanyNum
-// @desc 分页获取物流公司个数
-// @access private
-router.get('/getCompanyNum', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    let _reuslt = await company.getNum();
     _reuslt = utils.toJson(_reuslt);
+    let _total = await company.getNum().catch(err => {
+        res.send({
+            code: 400,
+            msg: '获取失败'
+        })
+    });
+    _total = utils.toJson(_total);  // 获取总数
     res.send({
         code: 200,
-        num: _reuslt[0].num
+        data: _reuslt,
+        total: _total[0].num
     })
 })
 
