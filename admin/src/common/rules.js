@@ -40,4 +40,16 @@ module.exports = {
             { required: true, message: "请输入公司编码", trigger: "blur" },
         ],
     },
+    // 页面
+    pageForm: {
+        fileList: [],
+        selected: ''
+    },
+    // 物流公司输入判断
+    pageRules: {
+        fileList: [{ type: 'array', required: true, message: "请上传图片", trigger: "change" }],
+        selected: [
+            { required: true, message: "请选择类型", trigger: "change" },
+        ],
+    }
 }
