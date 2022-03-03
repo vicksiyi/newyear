@@ -1,7 +1,7 @@
 export default {
     state: {
         types: ["轮播图", "首页图"],
-        selected: "",
+        selected: "",  // 用于筛选
         images: []
     },
     mutations: {

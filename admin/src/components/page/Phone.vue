@@ -7,23 +7,14 @@
       <div>
         <el-carousel trigger="click" indicator-position="none" height="100px">
           <el-carousel-item v-for="item in swipers" :key="item.id">
-            <img class="carousel-img" :src="item" alt="" />
+            <img class="carousel-img" :src="item.url" alt="" />
           </el-carousel-item>
         </el-carousel>
       </div>
       <div class="shopping">开始选购吧!</div>
       <div class="center">
-        <div class="item">
-          <img class="item-img" src="@/assets/1.jpg" alt="" />
-        </div>
-        <div class="item">
-          <img class="item-img" src="@/assets/2.jpg" alt="" />
-        </div>
-        <div class="item">
-          <img class="item-img" src="@/assets/3.jpg" alt="" />
-        </div>
-        <div class="item">
-          <img class="item-img" src="@/assets/4.jpg" alt="" />
+        <div v-for="item in pages" :key="item.id" class="item">
+          <img class="item-img" :src="item.url" alt="" />
         </div>
       </div>
       <div class="bottom">
@@ -33,19 +24,28 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   name: "Phone",
   data() {
     return {
-      swipers: [
-        "http://localhost:8080/static/img/1.e12286e.jpg",
-        "http://localhost:8080/static/img/2.e476cfc.jpg",
-        "http://localhost:8080/static/img/3.53ee0df.jpg",
-        "http://localhost:8080/static/img/4.2eb1bd9.jpg"
-      ],
+      loading: true,
     };
   },
-  methods: {},
+  computed: {
+    ...mapState({
+      images: (state) => state.page.images,
+    }),
+    swipers() {
+      return this.images.filter((item) => item.type === 0);
+    },
+    pages() {
+      return this.images.filter((item, val) => {
+        return item.type === 1;
+      }).slice(0,4);
+    },
+  },
+  methods: {}
 };
 </script>
 

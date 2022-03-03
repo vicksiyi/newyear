@@ -12,7 +12,7 @@
     </el-table-column>
     <el-table-column label="图片">
       <template slot-scope="scope">
-        <img :src="scope.row.url" alt="" />
+        <el-image :src="scope.row.url" lazy></el-image>
       </template>
     </el-table-column>
     <el-table-column prop="type" label="类别">

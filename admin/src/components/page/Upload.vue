@@ -8,6 +8,7 @@
   >
     <el-form-item label="图片上传" prop="fileList">
       <el-upload
+        ref="imageUpload"
         name="image"
         action="http://localhost:8080/api/upload/images"
         list-type="picture-card"
@@ -56,11 +57,16 @@ import { add } from "@/api/page";
 import Loading from "@/common/loading";
 export default {
   name: "Upload",
+  props: {
+    drawer: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
-      ruleForm: pageForm,
-      rules: pageRules,
-      selected: "",
+      ruleForm: JSON.parse(JSON.stringify(pageForm)),
+      rules: JSON.parse(JSON.stringify(pageRules)),
     };
   },
   computed: {
@@ -74,9 +80,11 @@ export default {
   },
   methods: {
     handleRemove(file, fileList) {
-      const name = file.response.file;
-      const index = this.fileList.indexOf(name);
-      this.ruleForm.fileList.splice(index, 1);
+      if (file.response !== undefined) {
+        const name = file.response.file;
+        const index = this.ruleForm.fileList.indexOf(name);
+        this.ruleForm.fileList.splice(index, 1);
+      }
     },
     handleSwiperSuccess(res, file) {
       this.ruleForm.fileList.push(res.file);
@@ -99,7 +107,8 @@ export default {
         .then((_result) => {
           Loading.end(loading);
           Form.tips(this, _result.data.code, _result.data.msg);
-          this.ruleForm = Object.assign({}, pageForm);
+          this.ruleForm = JSON.parse(JSON.stringify(pageForm));
+          this.$refs["imageUpload"].clearFiles();
           this.$emit("closeDrawer");
         })
         .catch((err) => {
@@ -110,13 +119,15 @@ export default {
     submitForm(forName) {
       Form.validate(this, forName).then((res) => {
         if (res) {
-          let index = this.types.indexOf(this.selected);
+          let index = this.types.indexOf(this.ruleForm.selected);
           index = index === -1 ? 0 : index;
           this.uploadImageList(this.ruleForm.fileList, index);
         }
       });
-      //   this.$emit("addImage", this.fileList, this.selected());
     },
+  },
+  mounted() {
+    console.log(pageForm);
   },
 };
 </script>

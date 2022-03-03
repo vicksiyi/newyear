@@ -43,7 +43,7 @@ router.post('/add', passport.authenticate('jwt', { session: false }), async (req
 // @desc 获取图片
 // @access private
 router.get('/get', passport.authenticate('jwt', { session: false }), async (req, res) => {
-    const _result = await page.query().catch(err => {
+    let _result = await page.query().catch(err => {
         res.send({
             code: 400,
             msg: '插入失败'
@@ -54,6 +54,24 @@ router.get('/get', passport.authenticate('jwt', { session: false }), async (req,
     res.send({
         code: 200,
         data: _result
+    })
+})
+
+// $routes /page/del
+// @desc 删除图片
+// @access private
+router.delete('/del/:id', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const id = req.params.id;
+    let _result = await page.del(id).catch(err => {
+        res.send({
+            code: 400,
+            msg: '删除失败'
+        })
+        throw Error(err);
+    });
+    res.send({
+        code: 200,
+        msg: '删除成功'
     })
 })
 module.exports = router;

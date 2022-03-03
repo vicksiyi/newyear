@@ -43,7 +43,7 @@ module.exports = {
     // 页面
     pageForm: {
         fileList: [],
-        selected: ''
+        selected: '轮播图'
     },
     // 物流公司输入判断
     pageRules: {

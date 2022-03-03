@@ -42,11 +42,11 @@ export default {
     },
   },
   methods: {
-    getParams(){
+    getParams() {
       return {
-              headers: this.headers,
-              data: this.ruleForm,
-            };
+        headers: this.headers,
+        data: this.ruleForm,
+      };
     },
     submitForm(formName) {
       Form.validate(this, formName)

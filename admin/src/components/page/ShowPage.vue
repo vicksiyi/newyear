@@ -11,7 +11,12 @@
         >
       </el-col>
       <el-col :span="5">
-        <el-select v-model="selected" clearable placeholder="请选择">
+        <el-select
+          :value="selected"
+          @change="selectChange"
+          clearable
+          placeholder="请选择"
+        >
           <el-option
             v-for="item in selects"
             :key="item.id"
@@ -24,7 +29,7 @@
     </el-row>
     <el-table
       v-loading="loading"
-      :data="swipers"
+      :data="shows"
       :height="500"
       style="width: auto"
     >
@@ -47,12 +52,8 @@
       </el-table-column>
       <el-table-column label="操作" width="180">
         <template slot-scope="scope">
-          <el-popconfirm title="是否删除吗？">
-            <el-button
-              slot="reference"
-              size="mini"
-              type="danger"
-              @click="del(scope.$index)"
+          <el-popconfirm title="是否删除吗？" @confirm="delImage(scope.row.id)">
+            <el-button slot="reference" size="mini" type="danger"
               >删除</el-button
             >
           </el-popconfirm>
@@ -72,6 +73,8 @@
 <script>
 import { mapGetters, mapState } from "vuex";
 import Upload from "@/components/page/Upload";
+import Form from "@/common/form";
+import { get, del } from "@/api/page";
 export default {
   name: "ShowPage",
   components: { Upload },
@@ -79,32 +82,6 @@ export default {
     return {
       drawer: false,
       direction: "rtl",
-      swipers: [
-        {
-          url: "http://localhost:8080/static/img/logo.62fae46.png",
-          type: 1,
-        },
-        {
-          url: "http://localhost:8080/static/img/2.e476cfc.jpg",
-          type: 0,
-        },
-        {
-          url: "http://localhost:8080/static/img/logo.62fae46.png",
-          type: 1,
-        },
-        {
-          url: "http://localhost:8080/static/img/logo.62fae46.png",
-          type: 0,
-        },
-        {
-          url: "http://localhost:8080/static/img/logo.62fae46.png",
-          type: 1,
-        },
-        {
-          url: "http://localhost:8080/static/img/logo.62fae46.png",
-          type: 1,
-        },
-      ],
       loading: false,
     };
   },
@@ -115,15 +92,61 @@ export default {
     },
     ...mapState({
       selects: (state) => state.page.types,
-      selected: (state) => state.page.selected,
-    })
+      images: (state) => state.page.images,
+    }),
+    selected() {
+      return this.$store.state.page.selected;
+    },
+    shows() {
+      return this.images.filter((val) => {
+        return this.selected === ""
+          ? true
+          : this.$store.state.page.types.indexOf(this.selected) === val.type;
+      });
+    },
   },
   methods: {
+    delImage(id) {
+      this.loading = true;
+      const params = {
+        headers: this.headers,
+        id: id,
+      };
+      del(params)
+        .then((res) => {
+          this.loading = false;
+          this.get();
+        })
+        .catch((err) => {
+          this.loading = false;
+          Form.tips(this, 400, "未知错误");
+        });
+    },
     add() {
       this.drawer = true;
     },
     closeDrawer() {
+      this.get();
       this.drawer = false;
+    },
+    // 获取数据
+    get() {
+      this.loading = true;
+      const params = {
+        headers: this.headers,
+      };
+      get(params)
+        .then((res) => {
+          this.loading = false;
+          this.$store.commit("updateImages", res.data.data);
+        })
+        .catch((err) => {
+          this.loading = false;
+          Form.tips(this, 400, "未知错误");
+        });
+    },
+    selectChange(val) {
+      this.$store.commit("updateSelected", val);
     },
   },
   filters: {
@@ -133,7 +156,9 @@ export default {
       return types[val];
     },
   },
-  mounted() {},
+  mounted() {
+    this.get();
+  },
 };
 </script>
 

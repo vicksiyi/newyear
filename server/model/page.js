@@ -3,6 +3,10 @@ class Page extends Handle {
     constructor() {
         super();
     }
+    del(id) {
+        const sql = `delete from images where id = ${id}`;
+        return super.commit(sql);
+    }
     insert(adminId, url, type) {
         const sql = `insert into images(adminId,url,type) values(${adminId},'${url}',${type});`;
         return super.commit(sql);

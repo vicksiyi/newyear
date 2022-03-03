@@ -16,3 +16,11 @@ export const get = function (parms) {
         headers: parms.headers
     })
 }
+
+export const del = function (parms) {
+    return axios.request({
+        url: `/api/page/del/${parms.id}`,
+        method: 'delete',
+        headers: parms.headers
+    })
+}
