@@ -51,5 +51,51 @@ module.exports = {
         selected: [
             { required: true, message: "请选择类型", trigger: "change" },
         ],
+    },
+    noticeForm: {
+        title: "",
+        content: "",
+        startTime1: "",
+        startTime2: "",
+        endTime1: "",
+        endTime2: "",
+    },
+    noticeRules: {
+        title: [{ required: true, message: "请输入公告标题", trigger: "blur" }],
+        content: [
+            { required: true, message: "请输入公告正文", trigger: "blur" },
+        ],
+        startTime1: [
+            {
+                type: "date",
+                required: true,
+                message: "请选择开始日期",
+                trigger: "change",
+            },
+        ],
+        startTime2: [
+            {
+                type: "date",
+                required: true,
+                message: "请选择时间",
+                trigger: "change",
+            },
+        ],
+        endTime1: [
+            {
+                type: "date",
+                required: true,
+                message: "请选择开始日期",
+                trigger: "change",
+            },
+        ],
+        endTime2: [
+            {
+                type: "date",
+                required: true,
+                message: "请选择时间",
+                trigger: "change",
+            },
+        ],
     }
 }

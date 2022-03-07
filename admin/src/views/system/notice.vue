@@ -6,7 +6,7 @@
           description="在这里你可以选择到自己满意的春联饰品，欢迎光临"
           type="warning"
         >
-          <h1 slot="title">当前公告</h1>
+          <h1 slot="title">当前公告[注:如果有多条公告，只显示最新的一条]</h1>
         </el-alert>
       </el-col>
     </el-row>
@@ -18,32 +18,11 @@
       </el-col>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
-      <el-table :data="tableData" height="400" border style="width: 100%">
-        <el-table-column prop="date" sort label="通知时间" width="180">
-        </el-table-column>
-        <el-table-column prop="title" label="标题" width="180">
-        </el-table-column>
-        <el-table-column prop="content" label="内容"> </el-table-column>
-        <el-table-column prop="endTime" label="通知时长" width="100">
-        </el-table-column>
-        <el-table-column prop="status" label="状态" width="100">
-          <template slot-scope="scope">
-            <el-tag>
-              {{ scope.row.status }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="200">
-          <template>
-            <el-button type="warning" size="mini">编辑</el-button>
-            <el-button type="danger" size="mini">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <Show :update="update"></Show>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
       <el-col :span="8" :offset="8">
-        <el-pagination background layout="prev, pager, next" :total="1000">
+        <el-pagination background layout="prev, pager, next" :total="total">
         </el-pagination
       ></el-col>
     </el-row>
@@ -52,90 +31,38 @@
       :visible.sync="drawer"
       :direction="direction"
       :size="600"
-      ><Submit></Submit>
+      ><Submit @closeDrawer="closeDrawer"></Submit>
     </el-drawer>
   </div>
 </template>
 
 <script>
-import Submit from "@/components/System/Submit";
+import { mapState } from "vuex";
+import Submit from "@/components/Notice/Submit";
+import Show from "@/components/Notice/Show";
 export default {
   name: "notice",
-  components: { Submit },
+  components: { Submit, Show },
   data() {
     return {
       drawer: false,
       direction: "rtl",
-      tableData: [
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-        {
-          date: "2022-01-03 20:00:00",
-          title: "用户须知",
-          content: "在这里你可以选择到自己满意的春联饰品，欢迎光临",
-          endTime: "1天3个小时",
-          status: "正在公告",
-        },
-      ],
+      update: false,
+      isEdit: false,
     };
+  },
+  computed: {
+    ...mapState({
+      total: (state) => state.notice.total,
+    }),
   },
   methods: {
     addNotice() {
       this.drawer = true;
+    },
+    closeDrawer() {
+      this.drawer = false;
+      this.update = !this.update;
     },
   },
 };

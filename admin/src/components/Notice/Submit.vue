@@ -77,71 +77,66 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+import Form from "@/common/form";
+import { add, update } from "@/api/notice";
+import { mergeTime } from "@/common/time";
+import { noticeForm, noticeRules } from "@/common/rules";
 export default {
   name: "Submit",
+  computed: {
+    ...mapGetters("header", ["getHeader"]),
+    headers() {
+      return this.$store.getters["header/getHeader"];
+    },
+    ...mapState({
+      isEdit: (state) => state.notice.isEdit,
+      notice: (state) => state.notice.notice,
+    }),
+  },
+  watch: {
+    isEdit(val) {
+      if (val == true) {
+        console.log(true);
+      }
+    },
+  },
   data() {
     return {
-      ruleForm: {
-        title: "",
-        content: "",
-        startTime1: "",
-        startTime2: "",
-        endTime1: "",
-        endTime2: "",
-      },
-      rules: {
-        title: [{ required: true, message: "请输入公告标题", trigger: "blur" }],
-        content: [
-          { required: true, message: "请输入公告正文", trigger: "blur" },
-        ],
-        startTime1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择开始日期",
-            trigger: "change",
-          },
-        ],
-        startTime2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change",
-          },
-        ],
-        endTime1: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择开始日期",
-            trigger: "change",
-          },
-        ],
-        endTime2: [
-          {
-            type: "date",
-            required: true,
-            message: "请选择时间",
-            trigger: "change",
-          },
-        ],
-      },
+      ruleForm: JSON.parse(JSON.stringify(noticeForm)),
+      rules: JSON.parse(JSON.stringify(noticeRules)),
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+    getParams() {
+      let data = {
+        title: this.ruleForm.title,
+        content: this.ruleForm.content,
+        startTime: mergeTime(
+          this.ruleForm.startTime1,
+          this.ruleForm.startTime2
+        ),
+        endTime: mergeTime(this.ruleForm.endTime1, this.ruleForm.endTime2),
+      };
+      return {
+        headers: this.headers,
+        data: data,
+      };
     },
-    resetForm(formName) {
-      this.$refs[formName].resetFields();
+    submitForm(formName) {
+      Form.validate(this, formName)
+        .then(async (res) => {
+          if (res) {
+            const params = this.getParams();
+            const _result = await add(params).catch((err) => {
+              this.$message.error("未知错误");
+            });
+            Form.tips(this, _result.data.code, _result.data.msg);
+            this.ruleForm = JSON.parse(JSON.stringify(noticeForm));
+            this.$emit("closeDrawer"); // 关闭抽屉，并刷新获取数据
+          }
+        })
+        .catch((err) => console.log(err));
     },
   },
   mounted: function () {},
