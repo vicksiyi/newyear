@@ -5,28 +5,45 @@
     height="400"
     border
     style="width: 100%"
+    :default-sort="{ prop: 'startTime', order: 'descending' }"
   >
-    <el-table-column prop="startTime" sort label="时间" width="180">
+    <el-table-column sortable prop="startTime" label="时间" width="180">
     </el-table-column>
     <el-table-column prop="title" label="标题" width="180"> </el-table-column>
     <el-table-column prop="content" label="内容"> </el-table-column>
-    <el-table-column prop="endTime" label="结束时间" width="180">
+    <el-table-column sortable prop="endTime" label="结束时间" width="180">
     </el-table-column>
     <el-table-column prop="status" label="状态" width="100">
       <template slot-scope="scope">
         <el-tag
-          v-if="!isShow(scope.row.startTime, scope.row.endTime)"
-          :type="scope.row.status === 1 ? '' : 'info'"
+          v-if="scope.row.status === 1"
+          :type="showType(scope.row.startTime, scope.row.endTime)"
         >
-          {{ scope.row.status | filterStatus }}
+          {{ showLabel(scope.row.startTime, scope.row.endTime) }}
         </el-tag>
-        <el-tag v-else type="success"> 公告中 </el-tag>
+        <el-tag v-else type="info"> 已撤回 </el-tag>
       </template>
     </el-table-column>
     <el-table-column label="操作" width="200">
-      <template>
-        <el-button type="warning" size="mini">编辑</el-button>
-        <el-button type="danger" size="mini">撤回</el-button>
+      <template slot-scope="scope">
+        <el-button
+          v-if="scope.row.status == 1"
+          type="danger"
+          @click="recall(scope.row.id, 0)"
+          size="mini"
+          :disabled="
+            show(scope.row.startTime, scope.row.endTime) === 2 ? true : false
+          "
+          >撤回</el-button
+        >
+
+        <el-button
+          v-else
+          type="success"
+          @click="recall(scope.row.id, 1)"
+          size="mini"
+          >显示</el-button
+        >
       </template>
     </el-table-column>
   </el-table>
@@ -34,15 +51,22 @@
 
 <script>
 import { mapGetters, mapState } from "vuex";
-import { get } from "@/api/notice";
+import { get, update } from "@/api/notice";
 import { formatTimestamp } from "@/common/time";
-import Form from "@/common/form";
 export default {
   name: "Show",
   props: {
     update: {
       type: Boolean,
       default: false,
+    },
+  },
+  watch: {
+    update(res) {
+      this.getData();
+    },
+    page() {
+      this.getData();
     },
   },
   computed: {
@@ -54,13 +78,7 @@ export default {
       notices: (state) => state.notice.notices,
       page: (state) => state.notice.page,
       total: (state) => state.notice.total,
-      isEdit: (state) => state.notice.isEdit,
     }),
-  },
-  watch: {
-    update(res) {
-      this.getData();
-    },
   },
   data() {
     return {
@@ -89,21 +107,49 @@ export default {
           this.$message.error("未知错误");
         });
     },
-    isShow(startTime, endTime) {
+    show(startTime, endTime) {
       let time = new Date().getTime();
       startTime = new Date(startTime).getTime();
       endTime = new Date(endTime).getTime();
-      return time > startTime && time < endTime;
-    }
+      if (time < startTime) return 0;
+      else if (time > startTime && time < endTime) return 1;
+      else return 2;
+    },
+    showType(startTime, endTime) {
+      const type = this.show(startTime, endTime);
+      if (type === 0) return "";
+      else if (type === 1) return "success";
+      else return "warning";
+    },
+    showLabel(startTime, endTime) {
+      const type = this.show(startTime, endTime);
+      if (type === 0) return "待公告";
+      else if (type === 1) return "公告中";
+      else return "已公告";
+    },
+    recall(id, status) {
+      const params = {
+        headers: this.headers,
+        status: status,
+        id: id,
+      };
+      update(params)
+        .then((result) => {
+          this.$message({
+            type: "success",
+            message: "更新完成",
+          });
+          this.getData();
+          this.$emit("updateLast");
+        })
+        .catch((err) => {
+          this.loading = false;
+          this.$message.error("未知错误");
+        });
+    },
   },
   mounted: function () {
     this.getData();
-  },
-  filters: {
-    filterStatus(index) {
-      const status = ["已撤回", "待公告"];
-      return status[index];
-    },
   },
 };
 </script>

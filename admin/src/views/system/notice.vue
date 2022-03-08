@@ -1,9 +1,9 @@
 <template>
   <div>
     <el-row :gutter="20">
-      <el-col :span="24">
+      <el-col :span="24" v-loading="loading">
         <el-alert
-          description="在这里你可以选择到自己满意的春联饰品，欢迎光临"
+          :description="`${notice.title}--${notice.content}`"
           type="warning"
         >
           <h1 slot="title">当前公告[注:如果有多条公告，只显示最新的一条]</h1>
@@ -18,11 +18,17 @@
       </el-col>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
-      <Show :update="update"></Show>
+      <Show :update="update" @updateLast="updateLast"></Show>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
       <el-col :span="8" :offset="8">
-        <el-pagination background layout="prev, pager, next" :total="total">
+        <el-pagination
+          :page-size="20"
+          @current-change="pageChange"
+          background
+          layout="prev, pager, next"
+          :total="total"
+        >
         </el-pagination
       ></el-col>
     </el-row>
@@ -37,21 +43,32 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
+import { getLast } from "@/api/notice";
 import Submit from "@/components/Notice/Submit";
 import Show from "@/components/Notice/Show";
 export default {
   name: "notice",
   components: { Submit, Show },
+  watch: {
+    update() {
+      this.getLast();
+    },
+  },
   data() {
     return {
       drawer: false,
       direction: "rtl",
       update: false,
-      isEdit: false,
+      loading: false,
+      notice: "",
     };
   },
   computed: {
+    ...mapGetters("header", ["getHeader"]),
+    headers() {
+      return this.$store.getters["header/getHeader"];
+    },
     ...mapState({
       total: (state) => state.notice.total,
     }),
@@ -60,10 +77,34 @@ export default {
     addNotice() {
       this.drawer = true;
     },
+    getLast() {
+      const params = {
+        headers: this.headers,
+      };
+      this.loading = true;
+      getLast(params)
+        .then((result) => {
+          this.loading = false;
+          this.notice = result.data.notice;
+        })
+        .catch((err) => {
+          this.loading = false;
+          this.$message.error("未知错误");
+        });
+    },
     closeDrawer() {
       this.drawer = false;
+      this.updateLast();
+    },
+    updateLast(){
       this.update = !this.update;
     },
+    pageChange(page) {
+      this.$store.commit("updatePage", page);
+    },
+  },
+  mounted() {
+    this.getLast();
   },
 };
 </script>

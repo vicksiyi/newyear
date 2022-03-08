@@ -11,6 +11,11 @@ class Notice extends Handle {
         const sql = `update notices set status=${status} where id = ${id};`;
         return super.commit(sql);
     }
+    getLast() {
+        const sql = `select * from notices where status = 1 and 
+        now() > startTime and now() < endTime order by time desc limit 1;`;
+        return super.commit(sql);
+    }
     insert(title, content, startTime, endTime) {
         const sql = `insert into notices(title,content,startTime,endTime) 
         values('${title}','${content}','${startTime}','${endTime}')`;

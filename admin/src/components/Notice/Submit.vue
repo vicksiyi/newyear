@@ -90,16 +90,8 @@ export default {
       return this.$store.getters["header/getHeader"];
     },
     ...mapState({
-      isEdit: (state) => state.notice.isEdit,
       notice: (state) => state.notice.notice,
     }),
-  },
-  watch: {
-    isEdit(val) {
-      if (val == true) {
-        console.log(true);
-      }
-    },
   },
   data() {
     return {

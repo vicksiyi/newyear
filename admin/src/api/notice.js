@@ -24,3 +24,11 @@ export const update = function (parms) {
         headers: parms.headers,
     })
 }
+
+export const getLast = function (parms) {
+    return axios.request({
+        url: `/api/notice/getLast`,
+        method: 'get',
+        headers: parms.headers,
+    })
+}

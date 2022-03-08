@@ -66,4 +66,22 @@ router.get('/get/:page', passport.authenticate('jwt', { session: false }), async
         total: _total[0].total
     })
 })
+
+// $routes /notice/getLast
+// @desc 查询最新公告
+// @access private
+router.get('/getLast', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    let _result = await notice.getLast().catch(err => {
+        res.send({
+            code: 400,
+            msg: "获取失败"
+        })
+        throw Error(err);
+    });
+    _result = utils.toJson(_result);
+    res.send({
+        code: 200,
+        notice: _result[0]
+    })
+})
 module.exports = router;

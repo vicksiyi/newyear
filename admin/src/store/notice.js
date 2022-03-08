@@ -2,9 +2,7 @@ export default {
     state: {
         notices: [],
         page: 1,
-        total: 0,
-        isEdit: false,
-        notice: {}
+        total: 0
     },
     mutations: {
         updateNotice(state, notices) {
@@ -15,12 +13,6 @@ export default {
         },
         updateTotal(state, total) {
             state.total = total;
-        },
-        updateIsEdit(state, status) {
-            state.isEdit = status
-        },
-        updateIsEdit(state, notice) {
-            state.notice = notice
         }
     }
 }
