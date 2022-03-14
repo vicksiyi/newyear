@@ -1,18 +1,26 @@
 // pages/home/index.js
+const home = require("../../static/js/home");
+const time = require("../../utils/time");
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    indicatorDots: true,
+    autoplay: true,
+    circular: true,
+    interval: 2000,
+    duration: 500,
+    pages: [],
+    notice: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onLoad: async function (options) {
+    this.getData();
   },
   onShow: function () {
     try {
@@ -29,6 +37,16 @@ Page({
   goShopping: function () {
     wx.navigateTo({
       url: '../shopping/index',
+    })
+  },
+  getData() {
+    let _token = wx.getStorageSync('_token');
+    Promise.all([home.getPage(_token), home.getNotice(_token)]).then(res => {
+      res[1].notice.startTime = time.formatTimestamp(new Date(res[1].notice.startTime).getTime());
+      this.setData({
+        pages: res[0].data,
+        notice: res[1].notice
+      })
     })
   }
 })

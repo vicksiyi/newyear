@@ -42,16 +42,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-top: 20rpx;
+  flex-wrap: wrap;
 }
 
-/* 
-.show-img .item {
-  width: 300rpx;
-  height: 300rpx;
-} */
-
 .show-img .item .img {
-  width: 300rpx;
-  height: 300rpx;
+  width: 260rpx;
+  height: 260rpx;
 }

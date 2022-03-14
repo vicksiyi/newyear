@@ -1,22 +1,13 @@
-const db = require('../config/keys').mysqlConfig;
-const handle = require('../utils/handle');
-class User {
-    constructor() { }
-    commit(sql) {
-        return new Promise((resolve, reject) => {
-            handle(db, sql, (err, _result) => {
-                if (err) reject(err)
-                else resolve(_result);
-            })
-        })
-    }
+const Handle = require("./handle");
+class User extends Handle {
+    constructor() { super(); }
     query(openId) {
         const sql = `select * from users where openId = '${openId}'`;
-        return this.commit(sql);
+        return super.commit(sql);
     }
     insert(openId) {
         const sql = `insert into users(openId) values('${openId}');`;
-        return this.commit(sql);
+        return super.commit(sql);
     }
 }
 const user = new User();

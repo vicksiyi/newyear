@@ -5,11 +5,17 @@
 <!-- 通告栏 -->
 <view>
   <i-notice-bar background-color="#fff" icon="systemprompt" loop>
-    在这里你可以选择到自己满意的春联饰品，欢迎光临
-  </i-notice-bar> 
+    {{notice.startTime}}:{{notice.content}}
+  </i-notice-bar>
 </view>
 <view class="swiper">
-  <image class="img" src="../../images/static/swiper.jpg"></image>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" circular="{{circular}}" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for="{{pages}}" wx:if="{{item.type == 0}}" wx:key="*this">
+      <swiper-item>
+        <image class="img" src="{{item.url}}"></image>
+      </swiper-item>
+    </block>
+  </swiper>
 </view>
 <view class="select" bindtap="goShopping">
   开始选购吧!
@@ -17,13 +23,8 @@
 </view>
 <view class="show-img">
   <view class="row">
-    <view wx:for="{{[1,2]}}" wx:key="*this" class="item">
-      <image class="img" src="../../images/static/{{item}}.jpg"></image>
-    </view>
-  </view>
-  <view class="row">
-    <view wx:for="{{[3,4]}}" wx:key="*this" class="item">
-      <image class="img" src="../../images/static/{{item}}.jpg"></image>
+    <view wx:for="{{pages}}" wx:if="{{item.type == 1}}" wx:key="*this" class="item">
+      <image class="img" src="{{item.url}}"></image>
     </view>
   </view>
 </view>

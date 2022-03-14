@@ -20,12 +20,21 @@ class HttpRequest {
       try {
         wx.request({
           ...options,
-          success(res) { resolve(res) },
+          success(res) {
+            if (res.statusCode == 401 && getCurrentPages()[0].route != "pages/login/index") {
+              wx.reLaunch({
+                url: '../login/index',
+              })
+            }
+            resolve(res);
+          },
           fail(err) {
+            console.log(err);
             reject(err);
           }
         })
       } catch (err) {
+        console.log(err);
         reject(err)
       }
     })
