@@ -58,10 +58,6 @@
   background: #f8f8f9;
 }
 
-.content .left .item:nth-child(1) {
-  background: #fff;
-}
-
 .selected-item {
   background: #fff;
 }
@@ -121,7 +117,7 @@
   width: 400rpx;
   height: 100rpx;
   font-size: 25rpx;
-  line-height: 40rpx;
+  line-height: 50rpx;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;

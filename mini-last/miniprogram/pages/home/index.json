@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "i-notice-bar": "../../dist/notice-bar/index",
-    "i-icon": "../../dist/icon/index"
+    "i-icon": "../../dist/icon/index",
+    "i-spin": "../../dist/spin/index"
   },
   "disableScroll": true
 }

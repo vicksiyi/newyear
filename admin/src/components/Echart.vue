@@ -121,8 +121,8 @@ export default {
       if (this.echart) {
         this.echart.setOption(this.options);
       } else {
-        this.echart = echarts.init(this.$refs.chart);
-        this.echart.setOption(this.options);
+        this.echart = echarts.init(this.$refs.chart);  // 初始化
+        this.echart.setOption(this.options); // 传入配置
       }
     },
     initChartData: function () {
@@ -143,6 +143,7 @@ export default {
   computed: {
     options() {
       if (this.isItemType) return this.itemTypeOption;
+      console.log(this.userOption);
       if (this.isUser) return this.userOption;
       if (this.isVideo) return this.videoOption;
     },

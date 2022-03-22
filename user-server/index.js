@@ -6,6 +6,7 @@ const Test = require('./routes/test');
 const Oauth = require('./routes/oauth');
 const Page = require('./routes/page');
 const Notice = require('./routes/notice');
+const Item = require('./routes/item');
 
 
 // // 使用body-parser
@@ -18,6 +19,7 @@ app.use('/api/test', Test);
 app.use('/api/oauth', Oauth);
 app.use('/api/page', Page);
 app.use('/api/notice', Notice);
+app.use('/api/item', Item);
 
 app.listen(5000, () => {
     console.log('the user-server port running');

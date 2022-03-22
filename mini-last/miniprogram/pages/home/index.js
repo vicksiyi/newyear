@@ -13,7 +13,8 @@ Page({
     interval: 2000,
     duration: 500,
     pages: [],
-    notice: {}
+    notice: {},
+    spinShow: false
   },
 
   /**
@@ -41,11 +42,15 @@ Page({
   },
   getData() {
     let _token = wx.getStorageSync('_token');
+    this.setData({
+      spinShow: true
+    })
     Promise.all([home.getPage(_token), home.getNotice(_token)]).then(res => {
       res[1].notice.startTime = time.formatTimestamp(new Date(res[1].notice.startTime).getTime());
       this.setData({
         pages: res[0].data,
-        notice: res[1].notice
+        notice: res[1].notice,
+        spinShow: false
       })
     })
   }
