@@ -5,8 +5,7 @@ exports.getItems = (token) => {
     axios.request(`/item/getItems`, {
       header: {
         Authorization: token
-      },
-      methods:"GET"
+      }
     })
       .then((res) => {
         if (res.data.code == 200) { resolve(res.data); }
@@ -22,11 +21,30 @@ exports.getType = (token) => {
     axios.request(`/item/getType`, {
       header: {
         Authorization: token
-      },
-      methods:"GET"
+      }
     })
       .then((res) => {
         if (res.data.code == 200) { resolve(res.data); }
+      })
+      .catch(err => {
+        resolve(false)
+      })
+  })
+}
+
+exports.noplay = (token, cards) => {
+  return new Promise((resolve, reject) => {
+    axios.request(`/item/noplay`, {
+      header: {
+        Authorization: token
+      },
+      data: {
+        cards: typeof cards === "string" ? cards : JSON.stringify(cards)
+      },
+      method: "POST"
+    })
+      .then((res) => {
+        if (res.data.code == 200) { resolve(true); }
       })
       .catch(err => {
         resolve(false)

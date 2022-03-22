@@ -1,5 +1,6 @@
 // pages/shopping/index.js
 const item = require("../../static/js/item");
+const { $Message } = require('../../dist/base/index');
 Page({
 
   /**
@@ -15,6 +16,7 @@ Page({
     loading: false,
     datas: [],
     money: 0,
+    token: ''
   },
 
   /**
@@ -22,6 +24,7 @@ Page({
    */
   onLoad: function (options) {
     let _this = this;
+    let _token = wx.getStorageSync('_token');
     wx.getSystemInfo({
       success: (result) => {
         _this.setData({
@@ -29,13 +32,17 @@ Page({
         })
       },
     })
-    let _token = wx.getStorageSync('_token');
+    this.setData({
+      token: _token
+    })
+  },
+  onShow: function () {
     let cards = wx.getStorageSync('cards');
     let money = wx.getStorageSync('money');
-    this.getData(_token);
+    this.getData(this.data.token);
     this.setData({
-      cards: JSON.parse(cards),
-      money: money
+      cards: cards ? JSON.parse(cards) : {},
+      money: money ? money : 0
     })
   },
   getData: function (token) {
@@ -55,17 +62,33 @@ Page({
     })
   },
   close: function () {
-    if (!this.data.show) {
-      this.showCards();
-    }
     this.setData({
       show: !this.data.show
     })
   },
-  selectDone: function () {
-    wx.navigateTo({
-      url: '../orderConfirm/index',
-    })
+  // 选好了，跳转到支付页面
+  selectDone: async function () {
+    if(JSON.stringify(this.data.cards) === '{}') {
+      $Message({
+        content: '不能为空',
+        type: 'warning'
+      });
+      return;
+    }
+    let status = item.noplay(this.data.token, this.data.cards);
+    if (status) {
+      // 上传成功清除本地缓存
+      wx.removeStorageSync('cards');
+      wx.removeStorageSync('money');
+      wx.navigateTo({
+        url: '../orderConfirm/index',
+      })
+    } else {
+      $Message({
+        content: '未知错误',
+        type: 'error'
+      });
+    }
   },
   selectItemType: function (res) {
     let id = res.currentTarget.dataset.id;
@@ -87,7 +110,7 @@ Page({
         [item]: cards[uuid].count + 1,
       })
     } else {
-      cards[uuid] = { count: 1 };
+      cards[uuid] = Object.assign(this.uuidToItem(uuid), { count: 1 });
       let temp = `cards.${uuid}`;
       _this.setData({
         [temp]: cards[uuid],
@@ -134,17 +157,6 @@ Page({
   // uuid转item
   uuidToItem: function (uuid) {
     return this.data.datas.filter(value => value.uuid === uuid)[0];
-  },
-  // 查看已经选的商品
-  showCards: function () {
-    let _this = this;
-    let cards = this.data.cards;
-    for (let key in cards) {
-      cards[key] = Object.assign(cards[key], this.uuidToItem(key));
-    }
-    this.setData({
-      cards: cards
-    })
   },
   clearCard: function () {
     this.setData({

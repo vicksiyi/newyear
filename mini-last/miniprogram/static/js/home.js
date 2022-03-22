@@ -5,8 +5,7 @@ exports.getPage = (token) => {
     axios.request(`/page/getPage`, {
       header: {
         Authorization: token
-      },
-      methods:"GET"
+      }
     })
       .then((res) => {
         if (res.data.code == 200) { resolve(res.data); }
@@ -22,8 +21,7 @@ exports.getNotice = (token) => {
     axios.request(`/notice/getNotice`, {
       header: {
         Authorization: token
-      },
-      methods:"GET"
+      }
     })
       .then((res) => {
         if (res.data.code == 200) { resolve(res.data); }

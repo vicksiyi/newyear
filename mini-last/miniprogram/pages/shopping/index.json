@@ -2,7 +2,8 @@
   "usingComponents": {
     "i-icon": "../../dist/icon/index",
     "i-load-more": "../../dist/load-more/index",
-    "i-spin": "../../dist/spin/index"
+    "i-spin": "../../dist/spin/index",
+    "i-message": "../../dist/message/index"
   },
   "navigationBarTitleText": "春联选购"
 }
