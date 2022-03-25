@@ -47,14 +47,17 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, .5);
-  z-index: 2;
+  z-index: 1;
 }
 
-.pop-up .form {
+.form {
+  position: fixed;
   width: 600rpx;
   padding: 30rpx;
   background: #fff;
-  margin: 50% auto;
+  z-index: 2;
+  left: 40rpx;
+  top: 260rpx;
 }
 
 .pop-up-add {

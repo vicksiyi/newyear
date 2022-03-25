@@ -8,6 +8,7 @@ const Page = require('./routes/page');
 const Notice = require('./routes/notice');
 const Item = require('./routes/item');
 const Play = require('./routes/play');
+const Address = require('./routes/address');
 
 
 // // 使用body-parser
@@ -22,6 +23,7 @@ app.use('/api/page', Page);
 app.use('/api/notice', Notice);
 app.use('/api/item', Item);
 app.use('/api/play', Play);
+app.use('/api/address', Address);
 
 app.listen(5000, () => {
     console.log('the user-server port running');

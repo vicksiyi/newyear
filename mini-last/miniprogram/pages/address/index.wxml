@@ -11,15 +11,15 @@
   </i-cell>
 </i-cell-group>
 <view wx:if="{{visible}}" bindtap="handleClick" class="pop-up">
-  <view class="form">
-    <i-panel title="基础用法">
-      <i-input value="{{ address.name }}" title="收货人" placeholder="名字" />
-      <i-input value="{{ address.mobile }}" type="number" title="联系电话" placeholder="请输入手机号" />
-      <i-input value="{{ address.address }}" type="textarea" title="详细地址" placeholder="请输入详细地址(最多50字)" maxlength="50" />
-    </i-panel>
-    <view class="add pop-up-add" hover-class="click">
-      添加地址
-    </view>
+</view>
+<view wx:if="{{visible}}" class="form">
+  <i-panel title="基础用法">
+    <i-input value="{{ addressInput.name }}" bind:change="nameChange" title="收货人" placeholder="名字" />
+    <i-input value="{{ addressInput.mobile }}" bind:change="mobileChange" type="number" title="联系电话" placeholder="请输入手机号" />
+    <i-input value="{{ addressInput.address }}" bind:change="addressChange" type="textarea" title="详细地址" placeholder="请输入详细地址(最多50字)" maxlength="50" />
+  </i-panel>
+  <view class="add pop-up-add" bindtap="add" hover-class="click">
+    添加地址
   </view>
 </view>
 <view class="add" bindtap="handleClick" hover-class="click">

@@ -5,7 +5,7 @@ const item = require('../model/item');
 const utils = require('../utils/utils');
 const redisHandle = require('../utils/redis');
 
-// $routes /item/getNotPlay
+// $routes /play/getNotPlay
 // @desc 获取未支付订单
 // @access private
 router.get('/getNotPlay', passport.authenticate('jwt', { session: false }), async (req, res) => {
@@ -35,7 +35,7 @@ router.get('/getNotPlay', passport.authenticate('jwt', { session: false }), asyn
     });
 })
 
-// $routes /item/playDone
+// $routes /play/playDone
 // @desc 支付完成处理
 // @access private
 router.post('/playDone', passport.authenticate('jwt', { session: false }), async (req, res) => {
