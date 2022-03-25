@@ -1,4 +1,21 @@
 <!--pages/orderList/index.wxml-->
+<i-panel i-class="panel" title="未支付">
+  <view class="order">
+    <view wx:for="{{noplay}}" bindtap="navOrderConfirm" data-Key="{{item.key}}" wx:key="*this" class="order-item">
+      <view class="left">
+        <view class="up">
+          下单时间：{{item.time}}
+        </view>
+        <view class="down">
+          <span>{{item.firstTitle}}</span> 等{{item.count}}件商品 ¥ {{item.money}}元
+        </view>
+      </view>
+      <view class="right">
+        <view bindtap="navPlay">去支付</view>
+      </view>
+    </view>
+  </view>
+</i-panel>
 <i-panel i-class="panel" title="到店自取">
   <view class="order">
     <view class="order-item">
@@ -62,3 +79,4 @@
     </view>
   </view>
 </i-panel>
+<i-spin size="large" fix wx:if="{{ loading }}"></i-spin>

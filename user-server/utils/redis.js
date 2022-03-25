@@ -17,6 +17,7 @@ class RedisHandle {
             console.log('Error ' + err);
         });
     }
+
     // 获取键值
     getKey(key) {
         let _this = this;
@@ -27,6 +28,7 @@ class RedisHandle {
             })
         })
     }
+
     // 设置值
     setKey(key, value) {
         let _this = this;
@@ -37,23 +39,25 @@ class RedisHandle {
             });
         })
     }
+
     // 设置存在过期时间的值{默认一个小时}
     setTtlKey(key, value, time = 3600) {
         let _this = this;
         return new Promise((resolve, reject) => {
-            _this.redisClient.set(key, value, (err) => {
+            _this.redisClient.set(key, value, (err,key) => {
                 if (err) reject(err);
-                else resolve(true);
+                else resolve();
             });
         }).then(() => {
             return new Promise((resolve, reject)=>{
                 _this.redisClient.expire(key, time, (err) => {
                     if (err) reject(err);
-                    else resolve(true);
+                    else resolve(key);
                 });
             })
         })
     }
+
     // 获取过期时间
     getTtlKey(key) {
         let _this = this;
@@ -62,6 +66,16 @@ class RedisHandle {
                 if (err) resolve(err);
                 else resolve(reply);
             });
+        })
+    }
+    // 获取符合条件的keys
+    getKeys(keyword) {
+        let _this = this;
+        return new Promise((resolve,reject)=>{
+            _this.redisClient.keys(keyword, function (err, reply) {
+                if (err) resolve(err);
+                else resolve(reply);
+            })
         })
     }
 }

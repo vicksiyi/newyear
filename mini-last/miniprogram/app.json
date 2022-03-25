@@ -1,8 +1,8 @@
 {
   "pages": [
-    "pages/shopping/index",
-    "pages/orderConfirm/index",
     "pages/home/index",
+    "pages/orderConfirm/index",
+    "pages/shopping/index",
     "pages/login/index",
     "pages/index/index",
     "pages/comsumption/index",

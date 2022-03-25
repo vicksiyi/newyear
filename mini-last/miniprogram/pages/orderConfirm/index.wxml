@@ -4,7 +4,7 @@
     <view class="money">
       合计：
       <i-icon size="30" color="#D8322E" type="transaction_fill" />
-      22.2元
+      {{money}}元
     </view>
   </view>
   <view class="done" bindtap="selectDone">支付</view>
@@ -45,29 +45,27 @@
         <view class="order-detail">
           <i-panel title="订单详情">
             <view class="order-list">
-              <view wx:for="{{[1,2,3,4]}}" class="item">
+              <view wx:for="{{items}}" class="item">
                 <view class="left">
-                  <image src="https://i.loli.net/2017/08/21/599a521472424.jpg"></image>
+                  <image src="{{item.url}}"></image>
                 </view>
                 <view class="msg">
-                  <view class="class">盒联1.1m</view>
+                  <!-- <view class="class">盒联1.1m</view> -->
                   <view class="detail">
-                    上联:春夏秋冬行好运
-                    下联:东西南北遇贵人
-                    横批:出入平安
+                    {{item.title}}
                   </view>
                 </view>
                 <view class="right">
-                  <view class="num">X 2</view>
+                  <view class="num">X {{item.count}}</view>
                   <view class="money">
-                    ￥ 11.5
+                    ￥ {{item.money}}
                   </view>
                 </view>
               </view>
             </view>
           </i-panel>
           <view class="all-num">
-            总计: <span>￥114.5</span>
+            总计: <span>￥{{money}}</span>
           </view>
         </view>
         <i-panel title="备注">
@@ -82,3 +80,4 @@
     </view>
   </view>
 </i-panel>
+<i-spin size="large" fix wx:if="{{ loading }}"></i-spin>

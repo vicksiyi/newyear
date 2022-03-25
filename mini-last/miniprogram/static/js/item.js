@@ -44,7 +44,39 @@ exports.noplay = (token, cards) => {
       method: "POST"
     })
       .then((res) => {
-        if (res.data.code == 200) { resolve(true); }
+        if (res.data.code == 200) { resolve(res.data.key); }
+      })
+      .catch(err => {
+        reject(false)
+      })
+  })
+}
+
+exports.play = (token, cards) => {
+  return new Promise((resolve, reject) => {
+    axios.request(`/play/getNotPlay`, {
+      header: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        if (res.data.code == 200) { resolve(res.data.data); }
+      })
+      .catch(err => {
+        resolve(false)
+      })
+  })
+}
+
+exports.getPlay = (token, key) => {
+  return new Promise((resolve, reject) => {
+    axios.request(`/item/getPlay/${key}`, {
+      header: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        if (res.data.code == 200) { resolve(res.data.data); }
       })
       .catch(err => {
         resolve(false)

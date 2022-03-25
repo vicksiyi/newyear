@@ -60,7 +60,7 @@
 .order-list {
   width: 720rpx;
   margin: auto;
-  height: 400rpx;
+  max-height: 400rpx;
   overflow-y: scroll;
   overflow-x: hidden;
 }

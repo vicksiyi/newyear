@@ -75,13 +75,17 @@ Page({
       });
       return;
     }
-    let status = item.noplay(this.data.token, this.data.cards);
-    if (status) {
+    let key = await item.noplay(this.data.token, this.data.cards);
+    if (key) {
       // 上传成功清除本地缓存
       wx.removeStorageSync('cards');
       wx.removeStorageSync('money');
       wx.navigateTo({
         url: '../orderConfirm/index',
+        success(res){
+          // 发送一个事件
+          res.eventChannel.emit('key', key)
+        }
       })
     } else {
       $Message({
@@ -102,7 +106,6 @@ Page({
     let _this = this;
     let cards = this.data.cards;
     let uuid = res.currentTarget.dataset.uuid;
-    console.log(this.uuidToItem(uuid));
     if (cards.hasOwnProperty(uuid)) {
       let item = `cards.${uuid}.count`;
       // 数量问题！！！！ ============> 需设计

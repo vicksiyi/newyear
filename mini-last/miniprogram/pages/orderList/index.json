@@ -1,6 +1,7 @@
 {
   "usingComponents": {
-    "i-panel": "../../dist/panel/index"
+    "i-panel": "../../dist/panel/index",
+    "i-spin": "../../dist/spin/index"
   },
   "navigationBarTitleText": "订单列表"
 }

@@ -1,4 +1,5 @@
 // pages/orderConfirm/index.js
+const item = require("../../static/js/item");
 Page({
 
   /**
@@ -27,13 +28,26 @@ Page({
       longitude: 116.323459711,
       iconPath: '/image/location.png'
     }],
-    address: null
+    address: null,
+    token: "",
+    key: "",
+    items: [],
+    money: 0,
+    count: 0,
+    loading: false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: async function (options) {
+    let _token = wx.getStorageSync('_token');
+    let key = await this.getKey();  // 获取传过来的key
+    this.setData({
+      token: _token,
+      key: key
+    })
+    this.getDetail(_token, key);
     let _this = this;
     wx.getSystemInfo({
       success: (result) => {
@@ -41,6 +55,32 @@ Page({
           height: result.windowHeight - 140
         })
       },
+    })
+  },
+  getKey: function () {
+    return new Promise((resolve, reject) => {
+      //	获取所有打开的EventChannel事件
+      const eventChannel = this.getOpenerEventChannel();
+      // 监听 index页面定义的 toB 事件
+      eventChannel.on('key', (res) => {
+        resolve(res);
+      })
+    })
+  },
+  getDetail: async function (token, key) {
+    this.setData({
+      loading: true
+    })
+    const getPlay = await item.getPlay(token, key);
+    let money = 0;
+    for (const key in getPlay.detail) {
+      money += getPlay.detail[key].money;
+    }
+    this.setData({
+      items: getPlay.detail,
+      money: money,
+      count: getPlay.detail.length,
+      loading: false
     })
   },
   handleChange({ detail }) {

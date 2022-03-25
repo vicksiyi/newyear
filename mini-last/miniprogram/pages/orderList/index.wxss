@@ -38,6 +38,10 @@
   margin-top: 20rpx;
   height: 50rpx;
   line-height: 50rpx;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  overflow: hidden;
 }
 
 .order .order-item .left .down span {
