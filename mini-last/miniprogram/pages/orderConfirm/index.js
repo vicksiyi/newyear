@@ -1,4 +1,5 @@
 // pages/orderConfirm/index.js
+const { $Message } = require("../../dist/base/index");
 const item = require("../../static/js/item");
 Page({
 
@@ -6,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    msg: "",
     current: 'tab1',
     max: 200, //限制最大输入字符数
     min: 1,  //限制最小输入字符数
@@ -125,12 +127,50 @@ Page({
     //最多字数限制
     if (len > 200) return;
     this.setData({
-      currentWordNumber: len //当前字数 
+      currentWordNumber: len, //当前字数 
+      msg: value
     })
   },
-  selectDone: function () {
-    wx.navigateTo({
-      url: '../orderDetail/index',
+  selectDone: async function () {
+    let data = {
+      key: this.data.key,
+      type: this.data.current === 'tab1' ? 0 : 1,
+      msg: this.data.msg,
+      addressId: this.data.address.id
+    }
+    if (data.type === 0 && data.msg === '') {
+      $Message({
+        content: "需要备注时间",
+        type: "warning"
+      })
+      return;
+    }
+    if (data.type === 1 && data.addressId === undefined) {
+      $Message({
+        content: "请先填写快递信息",
+        type: "warning"
+      })
+      return;
+    }
+    this.setData({
+      loading: true
     })
+    let status = await item.playDone(this.data.token, data);
+    this.setData({
+      loading: false
+    })
+    if (status) {
+      wx.navigateTo({
+        url: '../successPlay/index',
+      })
+    } else {
+      $Message({
+        content: "支付失败",
+        type: "error"
+      })
+      wx.navigateBack({
+        delta: 1,
+      })
+    }
   }
 })

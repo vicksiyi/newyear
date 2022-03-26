@@ -1,0 +1,19 @@
+<!--pages/successPlay/index.wxml-->
+<view class="success">
+  <view class="icon">
+    <image src="../../images/icon/success.png"></image>
+  </view>
+  <view class="tips">成功支付</view>
+  <!-- <view class="number">
+    <view>订单号:{{orderId}}</view>
+    <view>
+      <image bindtap="copy" src="../../images/icon/copy.png"></image>
+    </view>
+  </view>
+  <view wx:if="{{num}}" class="number">
+    取货号:{{num}}
+  </view> -->
+  <view class="number">
+    {{second}}秒后自动跳转...
+  </view>
+</view>

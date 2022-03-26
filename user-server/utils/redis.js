@@ -44,12 +44,12 @@ class RedisHandle {
     setTtlKey(key, value, time = 3600) {
         let _this = this;
         return new Promise((resolve, reject) => {
-            _this.redisClient.set(key, value, (err,key) => {
+            _this.redisClient.set(key, value, (err, key) => {
                 if (err) reject(err);
                 else resolve();
             });
         }).then(() => {
-            return new Promise((resolve, reject)=>{
+            return new Promise((resolve, reject) => {
                 _this.redisClient.expire(key, time, (err) => {
                     if (err) reject(err);
                     else resolve(key);
@@ -71,10 +71,20 @@ class RedisHandle {
     // 获取符合条件的keys
     getKeys(keyword) {
         let _this = this;
-        return new Promise((resolve,reject)=>{
+        return new Promise((resolve, reject) => {
             _this.redisClient.keys(keyword, function (err, reply) {
                 if (err) resolve(err);
                 else resolve(reply);
+            })
+        })
+    }
+    // 删除某个key
+    delKey(key) {
+        let _this = this;
+        return new Promise((resolve, reject) => {
+            _this.redisClient.del(key, function (err, result) {
+                if (err) reject(err)
+                else resolve(result);
             })
         })
     }

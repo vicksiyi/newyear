@@ -83,3 +83,21 @@ exports.getPlay = (token, key) => {
       })
   })
 }
+
+exports.playDone = (token, data) => {
+  return new Promise((resolve, reject) => {
+    axios.request(`/play/playDone`, {
+      header: {
+        Authorization: token
+      },
+      data: data,
+      method: "POST"
+    })
+      .then((res) => {
+        if (res.data.code == 200) { resolve(true); }
+      })
+      .catch(err => {
+        resolve(false)
+      })
+  })
+}

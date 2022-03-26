@@ -80,4 +80,5 @@
     </view>
   </view>
 </i-panel>
+<i-message id="message" />
 <i-spin size="large" fix wx:if="{{ loading }}"></i-spin>

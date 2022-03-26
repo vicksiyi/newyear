@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/orderList/index",
+    "pages/successPlay/index",
     "pages/address/index",
     "pages/home/index",
     "pages/orderConfirm/index",
