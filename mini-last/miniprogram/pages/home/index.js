@@ -46,7 +46,7 @@ Page({
       spinShow: true
     })
     Promise.all([home.getPage(_token), home.getNotice(_token)]).then(res => {
-      res[1].notice.startTime = time.formatTimestamp(new Date(res[1].notice.startTime).getTime());
+      if (res[1].notice != undefined) res[1].notice.startTime = time.formatTimestamp(new Date(res[1].notice.startTime).getTime());
       this.setData({
         pages: res[0].data,
         notice: res[1].notice,

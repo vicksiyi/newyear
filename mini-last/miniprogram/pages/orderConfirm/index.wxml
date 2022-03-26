@@ -32,9 +32,9 @@
         <!-- 快递派送 -->
         <view wx:else>
           <i-cell-group>
-            <i-cell wx:if="{{address}}" title="约翰" label="官渡二路129号广东石油化工学院" is-link url="/pages/address/index">
+            <i-cell wx:if="{{address}}" title="{{address.name}}" label="{{address.address}}" is-link url="/pages/address/index">
               <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
-              <view slot="footer" class="mobile">13338888888</view>
+              <view slot="footer" class="mobile">{{address.mobile}}</view>
             </i-cell>
             <i-cell wx:else title="请先选择地址" is-link url="/pages/address/index">
               <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>

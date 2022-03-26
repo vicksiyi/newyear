@@ -1,14 +1,16 @@
 <!--pages/address/index.wxml-->
 <i-cell-group>
-  <i-cell wx:for="{{[1,2,3,4]}}" title="约翰" label="官渡二路129号广东石油化工学院" only-tap-footer>
-    <view style="background:{{index == 2 ? '#ff9900':''}};" slot="icon" class="num">
-      {{index == 2 ? '默':index + 1}}
-    </view>
-    <view class="footer" slot="footer">
-      <span>13338888888</span>
-      <image class="img" src="../../images/icon/edit.png"></image>
-    </view>
-  </i-cell>
+  <block wx:for="{{addressList}}" wx:key="*this">
+    <i-cell title="{{item.name}}" label="{{item.address}}" only-tap-footer>
+      <view bindtap="select" data-Index="{{index}}" style="background:{{item.id === address.id ? '#ff9900':''}};" slot="icon" class="num">
+        {{item.id === address.id ? '选':index + 1}}
+      </view>
+      <view class="footer" slot="footer">
+        <span bindtap="select" data-Index="{{index}}">{{item.mobile}}</span>
+        <image class="img" bindtap="editHandle" data-Index="{{index}}" src="../../images/icon/edit.png"></image>
+      </view>
+    </i-cell>
+  </block>
 </i-cell-group>
 <view wx:if="{{visible}}" bindtap="handleClick" class="pop-up">
 </view>
@@ -18,10 +20,15 @@
     <i-input value="{{ addressInput.mobile }}" bind:change="mobileChange" type="number" title="联系电话" placeholder="请输入手机号" />
     <i-input value="{{ addressInput.address }}" bind:change="addressChange" type="textarea" title="详细地址" placeholder="请输入详细地址(最多50字)" maxlength="50" />
   </i-panel>
-  <view class="add pop-up-add" bindtap="add" hover-class="click">
+  <view wx:if="{{isEdit}}" class="add pop-up-add" bindtap="edit" hover-class="click">
+    修改地址
+  </view>
+  <view wx:else class="add pop-up-add" bindtap="add" hover-class="click">
     添加地址
   </view>
 </view>
 <view class="add" bindtap="handleClick" hover-class="click">
   <i-icon type="add" />添加收货地址
 </view>
+<i-message id="message" />
+<i-spin i-class="spin-show" size="large" fix wx:if="{{loading}}"></i-spin>

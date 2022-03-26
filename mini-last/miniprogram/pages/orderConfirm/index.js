@@ -57,6 +57,12 @@ Page({
       },
     })
   },
+  onShow() {
+    const address = wx.getStorageSync('address');
+    this.setData({
+      address: address ? JSON.parse(address) : null
+    })
+  },
   getKey: function () {
     return new Promise((resolve, reject) => {
       //	获取所有打开的EventChannel事件

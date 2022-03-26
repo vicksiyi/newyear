@@ -7,7 +7,12 @@ class Address extends Handle {
         const sql = `select * from address where openId = '${openId}'`;
         return super.commit(sql);
     }
-    insert(openId,name,mobile,address) {
+    edit(id, openId, name, mobile, address) {
+        const sql = `update address set name='${name}', mobile='${mobile}',
+        address = '${address}' where id = ${id} and openId = '${openId}'`;
+        return super.commit(sql);
+    }
+    insert(openId, name, mobile, address) {
         const sql = `insert into address(openId,name,mobile,address) 
         values('${openId}','${name}','${mobile}','${address}')`;
         return super.commit(sql);
