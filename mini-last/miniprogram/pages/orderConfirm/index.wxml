@@ -71,7 +71,7 @@
         <i-panel title="备注">
           <view class="contant-text">
             <view class="currentWordNumber">{{currentWordNumber|0}}/{{max}}</view>
-            <textarea name="bindTextAreaBlur" placeholder="暂无备注" bindblur="getText" bindinput="getValueLength" show-confirm-bar='true' value="{{editText}}" bindconfirm="getText" maxlength="{{max}}" minlength="{{min}}">
+            <textarea name="bindTextAreaBlur" placeholder="备注取货时间" bindblur="getText" bindinput="getValueLength" show-confirm-bar='true' value="{{editText}}" bindconfirm="getText" maxlength="{{max}}" minlength="{{min}}">
       <text class="minWord">{{minWord}}</text>
      </textarea>
           </view>
