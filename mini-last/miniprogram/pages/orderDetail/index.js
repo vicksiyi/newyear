@@ -1,4 +1,5 @@
 // pages/orderDetail/index.js
+const item = require("../../static/js/item");
 Page({
 
   /**
@@ -26,13 +27,36 @@ Page({
       longitude: 116.323459711,
       iconPath: '/image/location.png'
     }],
+    orderId: "",
+    order: {},
+    loading: false,
+    num: "",
+    type: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onShow: async function () {
+    let _token = wx.getStorageSync('_token');
+    this.setData({
+      loading: true,
+      token: _token
+    })
+    const orderId = wx.getStorageSync('orderId');
+    const order = wx.getStorageSync('order');
+    const type = wx.getStorageSync('type');
+    let num = this.data.num;
+    if (type === '0') {
+      num = await item.getInviteNum(_token, orderId);
+    }
+    this.setData({
+      order: JSON.parse(order),
+      orderId: orderId,
+      loading: false,
+      num: num,
+      type: type
+    })
   },
   navigation: function () {
     let plugin = requirePlugin('routePlan');
@@ -46,5 +70,10 @@ Page({
     wx.navigateTo({
       url: 'plugin://routePlan/index?key=' + key + '&referer=' + referer + '&endPoint=' + endPoint
     });
+  },
+  navLogistic: function () {
+    wx.navigateTo({
+      url: 'plugin://kdPlugin/index?num=SF1141900154711&appName=虎虎春联购',
+    })
   }
 })

@@ -9,9 +9,9 @@
 <!-- 选择 -->
 <view class="select-box">
   <i-cell-group>
-    <i-cell title="消费记录" is-link url="/pages/comsumption/index">
+    <!-- <i-cell title="消费记录" is-link url="/pages/comsumption/index">
       <i-icon color="#D8322E" size="25" slot="icon" type="activity_fill" />
-    </i-cell>
+    </i-cell> -->
     <button open-type="contact" bindcontact="handleContact" class="btn">
       <view class="btn">
         <i-cell title="在线交流" is-link>

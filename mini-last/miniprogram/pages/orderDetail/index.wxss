@@ -3,7 +3,7 @@
   width: 720rpx;
   border-radius: 10rpx;
   background: #f8f8f9;
-  height: 240rpx;
+  max-height: 240rpx;
   margin: 20rpx auto;
   display: flex;
   flex-direction: row;

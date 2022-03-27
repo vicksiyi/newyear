@@ -83,7 +83,68 @@ router.get('/getPlay/:key', passport.authenticate('jwt', { session: false }), as
     const time = parseInt(key.split(":")[key.split(":").length - 1]);
     res.send({
         code: 200,
-        data: { detail:JSON.parse(detail), ttl, date, time }
+        data: { detail: JSON.parse(detail), ttl, date, time }
+    })
+})
+
+// $routes /item/getOrder
+// @desc 获取订单信息
+// @access private
+router.get('/getOrder', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const openId = req.user.openId;
+    let _result = await item.getOrder(openId).catch(err => {
+        res.send({
+            code: 400,
+            msg: '获取失败'
+        })
+        throw Error(err);
+    });
+    _result = utils.toJson(_result);
+    let data = [{}, {}];
+    _result.forEach(async element => {
+        if (!data[element.type].hasOwnProperty(element.orderId)) {  // 如果当前订单不存在创建一个
+            data[element.type][element.orderId] = {
+                count: 0,
+                money: 0,
+                items: [],
+                time: ""
+            }
+        }
+        data[element.type][element.orderId].count++;
+        data[element.type][element.orderId].time = utils.formatTimestamp(new Date(element.time).getTime());
+        data[element.type][element.orderId].money += element.money;
+        data[element.type][element.orderId].status = element.status;
+        data[element.type][element.orderId].msg = element.msg;
+        data[element.type][element.orderId].items.push({
+            title: element.title,
+            url: element.url,
+            num: element.num,
+            type: element.iType,
+            money: element.money
+        })
+    });
+    res.send({
+        code: 200,
+        data: data
+    })
+})
+
+// $routes /item/getInviteNum
+// @desc 获取自取号
+// @access private
+router.get('/getInviteNum/:orderId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const orderId = req.params.orderId;
+    let _result = await item.getOrderInviteNum(orderId).catch(err => {
+        res.send({
+            code: 400,
+            msg: '获取失败'
+        })
+        throw Error(err);
+    });
+    _result = utils.toJson(_result);
+    res.send({
+        code: 200,
+        num: _result[0].inviteNum
     })
 })
 module.exports = router;

@@ -85,7 +85,7 @@ export default {
       getLast(params)
         .then((result) => {
           this.loading = false;
-          this.notice = result.data.notice;
+          this.notice = result.data.notice ? result.data.notice : {title:"暂无",content:"暂无"};
         })
         .catch((err) => {
           this.loading = false;

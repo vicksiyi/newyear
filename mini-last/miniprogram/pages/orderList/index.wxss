@@ -78,3 +78,7 @@
 .order .order-item .right .done {
   background: #bbbec4 !important;
 }
+
+.order .order-item .right .doing {
+  background: #E6A23C !important;
+}

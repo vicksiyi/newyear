@@ -1,17 +1,17 @@
 <!--pages/orderDetail/index.wxml-->
 <view class="card">
-  <view class="left">
+  <view wx:if="{{order.status !== 2 && type != '1'}}" class="left">
     <view>取</view>
     <view>件</view>
     <view>号</view>
   </view>
   <view class="right">
-    <view class="num">A01</view>
-    <view class="msg">备注：.........</view>
-    <view class="bottom">你的订单正在处理中，2小时后即可到店自取</view>
+    <view class="num">{{num}}</view>
+    <view class="msg">备注：{{order.msg}}</view>
+    <view class="bottom">{{order.status === 0 && type === '0' ? '你的订单正在处理中，2小时后即可到店自取': type === '1'?'':'订单已准备就绪'}}</view>
   </view>
 </view>
-<view>
+<view wx:if="{{type === '0'}}">
   <i-cell-group>
     <i-cell title="店铺位置" bind:click="navigation" value="导航" is-link only-tap-footer>
       <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
@@ -19,34 +19,40 @@
   </i-cell-group>
   <map slot="footer" id="myMap" style="width: 700rpx;margin: auto; height: 300rpx;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" covers="{{covers}}" show-location></map>
 </view>
+<view wx:else>
+  <i-cell-group>
+    <i-cell bind:click="navLogistic" title="物流信息" is-link only-tap-footer>
+      <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
+    </i-cell>
+  </i-cell-group>
+</view>
 <view class="order-detail">
   <i-panel title="订单详情">
     <view class="order-list">
-      <view wx:for="{{[1,2,3,4]}}" class="item">
+      <view wx:for="{{order.items}}" class="item">
         <view class="left">
-          <image src="https://i.loli.net/2017/08/21/599a521472424.jpg"></image>
+          <image src="{{item.url}}"></image>
         </view>
         <view class="msg">
-          <view class="class">盒联1.1m</view>
+          <view class="class">{{item.type}}</view>
           <view class="detail">
-            上联:春夏秋冬行好运
-            下联:东西南北遇贵人
-            横批:出入平安
+            {{item.title}}
           </view>
         </view>
         <view class="right">
-          <view class="num">X 2</view>
+          <view class="num">X {{item.num}}</view>
           <view class="money">
-            ￥ 11.5
+            ￥ {{item.money}}
           </view>
         </view>
       </view>
     </view>
   </i-panel>
   <view class="all-num">
-    总计: <span>￥114.5</span>
+    总计: <span>￥{{order.money}}</span>
   </view>
 </view>
-<i-input value="{{ orderDetail }}" title="订单信息" disabled />
-<i-input value="{{ orderNum }}" title="订单号码" disabled />
-<i-input value="{{ orderTime }}" title="订单时间" disabled />
+<i-input value="{{ orderId }}" title="订单信息" disabled />
+<i-input value="{{ orderId }}" title="订单号码" disabled />
+<i-input value="{{ order.time }}" title="订单时间" disabled />
+<i-spin size="large" fix wx:if="{{ loading }}"></i-spin>

@@ -101,3 +101,36 @@ exports.playDone = (token, data) => {
       })
   })
 }
+
+exports.getOrder = (token, key) => {
+  return new Promise((resolve, reject) => {
+    axios.request(`/item/getOrder`, {
+      header: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        if (res.data.code == 200) { resolve(res.data.data); }
+      })
+      .catch(err => {
+        resolve(false)
+      })
+  })
+}
+
+// 获取自取号
+exports.getInviteNum = (token, orderId) => {
+  return new Promise((resolve, reject) => {
+    axios.request(`/item/getInviteNum/${orderId}`, {
+      header: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        if (res.data.code == 200) { resolve(res.data.num); }
+      })
+      .catch(err => {
+        resolve(false)
+      })
+  })
+}

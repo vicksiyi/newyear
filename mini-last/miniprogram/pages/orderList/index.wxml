@@ -18,63 +18,40 @@
 </i-panel>
 <i-panel i-class="panel" title="到店自取">
   <view class="order">
-    <view class="order-item">
+    <view wx:for="{{invites}}" class="order-item">
       <view class="left">
         <view class="up">
-          下单时间：2022-01-03 16：22:51
+          下单时间：{{item.time}}
         </view>
         <view class="down">
-          <span>盒联1.1m</span> 等4件商品 ¥ 62.00元
+          <span>{{item.items[0].title}}</span> 等{{item.count}}件商品 ¥ {{item.money}}元
         </view>
       </view>
       <view class="right">
-        <view bindtap="show">查看详细</view>
-        <view>待取货</view>
-      </view>
-    </view>
-    <view class="order-item">
-      <view class="left">
-        <view class="up">
-          下单时间：2022-01-03 16：22:51
-        </view>
-        <view class="down">
-          <span>盒联1.1m</span> 等4件商品 ¥ 62.00元
-        </view>
-      </view>
-      <view class="right">
-        <view bindtap="show">查看详细</view>
-        <view class="done">已取货</view>
-      </view>
-    </view>
-    <view class="order-item">
-      <view class="left">
-        <view class="up">
-          下单时间：2022-01-03 16：22:51
-        </view>
-        <view class="down">
-          <span>盒联1.1m</span> 等4件商品 ¥ 62.00元
-        </view>
-      </view>
-      <view class="right">
-        <view bindtap="show">查看详细</view>
-        <view>待取货</view>
+        <view bindtap="show" data-Type="0" data-OrderId="{{index}}">查看详细</view>
+        <view wx:if="{{item.status === 0}}" class="doing">处理中</view>
+        <view wx:elif="{{item.status === 1}}" >待取货</view>
+        <view wx:else class="done">已取货</view>
       </view>
     </view>
   </view>
 </i-panel>
 <i-panel i-class="panel" title="快递派送">
   <view class="order">
-    <view class="order-item">
+    <view wx:for="{{express}}" class="order-item">
       <view class="left">
         <view class="up">
-          下单时间：2022-01-03 16：22:51
+          下单时间：{{item.time}}
         </view>
         <view class="down">
-          <span>盒联1.1m</span> 等4件商品 ¥ 62.00元
+          <span>{{item.items[0].title}}</span> 等{{item.count}}件商品 ¥{{item.money}}元
         </view>
       </view>
       <view class="right">
-        <view bindtap="navLogistic">查看详细</view>
+        <view bindtap="show" data-OrderId="{{index}}" data-Type="1">查看详细</view>
+        <view wx:if="{{item.status === 0}}" class="doing">未发货</view>
+        <view wx:elif="{{item.status === 1}}" >已发货</view>
+        <view wx:else class="done">已收货</view>
       </view>
     </view>
   </view>
