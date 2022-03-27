@@ -31,65 +31,15 @@
       </el-col>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
-      <el-table :data="orders" height="400" border style="width: 100%">
-        <el-table-column prop="startTime" sortable label="订单日期" width="180">
-        </el-table-column>
-        <el-table-column prop="openId" label="用户ID" width="240">
-        </el-table-column>
-        <el-table-column prop="number" label="取件号" width="100">
-        </el-table-column>
-        <el-table-column prop="orderId" label="订单ID" width="240">
-        </el-table-column>
-        <el-table-column prop="time" sortable label="取件时间" width="180">
-        </el-table-column>
-        <el-table-column label="订单商品" width="80">
-          <template slot-scope="scope">
-            <el-button
-              type="success"
-              size="mini"
-              @click="showItems(scope.$index)"
-              >查看</el-button
-            >
-          </template>
-        </el-table-column>
-        <el-table-column prop="status" label="订单状态" width="80">
-          <template slot-scope="scope">
-            <el-tag
-              effect="dark"
-              :type="scope.row.status === 0 ? '' : 'info'"
-            >
-              {{ scope.row.status | filterStatus }}
-            </el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <div class="action-list">
-              <div>
-                <el-popconfirm
-                  @confirm="done(scope.$index)"
-                  title="订单已完成吗？"
-                >
-                  <el-button
-                    :disabled="scope.row.status !== 0"
-                    slot="reference"
-                    type="warning"
-                    size="mini"
-                    >完成</el-button
-                  >
-                </el-popconfirm>
-              </div>
-              <div>
-                <el-button type="danger" size="mini">删除</el-button>
-              </div>
-            </div>
-          </template>
-        </el-table-column>
-      </el-table>
+      <ShowInvite @showItems="showItems"></ShowInvite>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
       <el-col :span="8" :offset="8">
-        <el-pagination background layout="prev, pager, next" :total="1000">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="getInviteLen"
+        >
         </el-pagination
       ></el-col>
     </el-row>
@@ -99,16 +49,18 @@
       :direction="direction"
       :size="400"
     >
-      <ShowItem></ShowItem>
+      <ShowItem :isInvite="true"></ShowItem>
     </el-drawer>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ShowItem from "@/components/Play/ShowItem";
+import ShowInvite from "@/components/Play/ShowInvite";
 export default {
   name: "invite",
-  components: { ShowItem },
+  components: { ShowItem, ShowInvite },
   data() {
     return {
       drawer: false,
@@ -140,77 +92,12 @@ export default {
       ],
       searchType: "",
       search: "",
-      orders: [
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 1,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 1,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-      ],
     };
   },
   methods: {
-    showItems(index) {
-      console.log(index);
+    showItems(orderId) {
       this.drawer = true;
+      this.$store.commit("updateInvite", this.invites[orderId]);
     },
     done(index) {
       console.log(`完成${index}`);
@@ -220,12 +107,12 @@ export default {
     searchLabel: function () {
       if (this.searchType == "") return "请先选择搜索类型";
       return `请输入${this.searchTypes[this.searchType].label}`;
-    }
-  },
-  filters: {
-    filterStatus: function (value) {
-      let status = ["处理中", "已完成"];
-      return status[value];
+    },
+    ...mapState({
+      invites: (state) => state.order.invites,
+    }),
+    getInviteLen() {
+      return Object.keys(this.invites).length;
     },
   },
 };

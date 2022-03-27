@@ -30,5 +30,4 @@ router.get('/getNotPlay', passport.authenticate('jwt', { session: false }), asyn
         data: data
     })
 })
-
 module.exports = router;

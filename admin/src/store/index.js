@@ -7,6 +7,7 @@ import logistic from './logistic';
 import page from "./page";
 import notice from './notice';
 import play from "./play";
+import order from "./order";
 import createPersistedState from "vuex-persistedstate"
 
 // 引入持久化
@@ -19,7 +20,8 @@ export default new Vuex.Store({
         logistic,
         page,
         notice,
-        play
+        play,
+        order
     },
     // 持久化操作
     plugins: [createPersistedState({
