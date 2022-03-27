@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import ShowItem from "@/components/Order/ShowItem";
+import ShowItem from "@/components/Play/ShowItem";
 import SubmitLogistic from "@/components/Order/SubmitLogistic";
 import ShowLogistic from "@/components/Order/ShowLogistic";
 export default {

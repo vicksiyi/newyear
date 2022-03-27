@@ -11,6 +11,7 @@ const ItemType = require('./routes/itemType');
 const Page = require('./routes/page');
 const Notice = require('./routes/notice');
 require('./utils/timer');  // 启动定时器
+const Play = require('./routes/play');
 
 // // 使用body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -26,6 +27,7 @@ app.use('/api/item', Item);
 app.use('/api/itemType', ItemType);
 app.use('/api/page', Page);
 app.use('/api/notice', Notice);
+app.use('/api/play', Play);
 
 app.listen(5001, () => {
     console.log('the server port running');

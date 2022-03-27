@@ -85,7 +85,9 @@ export default {
       getLast(params)
         .then((result) => {
           this.loading = false;
-          this.notice = result.data.notice ? result.data.notice : {title:"暂无",content:"暂无"};
+          this.notice = result.data.notice
+            ? result.data.notice
+            : { title: "暂无", content: "暂无" };
         })
         .catch((err) => {
           this.loading = false;
@@ -96,7 +98,7 @@ export default {
       this.drawer = false;
       this.updateLast();
     },
-    updateLast(){
+    updateLast() {
       this.update = !this.update;
     },
     pageChange(page) {

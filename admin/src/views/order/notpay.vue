@@ -20,32 +20,11 @@
       </el-col>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
-      <el-table :data="orders" height="400" border style="width: 100%">
-        <el-table-column prop="startTime" sortable label="订单日期" width="180">
-        </el-table-column>
-        <el-table-column prop="openId" label="用户ID" width="240">
-        </el-table-column>
-        <el-table-column prop="orderId" label="订单ID"> </el-table-column>
-        <el-table-column label="订单商品" width="80">
-          <template slot-scope="scope">
-            <el-button
-              type="success"
-              size="mini"
-              @click="showItems(scope.$index)"
-              >查看</el-button
-            >
-          </template>
-        </el-table-column>
-        <el-table-column prop="status" label="订单状态" width="80">
-          <template>
-            <el-tag effect="dark" type="info"> 未支付 </el-tag>
-          </template>
-        </el-table-column>
-      </el-table>
+      <ShowNoPlay @showItems="showItems"></ShowNoPlay>
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
       <el-col :span="8" :offset="8">
-        <el-pagination background layout="prev, pager, next" :total="1000">
+        <el-pagination background layout="prev, pager, next" :total="getNotPlayLen">
         </el-pagination
       ></el-col>
     </el-row>
@@ -55,16 +34,18 @@
       :direction="direction"
       :size="400"
     >
-      <ShowItem></ShowItem>
+      <ShowItem :isNotPlay="true"></ShowItem>
     </el-drawer>
   </div>
 </template>
 
 <script>
-import ShowItem from "@/components/Order/ShowItem";
+import { mapState } from "vuex";
+import ShowItem from "@/components/Play/ShowItem";
+import ShowNoPlay from "@/components/Play/ShowNoPlay";
 export default {
   name: "notpay",
-  components: { ShowItem },
+  components: { ShowItem, ShowNoPlay },
   data() {
     return {
       drawer: false,
@@ -88,81 +69,17 @@ export default {
         {
           value: "1",
           label: "用户ID",
-        }
+        },
       ],
       searchType: "",
       search: "",
-      orders: [
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 1,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 1,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-        {
-          startTime: "2022-01-12 22:00:00",
-          openId: "oCBbG4l1p3sBJSo_oEwSlDw_RA9I",
-          number: "A001",
-          time: "2022-01-12 22:30:00",
-          orderId: "0486e593-8e0e-11ec-a092-00163e0c2d78",
-          items: [{}],
-          status: 0,
-        },
-      ],
+      showData: {},
     };
   },
   methods: {
     showItems(index) {
-      console.log(index);
       this.drawer = true;
+      this.$store.commit("updateNotPlay", this.notPlays[index]);
     },
     done(index) {
       console.log(`完成${index}`);
@@ -173,7 +90,13 @@ export default {
       if (this.searchType == "") return "请先选择搜索类型";
       return `请输入${this.searchTypes[this.searchType].label}`;
     },
-  }
+    ...mapState({
+      notPlays: (state) => state.play.notPlays,
+    }),
+    getNotPlayLen() {
+      return this.notPlays.length;
+    },
+  },
 };
 </script>
 

@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import ShowItem from "@/components/Order/ShowItem";
+import ShowItem from "@/components/Play/ShowItem";
 export default {
   name: "invite",
   components: { ShowItem },
