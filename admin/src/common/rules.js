@@ -97,5 +97,21 @@ module.exports = {
                 trigger: "change",
             },
         ],
+    },
+    sendLogisticForm: {
+        logisticCode: "",
+        logistic: "",
+    },
+    sendLogisticRule: {
+        logisticCode: {
+            required: true,
+            message: "请输入物流单号",
+            trigger: "blur",
+        },
+        logistic: {
+            required: true,
+            message: "请选择物流公司",
+            trigger: "change",
+        },
     }
 }

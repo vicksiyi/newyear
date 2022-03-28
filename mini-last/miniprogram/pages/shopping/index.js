@@ -167,5 +167,12 @@ Page({
       money: 0
     })
     this.updateCard();  // 更新
+  },
+  // 预览图片
+  showImage(res){
+    const url = res.currentTarget.dataset.url;
+    wx.previewImage({
+      urls: [url],
+    })
   }
 })

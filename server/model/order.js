@@ -16,7 +16,7 @@ class Order extends Handle {
         return super.commit(sql);
     }
     getExpress() {
-        const sql = `select i.itemId,ad.name,ad.mobile,lg.courierNum,cm.name as companyName,ad.address,o.msg,o.openId,i.orderId,its.title,
+        const sql = `select i.itemId,ep.uuid as expressId,ad.name,ad.mobile,lg.courierNum,cm.name as companyName,ad.address,o.msg,o.openId,i.orderId,its.title,
         i.num,its.url,its.money,o.status,its.typeId,o.time,it.title as iType, o.type
         from ((itemRelOrder i inner join orders o on o.uuid = i.orderId) 
         inner join items its on its.uuid 

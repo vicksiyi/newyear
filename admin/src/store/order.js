@@ -3,7 +3,9 @@ export default {
         express: {},
         invites: {},
         invite: {},
-        exp: {}
+        exp: {},
+        expressId: "",
+        orderId: ""
     },
     mutations: {
         updateExpress(state, express) {
@@ -17,6 +19,12 @@ export default {
         },
         updateInvite(state, invite) {
             state.invite = invite;
+        },
+        updateExpressId(state, expressId) {
+            state.expressId = expressId;
+        },
+        updateOrderId(state, orderId) {
+            state.orderId = orderId;
         }
     }
 }

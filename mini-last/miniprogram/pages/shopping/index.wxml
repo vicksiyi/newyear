@@ -62,7 +62,7 @@
   <view class="right card-right" style="height: {{height}}px;">
     <view wx:for="{{items}}" class="card-item">
       <view class="img">
-        <image class="img" src="{{item.url}}"></image>
+        <image bindtap="showImage" data-Url="{{item.url}}" class="img" src="{{item.url}}"></image>
       </view>
       <view class="detail">
         <view class="up">{{item.title}}</view>

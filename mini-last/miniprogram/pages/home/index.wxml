@@ -3,7 +3,7 @@
   <image class="img" src="../../images/static/top.jpg"></image>
 </view>
 <!-- 通告栏 -->
-<view wx:if="{{notice === undefined}}">
+<view>
   <i-notice-bar background-color="#fff" icon="systemprompt" loop>
     {{notice.startTime}}:{{notice.content}}
   </i-notice-bar>

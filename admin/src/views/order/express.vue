@@ -32,6 +32,7 @@
     </el-row>
     <el-row style="margin-top: 20px">
       <ShowExpress
+        :update="update"
         @showItems="showItems"
         @showLogistic="showLogistic"
         @sendLogistic="sendLogistic"
@@ -39,7 +40,11 @@
     </el-row>
     <el-row style="margin-top: 20px" :gutter="20">
       <el-col :span="8" :offset="8">
-        <el-pagination background layout="prev, pager, next" :total="getExpressLen">
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :total="getExpressLen"
+        >
         </el-pagination
       ></el-col>
     </el-row>
@@ -50,7 +55,10 @@
       :size="show === 1 ? 600 : 400"
     >
       <ShowItem v-if="show === 0" :isExpress="true"></ShowItem>
-      <SubmitLogistic v-else-if="show == 1"></SubmitLogistic>
+      <SubmitLogistic
+        @closeDrawer="closeDrawer"
+        v-else-if="show == 1"
+      ></SubmitLogistic>
       <ShowLogistic v-else></ShowLogistic>
     </el-drawer>
   </div>
@@ -97,6 +105,7 @@ export default {
       searchType: "",
       search: "",
       show: 0,
+      update: false,
     };
   },
   methods: {
@@ -105,13 +114,21 @@ export default {
       this.drawer = true;
       this.$store.commit("updateExp", this.express[orderId]);
     },
-    sendLogistic(index) {
+    sendLogistic(orderId, expressId) {
       this.show = 1;
       this.drawer = true;
+      this.$store.commit("updateOrderId", orderId);
+      this.$store.commit("updateExpressId", expressId);
     },
-    showLogistic(index) {
+    showLogistic(orderId, expressId) {
       this.show = 2;
       this.drawer = true;
+      this.$store.commit("updateOrderId", orderId);
+      this.$store.commit("updateExpressId", expressId);
+    },
+    closeDrawer() {
+      this.drawer = false;
+      this.update = !this.update;
     },
   },
   computed: {

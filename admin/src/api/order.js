@@ -24,3 +24,12 @@ export const getExpress = function (parms) {
         headers: parms.headers
     })
 }
+
+export const addLogistic = function (parms) {
+    return axios.request({
+        url: `/api/order/addLogistic`,
+        method: 'post',
+        data: parms.data,
+        headers: parms.headers
+    })
+}

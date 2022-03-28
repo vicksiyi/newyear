@@ -53,7 +53,7 @@
           <div>
             <el-button
               type="warning"
-              @click="sendLogistic(scope.row.orderId)"
+              @click="sendLogistic(scope.row.orderId, scope.row.expressId)"
               size="mini"
               :disabled="scope.row.status == 0 ? false : true"
               >发货</el-button
@@ -61,7 +61,7 @@
           </div>
           <div>
             <el-button
-              @click="showLogistic(scope.row.orderId)"
+              @click="showLogistic(scope.row.orderId, scope.row.expressId)"
               type="primary"
               size="mini"
               >物流</el-button
@@ -78,6 +78,18 @@ import { mapGetters } from "vuex";
 import { getExpress } from "@/api/order";
 export default {
   name: "ShowExpress",
+  props: {
+    update: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  watch: {
+    update() {
+      console.log(12312312);
+      this.getData();
+    },
+  },
   computed: {
     ...mapGetters("header", ["getHeader"]),
     headers() {
@@ -99,7 +111,6 @@ export default {
   },
   methods: {
     showItems(orderId) {
-      console.log(orderId);
       this.$emit("showItems", orderId);
     },
     getData() {
@@ -118,11 +129,11 @@ export default {
           this.$message.error("未知错误");
         });
     },
-    showLogistic(orderId) {
-      this.$emit("showLogistic", orderId);
+    showLogistic(orderId, expressId) {
+      this.$emit("showLogistic", orderId, expressId);
     },
-    sendLogistic(orderId) {
-      this.$emit("sendLogistic", orderId);
+    sendLogistic(orderId, expressId) {
+      this.$emit("sendLogistic", orderId, expressId);
     },
   },
   mounted() {

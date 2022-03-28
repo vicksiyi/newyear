@@ -3,6 +3,7 @@ const router = express.Router();
 const passport = require('passport');
 const order = require('../model/order');
 const utils = require("../utils/utils");
+const transaction = require("../model/transaction");
 
 // $routes /order/getInvite
 // @desc 获取自取订单
@@ -99,6 +100,7 @@ router.get('/getExpress', passport.authenticate('jwt', { session: false }), asyn
         data[_result[i].orderId].name = _result[i].name;
         data[_result[i].orderId].mobile = _result[i].mobile;
         data[_result[i].orderId].address = _result[i].address;
+        data[_result[i].orderId].expressId = _result[i].expressId;
         data[_result[i].orderId].courierNum = _result[i].courierNum;
         data[_result[i].orderId].companyName = _result[i].companyName;
         data[_result[i].orderId].money += _result[i].money;
@@ -117,5 +119,40 @@ router.get('/getExpress', passport.authenticate('jwt', { session: false }), asyn
         code: 200,
         data: data
     })
+})
+
+// $routes /order/addLogistic
+// @desc 发货
+// @access private , 
+router.post('/addLogistic', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const { orderId, companyId, expressId, courierNum } = req.body;
+    transaction.start().catch(err => { throw err; }); // 开启事务
+    let sql = `insert into logistics(companyId,expressId,courierNum)
+    values(${companyId},'${expressId}','${courierNum}')`;
+    transaction.insert(sql).then(() => {
+        return new Promise((resolve, reject) => {
+            sql = `update orders set status = 1 where uuid='${orderId}'`;
+            // 更新状态
+            transaction.insert(sql).then((orderLast) => {
+                resolve();
+            }).catch((error) => reject(error));
+        })
+    }).then(() => {
+        // 提交事务
+        return new Promise((resolve, reject) => {
+            transaction.commit().then(() => {
+                res.send({
+                    code: 200,
+                    msg: "成功"
+                })
+            }).catch((error) => reject(error));
+        })
+    }).catch(err => {
+        res.send({
+            code: 400,
+            msg: '插入失败'
+        })
+        transaction.rollback(err);
+    });
 })
 module.exports = router;

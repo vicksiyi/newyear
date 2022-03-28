@@ -8,20 +8,20 @@
       label-width="100px"
       class="demo-ruleForm"
     >
-      <el-form-item label="物流单号" prop="logisticCode">
+      <el-form-item label="物流单号" prop="courierNum">
         <el-input
           type="text"
           placeholder="请输入物流单号"
-          v-model="ruleForm.logisticCode"
+          v-model="ruleForm.courierNum"
         ></el-input>
       </el-form-item>
-      <el-form-item label="物流公司" prop="logistic">
-        <el-select v-model="logistic" placeholder="请选择物流公司">
+      <el-form-item label="物流公司" prop="companyId">
+        <el-select v-model="ruleForm.companyId" placeholder="请选择物流公司">
           <el-option
             v-for="item in logistics"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
+            :key="item.symbol"
+            :label="item.name"
+            :value="item.id"
           >
           </el-option>
         </el-select>
@@ -39,58 +39,62 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from "vuex";
+import Form from "@/common/form";
+import Loading from "@/common/loading";
+import { addLogistic } from "@/api/order";
+import { sendLogisticForm, sendLogisticRule } from "@/common/rules";
 export default {
   name: "SubmitLogistic",
   components: {},
+  computed: {
+    ...mapGetters("header", ["getHeader"]),
+    headers() {
+      return this.$store.getters["header/getHeader"];
+    },
+    ...mapState({
+      logistics: (state) => state.logistic.logistics,
+      orderId: (state) => state.order.orderId,
+      expressId: (state) => state.order.expressId,
+    }),
+  },
   data() {
     return {
-      logistics: [
-        {
-          value: "SF",
-          label: "顺丰",
-        },
-        {
-          value: "HTKY",
-          label: "百世快递",
-        },
-        {
-          value: "ZTO",
-          label: "中通",
-        },
-        {
-          value: "YTO",
-          label: "圆通",
-        },
-      ],
-      logistic: "",
-      ruleForm: {
-        logisticCode: "",
-        logistic: "",
-      },
-      rules: {
-        logisticCode: {
-          required: true,
-          message: "请输入物流单号",
-          trigger: "blur",
-        },
-        logistic: {
-          required: true,
-          message: "请选择物流公司",
-          trigger: "change",
-        },
-      },
+      ruleForm: JSON.parse(JSON.stringify(sendLogisticForm)),
+      rules: JSON.parse(JSON.stringify(sendLogisticRule)),
     };
   },
   methods: {
+    getParams() {
+      let data = {
+        ...this.ruleForm,
+        expressId: this.expressId,
+        orderId: this.orderId,
+      };
+      return {
+        headers: this.headers,
+        data: data,
+      };
+    },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          alert("submit!");
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+      const loading = Loading.start(this);
+      Form.validate(this, formName)
+        .then(async (res) => {
+          if (res) {
+            const params = this.getParams();
+            const _result = await addLogistic(params).catch((err) => {
+              this.$message.error("未知错误");
+            });
+            Form.tips(this, _result.data.code, _result.data.msg);
+            this.ruleForm = JSON.parse(JSON.stringify(sendLogisticForm));
+            this.$emit("closeDrawer"); // 关闭抽屉，并刷新获取数据
+          }
+          Loading.end(loading);
+        })
+        .catch((err) => {
+          Loading.end(loading);
+          console.log(err);
+        });
     },
   },
 };
