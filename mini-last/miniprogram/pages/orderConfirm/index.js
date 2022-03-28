@@ -82,7 +82,7 @@ Page({
     const getPlay = await item.getPlay(token, key);
     let money = 0;
     for (const key in getPlay.detail) {
-      money += getPlay.detail[key].money;
+      money += getPlay.detail[key].money * getPlay.detail[key].count;
     }
     this.setData({
       items: getPlay.detail,
