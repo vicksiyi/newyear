@@ -17,7 +17,7 @@ router.get('/getNotPlay', passport.authenticate('jwt', { session: false }), asyn
         let _temp = await redisHandle.getKey(_result[i]);
         _temp = JSON.parse(_temp);
         for (const key in _temp) {
-            _data.money += _temp[key].money;
+            _data.money += _temp[key].money * _temp[key].count;
             _data.count++;
             _data.items.push(_temp[key]);
         }

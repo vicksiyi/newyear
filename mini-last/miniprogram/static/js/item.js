@@ -134,3 +134,20 @@ exports.getInviteNum = (token, orderId) => {
       })
   })
 }
+
+
+exports.getLogisticNum = (token, orderId) => {
+  return new Promise((resolve, reject) => {
+    axios.request(`/item/getLogisticNum/${orderId}`, {
+      header: {
+        Authorization: token
+      }
+    })
+      .then((res) => {
+        if (res.data.code == 200) { resolve(res.data.data); }
+      })
+      .catch(err => {
+        resolve(false)
+      })
+  })
+}

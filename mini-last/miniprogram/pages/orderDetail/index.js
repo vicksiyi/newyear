@@ -31,7 +31,8 @@ Page({
     order: {},
     loading: false,
     num: "",
-    type: 0
+    type: 0,
+    logistaicNum: {}
   },
 
   /**
@@ -49,6 +50,9 @@ Page({
     let num = this.data.num;
     if (type === '0') {
       num = await item.getInviteNum(_token, orderId);
+    }
+    if (JSON.parse(order).status != 0) {
+      this.getLogisticNumber(_token, orderId);
     }
     this.setData({
       order: JSON.parse(order),
@@ -73,7 +77,12 @@ Page({
   },
   navLogistic: function () {
     wx.navigateTo({
-      url: 'plugin://kdPlugin/index?num=SF1141900154711&appName=虎虎春联购',
+      url: `plugin://kdPlugin/index?num=${this.data.logistaicNum.courierNum}&appName=虎虎春联购`,
     })
+  },
+  async getLogisticNumber(token, orderId) {
+    let _this = this;
+    let logistaicNum = await item.getLogisticNum(token, orderId);
+    this.setData({ logistaicNum: logistaicNum });
   }
 })

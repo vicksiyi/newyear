@@ -32,6 +32,7 @@ router.get('/getNotPlay', passport.authenticate('jwt', { session: false }), asyn
         _result = Object.assign(_result, { key: keys[i], time: parseInt(keys[i].split(":")[keys[i].split(":").length - 1]), ttl: _ttl, date: new Date().getTime() });
         result.push(_result);
     }
+    result.sort((a, b) => { return b.time - a.time });
     res.send({
         code: 200,
         data: result

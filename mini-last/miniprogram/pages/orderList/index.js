@@ -35,7 +35,7 @@ Page({
         value.time = time.formatTimestamp(value.time);  // 格式化时间
         let money = 0, count = 0;
         for (const key in value.data) {
-          money += value.data[key].money;
+          money += value.data[key].money * value.data[key].count;
           count++;
         }
         value.money = money;

@@ -112,7 +112,7 @@ router.get('/getOrder', passport.authenticate('jwt', { session: false }), async 
         }
         data[element.type][element.orderId].count++;
         data[element.type][element.orderId].time = utils.formatTimestamp(new Date(element.time).getTime());
-        data[element.type][element.orderId].money += element.money;
+        data[element.type][element.orderId].money += element.money * element.num;
         data[element.type][element.orderId].status = element.status;
         data[element.type][element.orderId].msg = element.msg;
         data[element.type][element.orderId].items.push({
@@ -145,6 +145,27 @@ router.get('/getInviteNum/:orderId', passport.authenticate('jwt', { session: fal
     res.send({
         code: 200,
         num: _result[0].inviteNum
+    })
+})
+
+
+// $routes /item/getLogisticNum
+// @desc 获取快递单号
+// @access private
+router.get('/getLogisticNum/:orderId', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    const orderId = req.params.orderId;
+    let _result = await item.getLogisticNum(orderId).catch(err => {
+        res.send({
+            code: 400,
+            msg: '获取失败'
+        })
+        throw Error(err);
+    });
+    _result = utils.toJson(_result);
+    if (_result.length == 0) res.send({ code: 200, data: {} });
+    else res.send({
+        code: 200,
+        data: _result[0]
     })
 })
 module.exports = router;

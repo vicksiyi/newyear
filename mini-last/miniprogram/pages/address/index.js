@@ -42,7 +42,6 @@ Page({
       visible: false
     })
     const addressList = await address.getAddress(_token);
-    console.log(addressList);
     this.setData({
       addressList: addressList,
       loading: false
@@ -69,6 +68,7 @@ Page({
   },
   async edit() {
     const addressInput = this.data.addressInput;
+    console.log(addressInput);
     if (!this.checkAddressInput(addressInput)) return;
     const status = await address.editAddress(this.data.token, addressInput);
     if (status) {

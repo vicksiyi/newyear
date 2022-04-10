@@ -15,6 +15,6 @@ App({
     }
 
     this.globalData = {};
-    this.baseUrl = 'http://localhost:5000/api';
+    this.baseUrl = 'http://192.168.1.101:5000/api';
   }
 });

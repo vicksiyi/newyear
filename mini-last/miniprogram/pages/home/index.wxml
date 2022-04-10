@@ -3,9 +3,9 @@
   <image class="img" src="../../images/static/top.jpg"></image>
 </view>
 <!-- 通告栏 -->
-<view>
+<view wx:if="{{notice}}">
   <i-notice-bar background-color="#fff" icon="systemprompt" loop>
-    {{notice.startTime}}:{{notice.content}}
+    {{notice.title}}:{{notice.content}}
   </i-notice-bar>
 </view>
 <view class="swiper">

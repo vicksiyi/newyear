@@ -19,10 +19,16 @@
   </i-cell-group>
   <map slot="footer" id="myMap" style="width: 700rpx;margin: auto; height: 300rpx;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" covers="{{covers}}" show-location></map>
 </view>
-<view wx:else>
+<view wx:if="{{type != '0' && order.status != '0'}}">
   <i-cell-group>
     <i-cell bind:click="navLogistic" title="物流信息" is-link only-tap-footer>
       <image class="icon-place" slot="icon" src="../../images/icon/place.png"></image>
+    </i-cell>
+  </i-cell-group>
+</view>
+<view wx:if="{{type != '0' && order.status == '0'}}">
+  <i-cell-group>
+    <i-cell title="未发货！">
     </i-cell>
   </i-cell-group>
 </view>

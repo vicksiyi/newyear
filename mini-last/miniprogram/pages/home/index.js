@@ -49,7 +49,7 @@ Page({
       if (res[1].notice != undefined) res[1].notice.startTime = time.formatTimestamp(new Date(res[1].notice.startTime).getTime());
       this.setData({
         pages: res[0].data,
-        notice: res[1].notice,
+        notice: res[1].notice ? res[1].notice : null,
         spinShow: false
       })
     })

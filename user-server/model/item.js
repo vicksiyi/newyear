@@ -24,6 +24,14 @@ class Item extends Handle {
         const sql = `select num as inviteNum from invites where orderId = '${orderId}'`;
         return super.commit(sql);
     }
+    // 获取快递单号
+    getLogisticNum(orderId){
+        const sql = `select l.courierNum,c.name,c.symbol from logistics l 
+        inner join express e on l.expressId = e.uuid 
+        inner join companys c on c.id = l.companyId 
+        where e.orderId = '${orderId}';`;
+        return super.commit(sql);
+    }
 }
 const item = new Item();
 module.exports = item;

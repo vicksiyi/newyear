@@ -34,7 +34,7 @@ router.get('/getInvite', passport.authenticate('jwt', { session: false }), async
         data[_result[i].orderId].openId = _result[i].openId;
         data[_result[i].orderId].status = _result[i].status;
         data[_result[i].orderId].num = _result[i].inviteNum;
-        data[_result[i].orderId].money += _result[i].money;
+        data[_result[i].orderId].money += _result[i].money * _result[i].num;
         data[_result[i].orderId].msg = _result[i].msg;
         data[_result[i].orderId].items.push({
             money: _result[i].money,
@@ -103,7 +103,7 @@ router.get('/getExpress', passport.authenticate('jwt', { session: false }), asyn
         data[_result[i].orderId].expressId = _result[i].expressId;
         data[_result[i].orderId].courierNum = _result[i].courierNum;
         data[_result[i].orderId].companyName = _result[i].companyName;
-        data[_result[i].orderId].money += _result[i].money;
+        data[_result[i].orderId].money += _result[i].money * _result[i].num;
         data[_result[i].orderId].msg = _result[i].msg;
         data[_result[i].orderId].items.push({
             money: _result[i].money,
