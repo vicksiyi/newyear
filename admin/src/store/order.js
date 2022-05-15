@@ -6,7 +6,9 @@ export default {
         exp: {},
         expressId: "",
         orderId: "",
-        courierNum: ""
+        courierNum: "",
+        expressPage: 1,
+        invitePage: 1,
     },
     mutations: {
         updateExpress(state, express) {
@@ -29,6 +31,12 @@ export default {
         },
         updateCourierNum(state, value) {
             state.courierNum = value
+        },
+        updateExpressPage(state, value) {
+            state.expressPage = value
+        },
+        updateInvitePage(state, value) {
+            state.invitePage = value
         }
     }
 }

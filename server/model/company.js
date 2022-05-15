@@ -1,8 +1,9 @@
 const Handle = require('../model/handle');
 class Company extends Handle {
-    constructor(){
+    constructor() {
         super();
     }
+
     // 删除物流公司
     delete(id) {
         const sql = `delete from companys WHERE id=${id};`;
@@ -18,6 +19,12 @@ class Company extends Handle {
     // 获取全部数量
     getNum() {
         const sql = `select count(1) as num from companys`;
+        return super.commit(sql);
+    }
+
+    // 查找物流公司是否已经存在
+    getCompany(name, symbol) {
+        const sql = `select count(1) as num from companys where name='${name}' or symbol='${symbol}'`;
         return super.commit(sql);
     }
 

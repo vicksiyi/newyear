@@ -80,6 +80,8 @@ export default {
             this.$store.commit("header/setToken", _result.data.token);
             this.setTokenAsync(_result.data.token);
             this.$router.replace("/");
+          }else{
+            this.$message.error(_result.data.msg);
           }
           Loading.end(loading);
         } else {

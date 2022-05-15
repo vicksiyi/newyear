@@ -44,6 +44,8 @@
           background
           layout="prev, pager, next"
           :total="getExpressLen"
+          :page-size="10"
+          @current-change="pageChange"
         >
         </el-pagination
       ></el-col>
@@ -125,14 +127,15 @@ export default {
       this.drawer = true;
       this.$store.commit("updateOrderId", orderId);
       this.$store.commit("updateExpressId", expressId);
-
-      console.log(courierNum);
       this.$store.commit("updateCourierNum", courierNum);
     },
     closeDrawer() {
       this.drawer = false;
       this.update = !this.update;
     },
+    pageChange(page){
+      this.$store.commit("updateExpressPage", page);
+    }
   },
   computed: {
     searchLabel: function () {

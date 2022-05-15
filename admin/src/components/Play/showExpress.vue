@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { getExpress } from "@/api/order";
 export default {
   name: "ShowExpress",
@@ -93,19 +93,25 @@ export default {
   },
   watch: {
     update() {
-      console.log(12312312);
       this.getData();
     },
   },
   computed: {
+    ...mapState({
+      page: (state) => state.order.expressPage,
+    }),
     ...mapGetters("header", ["getHeader"]),
     headers() {
       return this.$store.getters["header/getHeader"];
     },
     getExpressData() {
       let data = [];
-      for (const key in this.express) {
-        data.push(Object.assign(this.express[key], { orderId: key }));
+      let len = Object.keys(this.express).length;
+      let keys = Object.keys(this.express);
+      let start = 10 * (this.page - 1);
+      let end = start + 10 > len ? len : start + 10;
+      for (let i = start; i < end; ++i) {
+        data.push(Object.assign(this.express[keys[i]], { orderId: keys[i] }));
       }
       return data;
     },

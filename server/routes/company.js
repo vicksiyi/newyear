@@ -48,10 +48,13 @@ router.delete('/delCompany/:id', passport.authenticate('jwt', { session: false }
 router.post('/addCompany', passport.authenticate('jwt', { session: false }), async (req, res) => {
     let name = req.body.name;
     let symbol = req.body.symbol;
+    let _result = await company.getCompany(name, symbol);
+    _result = utils.toJson(_result);
+    if (_result[0].num > 0) {
+        res.send({ code: 400, msg: '不能重复插入' })
+        return;
+    }
     let _ = await company.insert(name, symbol);
-    res.send({
-        code: 200,
-        msg: '插入成功'
-    })
+    res.send({ code: 200, msg: '插入成功' })
 })
 module.exports = router;

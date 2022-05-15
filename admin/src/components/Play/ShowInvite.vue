@@ -66,19 +66,26 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { getInvite, nextStatus } from "@/api/order";
 export default {
   name: "ShowInvite",
   computed: {
     ...mapGetters("header", ["getHeader"]),
+    ...mapState({
+      page: (state) => state.order.invitePage,
+    }),
     headers() {
       return this.$store.getters["header/getHeader"];
     },
     getInviteData() {
       let data = [];
-      for (const key in this.invites) {
-        data.push(Object.assign(this.invites[key], { orderId: key }));
+      let len = Object.keys(this.invites).length;
+      let keys = Object.keys(this.invites);
+      let start = 10 * (this.page - 1);
+      let end = start + 10 > len ? len : start + 10;
+      for (let i = start; i < end; ++i) {
+        data.push(Object.assign(this.invites[keys[i]], { orderId: keys[i] }));
       }
       return data;
     },

@@ -39,6 +39,8 @@
           background
           layout="prev, pager, next"
           :total="getInviteLen"
+          :page-size="10"
+          @current-change="pageChange"
         >
         </el-pagination
       ></el-col>
@@ -101,6 +103,10 @@ export default {
     },
     done(index) {
       console.log(`完成${index}`);
+    },
+    pageChange(page) {
+      console.log(page);
+      this.$store.commit("updateInvitePage", page);
     },
   },
   computed: {

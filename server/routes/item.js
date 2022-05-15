@@ -54,7 +54,7 @@ router.get('/getItem/:page', passport.authenticate('jwt', { session: false }), a
 // @access private
 router.post('/editItem', passport.authenticate('jwt', { session: false }), async (req, res) => {
     let { uuid, title, type, filename, num, money, status, url } = req.body;
-    url = url || await uploadImage(filename); // 上传到OSS获取url;
+    url = url || await uploadOss.uploadImage(filename); // 上传到OSS获取url;
     const _result = await item.edit(uuid, title, type, url, num, money, status).catch(err => {
         res.send({
             code: 400,
