@@ -61,9 +61,16 @@
           </div>
           <div>
             <el-button
-              @click="showLogistic(scope.row.orderId, scope.row.expressId)"
+              @click="
+                showLogistic(
+                  scope.row.orderId,
+                  scope.row.expressId,
+                  scope.row.courierNum
+                )
+              "
               type="primary"
               size="mini"
+              :disabled="scope.row.status == 1 ? false : true"
               >物流</el-button
             >
           </div>
@@ -129,8 +136,8 @@ export default {
           this.$message.error("未知错误");
         });
     },
-    showLogistic(orderId, expressId) {
-      this.$emit("showLogistic", orderId, expressId);
+    showLogistic(orderId, expressId, courierNum) {
+      this.$emit("showLogistic", orderId, expressId, courierNum);
     },
     sendLogistic(orderId, expressId) {
       this.$emit("sendLogistic", orderId, expressId);

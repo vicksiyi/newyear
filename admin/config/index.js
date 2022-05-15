@@ -17,6 +17,13 @@ module.exports = {
         pathRewrite: {
           '^/api': '/api' //路径重写 
         }
+      },
+      "/gxali": {
+        target: 'http://wdexpress.market.alicloudapi.com', //源地址 
+        changeOrigin: true, //是否跨域
+        pathRewrite: {
+          '^/gxali': '/gxali' //路径重写 
+        }
       }
     },
     // Various Dev Server settings

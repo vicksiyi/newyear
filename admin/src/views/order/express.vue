@@ -120,11 +120,14 @@ export default {
       this.$store.commit("updateOrderId", orderId);
       this.$store.commit("updateExpressId", expressId);
     },
-    showLogistic(orderId, expressId) {
+    showLogistic(orderId, expressId, courierNum) {
       this.show = 2;
       this.drawer = true;
       this.$store.commit("updateOrderId", orderId);
       this.$store.commit("updateExpressId", expressId);
+
+      console.log(courierNum);
+      this.$store.commit("updateCourierNum", courierNum);
     },
     closeDrawer() {
       this.drawer = false;

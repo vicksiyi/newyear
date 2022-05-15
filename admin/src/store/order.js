@@ -5,7 +5,8 @@ export default {
         invite: {},
         exp: {},
         expressId: "",
-        orderId: ""
+        orderId: "",
+        courierNum: ""
     },
     mutations: {
         updateExpress(state, express) {
@@ -25,6 +26,9 @@ export default {
         },
         updateOrderId(state, orderId) {
             state.orderId = orderId;
+        },
+        updateCourierNum(state, value) {
+            state.courierNum = value
         }
     }
 }
